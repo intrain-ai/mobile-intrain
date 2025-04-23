@@ -1,7 +1,7 @@
 # Android Learning
 ================
 
-Repository ini berisi kumpulan kode program Android yang saya pelajari dan kembangkan menggunakan Android Studio dan bahasa pemrograman Kotlin.
+Repository ini berisi kumpulan kode program Android yang digunakan dengan menggunakan Android Studio dan bahasa pemrograman Kotlin.
 
 ## Tools
 - Android Studio
