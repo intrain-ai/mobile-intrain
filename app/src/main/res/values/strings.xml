@@ -3,4 +3,18 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="email_validation_hint">Masukan Email</string>
+    <string name="email_validation_isEmpty">Email tidak boleh kosong</string>
+    <string name="email_validation_notValid">Email tidak valid</string>
+    <string name="pass_isEmpty">Passsword tidak boleh kosong</string>
+    <string name="pass_min_character">Panjang password minimal 6 karakter</string>
+    <string name="pass_input_hint">Masukan Password</string>
+    <string name="Pass_hint">Masukan Password</string>
+    <string name="login">Login</string>
+    <string name="register">Daftar</string>
+    <string name="forgot_password">Lupa Password?</string>
+    <string name="logo_intrain">Logo intrain</string>
+    <string name="email">Email</string>
+    <string name="input_email">Masukan Email</string>
+    <string name="Input_pass">Password</string>
 </resources>
