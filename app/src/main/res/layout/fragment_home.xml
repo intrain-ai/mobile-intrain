@@ -14,9 +14,10 @@
         android:layout_marginBottom="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:text="Hello, Aldi!"
+        android:text="@string/welcoming_message"
         android:textStyle="bold"
         android:textSize="24sp"
+        android:fontFamily="@font/poppinsbold"
         android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +28,8 @@
         android:id="@+id/activityText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Let’s check your activity today"
+        android:text="@string/welcoming_message_2"
+        android:fontFamily="@font/poppinsregular"
         android:textSize="16sp"
         android:textStyle="bold"
         android:textColor="#4560b6"
@@ -52,7 +54,7 @@
             android:id="@+id/courseTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Course"
+            android:text="@string/course"
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="#4560b6"
@@ -72,7 +74,9 @@
             android:id="@+id/courseDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Course Completed"
+            android:fontFamily="@font/poppinsregular"
+            android:textStyle="bold"
+            android:text="@string/course_completed"
             android:textSize="14sp"
             android:textColor="#6B6B6B" />
     </LinearLayout>
@@ -93,12 +97,13 @@
             android:id="@+id/activityLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Activity"
+            android:text="@string/activity"
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginBottom="8dp"
             android:textColor="#4560b6"
-            android:layout_gravity="start"/>
+            android:layout_gravity="start"
+            android:padding="8dp"/>
 
         <!-- Icon Row -->
         <LinearLayout
@@ -118,15 +123,15 @@
                     android:id="@+id/cvCheckerIcon"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
+                    android:backgroundTint="@color/white"
                     android:src="@drawable/ic_cv_checker"
                     android:scaleType="centerInside"
-                    android:contentDescription="CV Checker Icon"
-                    android:layout_marginEnd="16dp"/>
+                    android:contentDescription="@string/cv_checker_icon" />
                 <TextView
                     android:id="@+id/cvCheckerText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="CV Checker"
+                    android:text="@string/cv_checker"
                     android:textSize="12sp"
                     android:textColor="#6B6B6B" />
             </LinearLayout>
@@ -143,13 +148,12 @@
                     android:layout_height="100dp"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_course"
-                    android:contentDescription="InTrain.ai Icon"
-                    android:layout_marginEnd="16dp"/>
+                    android:contentDescription="@string/intrain_ai_icon"/>
                 <TextView
                     android:id="@+id/inTrainText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="InTrain.ai"
+                    android:text="@string/intrain_ai"
                     android:textSize="12sp"
                     android:textColor="#6B6B6B" />
             </LinearLayout>
@@ -166,12 +170,12 @@
                     android:layout_height="100dp"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_chat"
-                    android:contentDescription="Course Icon"/>
+                    android:contentDescription="@string/course_icon"/>
                 <TextView
                     android:id="@+id/courseText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Course"
+                    android:text="@string/course"
                     android:textSize="12sp"
                     android:textColor="#6B6B6B" />
             </LinearLayout>
@@ -191,11 +195,12 @@
             android:id="@+id/newsTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="News"
+            android:text="@string/news"
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="#4560b6"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp"
+            android:padding="8dp"/>
 
         <TextView
             android:id="@+id/newsContent"
