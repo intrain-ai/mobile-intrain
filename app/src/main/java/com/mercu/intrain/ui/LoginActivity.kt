@@ -6,36 +6,46 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.mercu.intrain.MainActivity
 import com.mercu.intrain.R
 import com.mercu.intrain.databinding.ActivityLoginBinding
+import com.mercu.intrain.sharedpref.SharedPrefHelper
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var viewModel: LoginViewModel
+    private lateinit var sharedPrefHelper: SharedPrefHelper
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         binding.loading.visibility = View.GONE
 
-        enableEdgeToEdge()
+        sharedPrefHelper = SharedPrefHelper(this)
+
+        supportActionBar?.hide()
+
+        viewModel = ViewModelProvider(this)[LoginViewModel::class.java]
 
         binding.login.setOnClickListener {
-            binding.loading.visibility = View.VISIBLE
-            binding.login.isEnabled = false
-            binding.login.text = ""
-
-            Handler(Looper.getMainLooper()).postDelayed({
-                binding.loading.visibility = View.GONE
-                binding.login.isEnabled = true
-                binding.login.text = getString(R.string.login)
-            }, 1000)
+            viewModel.login()
+            if (viewModel.isLogin.value == true){
+                sharedPrefHelper.isLogin(true)
             }
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         binding.register.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)

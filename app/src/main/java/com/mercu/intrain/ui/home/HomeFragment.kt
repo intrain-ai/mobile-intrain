@@ -1,5 +1,6 @@
 package com.mercu.intrain.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,13 +10,17 @@ import androidx.lifecycle.ViewModelProvider
 import com.mercu.intrain.databinding.FragmentHomeBinding
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import android.widget.TextView
+import com.mercu.intrain.sharedpref.SharedPrefHelper
+import com.mercu.intrain.ui.LoginActivity
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
+
     private lateinit var homeViewModel: HomeViewModel
+    private lateinit var sharedPrefHelper: SharedPrefHelper
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,6 +32,8 @@ class HomeFragment : Fragment() {
         // Inflate the layout using ViewBinding
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        sharedPrefHelper = SharedPrefHelper(requireContext())
 
         // Observe the ViewModel's data and update the TextViews and progress bar accordingly
         homeViewModel.text.observe(viewLifecycleOwner) {
@@ -68,6 +75,10 @@ class HomeFragment : Fragment() {
         binding.courseIcon.setOnClickListener {
             // You can update the progress dynamically like this:
             homeViewModel.updateProgress(80f) // Update progress to 80%
+            sharedPrefHelper.isLogin(false) //buat tes error
+            val intent = Intent(requireContext(), LoginActivity::class.java)
+            startActivity(intent)
+            activity?.finish()
         }
 
         return root

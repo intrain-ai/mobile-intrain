@@ -54,4 +54,13 @@ class SharedPrefHelper(context: Context) {
         sharedPreferences.edit().clear().apply()
     }
 
+    fun isLogin(isLogin: Boolean){
+        sharedPreferences.edit().putBoolean("isLogin", isLogin).apply()
+    }
+
+    fun getLogin(): Boolean{
+        return sharedPreferences.getBoolean("isLogin",false)
+    }
+
+
 }
