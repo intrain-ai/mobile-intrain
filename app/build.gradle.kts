@@ -1,3 +1,5 @@
+import org.gradle.kotlin.dsl.implementation
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -68,7 +70,7 @@ dependencies {
     ksp("androidx.room:room-compiler:2.7.0")
     implementation ("androidx.datastore:datastore-preferences:1.1.1")
     implementation ("androidx.datastore:datastore-core:1.1.1")
-
     implementation ("com.google.android.material:material:1.11.0")
+
 
 }

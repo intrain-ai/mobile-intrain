@@ -4,10 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.mercu.intrain.databinding.FragmentHomeBinding
+import com.google.android.material.progressindicator.CircularProgressIndicator
+import android.widget.TextView
 
 class HomeFragment : Fragment() {
 
@@ -27,30 +28,46 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        // Observe the ViewModel's data and update the TextViews accordingly
+        // Observe the ViewModel's data and update the TextViews and progress bar accordingly
         homeViewModel.text.observe(viewLifecycleOwner) {
             binding.helloText.text = it // Update the "Hello, Aldi!" TextView
         }
 
-        homeViewModel.courseCompleted.observe(viewLifecycleOwner) {
-            binding.courseCompleted.text = it.toString() // Update the course completed count TextView
+        homeViewModel.courseDescription.observe(viewLifecycleOwner) {
+            binding.courseDescription.text = it // Update course description
         }
 
-        homeViewModel.courseDescription.observe(viewLifecycleOwner) {
-            binding.courseDescription.text = it // Update the course description TextView
+        homeViewModel.courseProgress.observe(viewLifecycleOwner) {
+            // Set the progress dynamically based on the LiveData value (from 0 to 100)
+            binding.courseProgress.progress = it.toInt() // Cast to Int for the progress value
+
+            // Update the text in the center of the progress circle
+            binding.progressText.text = "${it.toInt()}%" // Update percentage in the center
         }
 
         homeViewModel.activityContent.observe(viewLifecycleOwner) {
-            binding.activityLabel.text = it // Update the activity label TextView
+            binding.activityLabel.text = it // Update activity content
         }
 
         homeViewModel.newsContent.observe(viewLifecycleOwner) {
-            binding.newsContent.text = it // Update the news content TextView
+            binding.newsContent.text = it // Update news content
         }
 
-        // Example of updating the activity content when an icon is clicked
+        // Simulate progress increase (e.g., progress from 0% to 100% over time)
+        // Example: Update the progress to 50% after 2 seconds
         binding.cvCheckerIcon.setOnClickListener {
-            homeViewModel.updateActivity("CV Checker Clicked") // Update activity content when clicked
+            // You can update the progress dynamically like this:
+            homeViewModel.updateProgress(50f) // Update progress to 50%
+        }
+
+        binding.inTrainIcon.setOnClickListener {
+            // You can update the progress dynamically like this:
+            homeViewModel.updateProgress(20f) // Update progress to 20%
+        }
+
+        binding.courseIcon.setOnClickListener {
+            // You can update the progress dynamically like this:
+            homeViewModel.updateProgress(80f) // Update progress to 80%
         }
 
         return root
@@ -58,6 +75,6 @@ class HomeFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null // Prevent memory leaks by clearing the binding reference
+        _binding = null
     }
 }

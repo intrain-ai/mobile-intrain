@@ -12,8 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/welcoming_message"
         android:textStyle="bold"
         android:textSize="24sp"
@@ -45,7 +45,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/activityText"
+        app:layout_constraintTop_toBottomOf="@id/helloText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:padding="16dp">
@@ -54,30 +54,55 @@
             android:id="@+id/courseTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/course"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="#4560b6"
             android:layout_gravity="start"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:padding="8dp"/>
+            android:fontFamily="@font/poppinsbold"
+            android:padding="8dp"
+            android:text="@string/course"
+            android:textColor="#4560b6"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/courseCompleted"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="12"
-            android:textSize="24sp"
-            android:textColor="#4D78FF" />
+            android:layout_marginBottom="16dp">
+
+            <!-- Circular Progress Bar -->
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/courseProgress"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:indicatorColor="#4D78FF"
+                app:indicatorSize="100dp"
+                android:layout_centerInParent="true"
+                app:trackColor="#A9A4A4"
+                app:trackThickness="10dp"
+                android:progress="0"
+                android:max="100" />
+
+            <!-- Progress Number -->
+            <TextView
+                android:id="@+id/progressText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="24sp"
+                android:textColor="#4D78FF"
+                android:layout_centerInParent="true"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppinsbold"/>
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/courseDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppinsregular"
-            android:textStyle="bold"
             android:text="@string/course_completed"
             android:textSize="14sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/poppinsregular"
             android:textColor="#6B6B6B" />
     </LinearLayout>
 
@@ -118,8 +143,9 @@
                 android:orientation="vertical"
                 android:gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <ImageButton
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp">
+                <ImageView
                     android:id="@+id/cvCheckerIcon"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
@@ -141,8 +167,9 @@
                 android:orientation="vertical"
                 android:gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <ImageButton
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp">
+                <ImageView
                     android:id="@+id/inTrainIcon"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
@@ -164,7 +191,7 @@
                 android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-                <ImageButton
+                <ImageView
                     android:id="@+id/courseIcon"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
