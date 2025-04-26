@@ -28,4 +28,7 @@
     <string name="cv_checker_icon">CV Checker Icon</string>
     <string name="activity">Activity</string>
     <string name="course_completed">Course Completed</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="chat">Chat</string>
 </resources>
