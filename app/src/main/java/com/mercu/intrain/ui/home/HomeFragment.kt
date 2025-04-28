@@ -1,5 +1,6 @@
 package com.mercu.intrain.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.mercu.intrain.databinding.FragmentHomeBinding
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import android.widget.TextView
+import com.mercu.intrain.ui.cvcheck.ReviewActivity
 
 class HomeFragment : Fragment() {
 
@@ -56,8 +58,8 @@ class HomeFragment : Fragment() {
         // Simulate progress increase (e.g., progress from 0% to 100% over time)
         // Example: Update the progress to 50% after 2 seconds
         binding.cvCheckerIcon.setOnClickListener {
-            // You can update the progress dynamically like this:
-            homeViewModel.updateProgress(50f) // Update progress to 50%
+            val intent = Intent(requireContext(), ReviewActivity::class.java)
+            startActivity(intent)
         }
 
         binding.inTrainIcon.setOnClickListener {
