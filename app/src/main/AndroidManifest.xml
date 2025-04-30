@@ -48,6 +48,10 @@
             </intent-filter>
 
         </activity>
+
+        <activity
+            android:name=".ui.cvcheck.ReviewActivity"
+            android:exported="true"/>
     </application>
 
 </manifest>
