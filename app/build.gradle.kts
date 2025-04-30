@@ -73,5 +73,14 @@ dependencies {
     implementation("androidx.datastore:datastore-core:1.1.1")
     implementation("com.google.android.material:material:1.11.0")
 
+    implementation("com.google.ai.client.generativeai:generativeai:0.1.1")
+    implementation("com.tom-roush:pdfbox-android:2.0.27.0")
+
+    implementation ("com.github.mhiew:android-pdf-viewer:3.2.0-beta.3")
+
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation("com.google.android.material:material:1.11.0")
+
+
 
 }
