@@ -1,5 +1,6 @@
 package com.mercu.intrain.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.mercu.intrain.databinding.FragmentHomeBinding
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import android.widget.TextView
+import com.mercu.intrain.MainActivity
+import com.mercu.intrain.ui.chat.ChatActivity
 
 class HomeFragment : Fragment() {
 
@@ -63,6 +66,8 @@ class HomeFragment : Fragment() {
         binding.inTrainIcon.setOnClickListener {
             // You can update the progress dynamically like this:
             homeViewModel.updateProgress(20f) // Update progress to 20%
+            val intent = Intent(requireContext(), ChatActivity::class.java)
+            startActivity(intent)
         }
 
         binding.courseIcon.setOnClickListener {

@@ -1,5 +1,6 @@
 package com.mercu.intrain
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -10,13 +11,16 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.mercu.intrain.databinding.ActivityMainBinding
+import com.mercu.intrain.sharedpref.SharedPrefHelper
+import com.mercu.intrain.ui.LoginActivity
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
     private val viewModel by viewModels<MainViewModel>()
+    private lateinit var sharedPrefHelper: SharedPrefHelper
 
-    override fun onCreate(savedInstanceState : Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen().apply {
             setKeepOnScreenCondition {
@@ -28,9 +32,15 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navView : BottomNavigationView = binding.navView
+        sharedPrefHelper = SharedPrefHelper(this)
 
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        if (sharedPrefHelper.getUid() == null) {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        } else {
+            val navView: BottomNavigationView = binding.navView
+
+            val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
 //        val appBarConfiguration = AppBarConfiguration(
 //            setOf(
@@ -38,6 +48,7 @@ class MainActivity : AppCompatActivity() {
 //            )
 //        )
 
-        navView.setupWithNavController(navController)
+            navView.setupWithNavController(navController)
+        }
     }
 }

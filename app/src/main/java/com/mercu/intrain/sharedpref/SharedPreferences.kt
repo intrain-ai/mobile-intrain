@@ -6,12 +6,13 @@ import com.google.gson.Gson
 
 class SharedPrefHelper(context: Context) {
 
-    private val sharedPreferences: SharedPreferences = context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+    private val sharedPreferences: SharedPreferences =
+        context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
     private val gson = Gson()
 
     // Save data methods
-    fun saveToken(token: String) {
-        sharedPreferences.edit().putString("auth_token", token).apply()
+    fun saveUid(uid: String) {
+        sharedPreferences.edit().putString("auth_uid", uid).apply()
     }
 
     fun saveUsername(username: String) {
@@ -26,8 +27,8 @@ class SharedPrefHelper(context: Context) {
         sharedPreferences.edit().putBoolean("dark_mode", isDarkMode).apply()
     }
 
-    fun getToken(): String? {
-        return getString("auth_token")
+    fun getUid(): String? {
+        return getString("auth_uid")
     }
 
     fun getUsername(): String? {
@@ -47,7 +48,7 @@ class SharedPrefHelper(context: Context) {
     }
 
     fun isLoggedIn(): Boolean {
-        return getToken() != null
+        return getUid() != null
     }
 
     fun clear() {

@@ -1,19 +1,16 @@
 package com.mercu.intrain.ui.chat
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mercu.intrain.R
 import com.mercu.intrain.model.Message
 
-class ChatFragment : Fragment() {
+class ChatActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var editTextMessage: EditText
@@ -22,18 +19,16 @@ class ChatFragment : Fragment() {
 
     private val messages = mutableListOf<Message>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_chat, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_chat) // <- nanti kalau mau lebih rapi bisa ganti nama layout-nya ke `activity_chat`
 
-        recyclerView = view.findViewById(R.id.recyclerView)
-        editTextMessage = view.findViewById(R.id.editTextMessage)
-        buttonSend = view.findViewById(R.id.buttonSend)
+        recyclerView = findViewById(R.id.recyclerView)
+        editTextMessage = findViewById(R.id.editTextMessage)
+        buttonSend = findViewById(R.id.buttonSend)
 
         adapter = ChatAdapter(messages)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
         buttonSend.setOnClickListener {
@@ -42,18 +37,15 @@ class ChatFragment : Fragment() {
                 messages.add(Message(text, true))
                 messages.add(Message("Balasan bot untuk: \"$text\"", false))
                 adapter.notifyItemRangeInserted(messages.size - 2, 2)
-                updateRecyclerViewVisibility()
+//                updateRecyclerViewVisibility()
                 recyclerView.scrollToPosition(messages.size - 1)
                 editTextMessage.text.clear()
             }
         }
-
-
-        return view
+//        updateRecyclerViewVisibility()
     }
 
-    private fun updateRecyclerViewVisibility() {
-        recyclerView.visibility = if (messages.isEmpty()) View.INVISIBLE else View.VISIBLE
-    }
-
+//    private fun updateRecyclerViewVisibility() {
+//        recyclerView.visibility = if (messages.isEmpty()) View.INVISIBLE else View.VISIBLE
+//    }
 }

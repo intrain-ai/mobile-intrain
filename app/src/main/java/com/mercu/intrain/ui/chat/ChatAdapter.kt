@@ -1,4 +1,5 @@
 package com.mercu.intrain.ui.chat
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,4 +49,6 @@ class ChatAdapter(private val messages: List<Message>) :
     class BotViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textMessage: TextView = view.findViewById(R.id.textViewMessage)
     }
+
+
 }
