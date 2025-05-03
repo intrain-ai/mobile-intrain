@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    android:layout_margin="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Course Title -->
+        <TextView
+            android:id="@+id/tvCourseTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="Course Title"
+            android:fontFamily="@font/poppinsbold"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Course Provider -->
+        <TextView
+            android:id="@+id/tvProvider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:text="Provider"
+            android:fontFamily="@font/poppinsbold"
+            android:textColor="#666666"/>
+
+        <!-- Progress Bar -->
+        <ProgressBar
+            android:id="@+id/progressCourse"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:layout_marginTop="8dp"
+            android:progress="25"
+            android:progressTint="#4CAF50"
+            android:backgroundTint="#E0E0E0"/>
+
+        <!-- Enrollment Status -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="Status"
+                android:fontFamily="@font/poppinsbold"
+                android:padding="8dp"
+                android:background="@drawable/bg_status"
+                android:textColor="@android:color/white"/>
+
+            <TextView
+                android:id="@+id/tvEnrolledDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="Enrolled: 01 Jan 2024"
+                android:fontFamily="@font/poppinsbold"
+                android:layout_marginStart="8dp"
+                android:textColor="#666666"/>
+        </LinearLayout>
+
+        <!-- Action Button -->
+        <Button
+            android:id="@+id/btnAction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="14sp"
+            android:text="Mulai"
+            android:fontFamily="@font/poppinsbold"
+            android:backgroundTint="#2196F3"
+            android:textColor="@android:color/white"
+            android:textAllCaps="false"/>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
