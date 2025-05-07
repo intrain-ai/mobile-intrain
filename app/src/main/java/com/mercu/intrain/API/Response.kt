@@ -46,22 +46,18 @@ data class LoginRequest(
 
 @Parcelize
 data class ResgiterResponse(
-
     @field:SerializedName("message")
-    val message: String? = null,
-
-    @field:SerializedName("user")
-    val user: User? = null
+    val message: String? = null
 ) : Parcelable
 
 @Parcelize
 data class RegisterRequest(
 
-    @field:SerializedName("password")
-    val email: String? = null,
-
     @field:SerializedName("username")
     val username: String? = null,
+
+    @field:SerializedName("password")
+    val email: String? = null,
 
     @field:SerializedName("name")
     val name: String? = null,
@@ -70,3 +66,90 @@ data class RegisterRequest(
     val createdAt: String? = null,
 
     ) : Parcelable
+@Parcelize
+data class CVuploadResponse(
+    @field:SerializedName("jawa")
+    val jawa: String //dummy
+) : Parcelable
+
+
+data class ChatRequest(
+
+    @field:SerializedName("job_type")
+    val jobType: String? = null,
+
+    @field:SerializedName("user_id")
+    val userId: String? = null,
+
+    @field:SerializedName("hr_level_id")
+    val hrLevelId: Int? = null
+)
+// buat initialisasi
+@Parcelize
+data class ChatInitResponse(
+
+    @field:SerializedName("response")
+    val response: ChatResponse? = null,
+
+    @field:SerializedName("session_id")
+    val sessionId: String? = null
+): Parcelable
+
+@Parcelize
+data class ChatResponse(
+
+    @field:SerializedName("question_text")
+    val questionText: String? = null,
+
+    @field:SerializedName("type")
+    val type: String? = null,
+
+    @field:SerializedName("question_number")
+    val questionNumber: Int? = null
+): Parcelable
+
+data class ChatContinous(
+    @field:SerializedName("session_id")
+    val sessionId: String? = null,
+
+    @field:SerializedName("message")
+    val message: String? = null
+)
+
+@Parcelize
+data class ChatConResponse(
+
+    @field:SerializedName("response")
+    val response: ChatResponse? = null,
+
+    @field:SerializedName("session_id")
+    val sessionId: String? = null
+): Parcelable
+
+@Parcelize
+data class EvaluationResponse(
+    @SerializedName("evaluation")
+    val evaluation: Evaluation? = null,
+
+    @SerializedName("session_id")
+    val sessionId: String? = null
+) : Parcelable
+
+@Parcelize
+data class Evaluation(
+    @SerializedName("evaluated_at")
+    val evaluatedAt: String? = null,
+
+    @SerializedName("id")
+    val id: String? = null,
+
+    @SerializedName("recommendations")
+    val recommendations: List<String>? = null,
+
+    @SerializedName("score")
+    val score: Int? = null,
+
+    @SerializedName("session_id")
+    val sessionId: String? = null
+) : Parcelable
+

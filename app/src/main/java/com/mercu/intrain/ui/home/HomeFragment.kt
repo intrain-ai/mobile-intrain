@@ -11,7 +11,10 @@ import com.mercu.intrain.databinding.FragmentHomeBinding
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import android.widget.TextView
 import com.mercu.intrain.MainActivity
+import com.mercu.intrain.adapter.DiffSelectAdapter
 import com.mercu.intrain.ui.chat.ChatActivity
+import com.mercu.intrain.ui.chat.DiffSelectActivity
+import com.mercu.intrain.ui.course.CourseActivity
 import com.mercu.intrain.ui.cvcheck.ReviewActivity
 
 class HomeFragment : Fragment() {
@@ -67,13 +70,15 @@ class HomeFragment : Fragment() {
         binding.inTrainIcon.setOnClickListener {
             // You can update the progress dynamically like this:
             homeViewModel.updateProgress(20f) // Update progress to 20%
-            val intent = Intent(requireContext(), ChatActivity::class.java)
+            val intent = Intent(requireContext(), DiffSelectActivity::class.java)
             startActivity(intent)
         }
 
         binding.courseIcon.setOnClickListener {
             // You can update the progress dynamically like this:
-            homeViewModel.updateProgress(80f) // Update progress to 80%
+            homeViewModel.updateProgress(80f)
+            val intent = Intent(requireContext(), CourseActivity::class.java)
+            startActivity(intent)// Update progress to 80%
         }
 
         return root
