@@ -45,7 +45,7 @@ data class LoginRequest(
 // REGISTER
 
 @Parcelize
-data class ResgiterResponse(
+data class RegisterResponse(
     @field:SerializedName("message")
     val message: String? = null
 ) : Parcelable

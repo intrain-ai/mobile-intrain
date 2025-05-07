@@ -2,20 +2,12 @@ package com.mercu.intrain.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.mercu.intrain.API.ApiConfig
-import com.mercu.intrain.API.LoginResponse
 import com.mercu.intrain.API.RegisterRequest
-import com.mercu.intrain.API.ResgiterResponse
-import com.mercu.intrain.MainActivity
-import com.mercu.intrain.R
-import com.mercu.intrain.databinding.ActivityLoginBinding
+import com.mercu.intrain.API.RegisterResponse
 import com.mercu.intrain.databinding.ActivityRegisterBinding
 import com.mercu.intrain.sharedpref.SharedPrefHelper
 import retrofit2.Call
@@ -54,10 +46,10 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun register (username: String, password: String, name: String,email: String){
         val registerRequest = RegisterRequest(username, password, name, email)
-        ApiConfig.api.registerRequest(registerRequest).enqueue(object : Callback<ResgiterResponse> {
+        ApiConfig.api.registerRequest(registerRequest).enqueue(object : Callback<RegisterResponse> {
             override fun onResponse(
-                call: Call<ResgiterResponse?>,
-                response: Response<ResgiterResponse?>
+                call: Call<RegisterResponse?>,
+                response: Response<RegisterResponse?>
             ) {
                 binding.loading.visibility = View.GONE
                 if (response.isSuccessful) {
@@ -72,7 +64,7 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<ResgiterResponse>, t: Throwable) {
+            override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
                 binding.loading.visibility = View.GONE
                 showToast("Network request failed: ${t.message}")
             }
