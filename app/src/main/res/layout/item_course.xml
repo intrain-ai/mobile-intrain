@@ -1,93 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="4dp"
-    android:layout_margin="8dp">
+    android:layout_marginTop="16dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="6dp"
+    app:strokeColor="#E0E0E0"
+    app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="20dp">
 
-        <!-- Course Title -->
         <TextView
             android:id="@+id/tvCourseTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Judul Kursus"
             android:textSize="18sp"
-            android:text="Course Title"
-            android:fontFamily="@font/poppinsbold"
-            android:layout_marginBottom="8dp"/>
+            android:textStyle="bold"
+            android:textColor="#4560b6"
+            android:fontFamily="@font/poppinsbold"/>
 
-        <!-- Course Provider -->
         <TextView
             android:id="@+id/tvProvider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:layout_marginTop="4dp"
             android:text="Provider"
             android:fontFamily="@font/poppinsbold"
-            android:textColor="#666666"/>
+            android:textSize="14sp"
+            android:textColor="#757575" />
 
-        <!-- Progress Bar -->
-        <ProgressBar
+        <TextView
+            android:id="@+id/tvEnrolledDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="#757575"
+            android:fontFamily="@font/poppinsbold"
+            android:textSize="12sp"
+            android:text="Enrolled: 2023-01-01"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:padding="6dp"
+            android:text="Status"
+            android:textColor="#757575"
+            android:fontFamily="@font/poppinsbold"
+            android:textSize="13sp"
+            android:background="@drawable/bg_status_label"
+            android:visibility="gone" />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/progressCourse"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="8dp"
-            android:layout_marginTop="8dp"
-            android:progress="25"
-            android:progressTint="#4CAF50"
-            android:backgroundTint="#E0E0E0"/>
-
-        <!-- Enrollment Status -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="16dp"
-            android:gravity="center_vertical">
+            android:layout_marginBottom="16dp"
+            app:trackCornerRadius="4dp"
+            app:trackThickness="8dp"
+            android:visibility="gone" />
 
-            <TextView
-                android:id="@+id/tvStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:text="Status"
-                android:fontFamily="@font/poppinsbold"
-                android:padding="8dp"
-                android:background="@drawable/bg_status"
-                android:textColor="@android:color/white"/>
-
-            <TextView
-                android:id="@+id/tvEnrolledDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:text="Enrolled: 01 Jan 2024"
-                android:fontFamily="@font/poppinsbold"
-                android:layout_marginStart="8dp"
-                android:textColor="#666666"/>
-        </LinearLayout>
-
-        <!-- Action Button -->
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAction"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textSize="14sp"
-            android:text="Mulai"
-            android:fontFamily="@font/poppinsbold"
-            android:backgroundTint="#2196F3"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:text="Enroll"
+            android:textAllCaps="false"
+            app:cornerRadius="12dp"
+            app:backgroundTint="#6246EA"
+            app:iconTint="@android:color/white"
             android:textColor="@android:color/white"
-            android:textAllCaps="false"/>
-
+            android:fontFamily="@font/poppinsbold"/>
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+
+</com.google.android.material.card.MaterialCardView>
