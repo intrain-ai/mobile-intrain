@@ -8,116 +8,122 @@
     android:background="@color/md_theme_background"
     android:padding="16dp">
 
-    <!-- Header Text -->
-    <TextView
-        android:id="@+id/titleText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CV Preview"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:fontFamily="@font/poppinsbold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
     <!-- PDF Preview Card -->
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/previewCard"
         android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="250dp"
         app:cardCornerRadius="16dp"
-        app:cardElevation="6dp"
-        app:cardUseCompatPadding="true"
-        android:padding="8dp"
-        android:background="@color/md_theme_surface"
-        app:layout_constraintTop_toBottomOf="@id/titleText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <ImageView
-            android:id="@+id/pdfPreview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitCenter"
-            android:contentDescription="PDF Preview"
-            android:padding="8dp"
-            android:src="@drawable/ic_pdf_placeholder"
-            android:background="#FFFFFF" />
-    </androidx.cardview.widget.CardView>
-
-    <!-- Result Section -->
-    <ScrollView
-        android:id="@+id/resultScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/md_theme_surface"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/previewCard"
-        app:layout_constraintBottom_toTopOf="@+id/upload_pdf_button"
+        app:cardElevation="4dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/md_theme_outline"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/pdfPreview"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:contentDescription="PDF Preview"
+                android:padding="16dp"
+                android:src="@drawable/ic_pdf_placeholder"
+                android:background="@color/md_theme_surface" />
 
             <TextView
-                android:id="@+id/resultTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:fontFamily="@font/poppinsregular"
-                android:lineSpacingExtra="4sp" />
+                android:text="Upload your CV to get started"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                android:textColor="@color/md_theme_onSurfaceVariant"
+                android:layout_marginBottom="16dp" />
 
         </LinearLayout>
-    </ScrollView>
+
+    </com.google.android.material.card.MaterialCardView>
 
     <!-- Upload Button -->
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/upload_pdf_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Upload CV PDF"
-        android:textColor="#FFFFFF"
-        android:backgroundTint="#3B82F6"
-        android:drawableStart="@android:drawable/ic_menu_upload"
-        android:drawableTint="#FFFFFF"
-        android:padding="8dp"
-        android:elevation="4dp"
-        app:layout_constraintTop_toBottomOf="@+id/resultScrollView"
+        android:textColor="@color/md_theme_onPrimary"
+        app:icon="@android:drawable/ic_menu_upload"
+        app:iconTint="@color/md_theme_onPrimary"
+        app:cornerRadius="12dp"
+        app:elevation="4dp"
+        app:layout_constraintTop_toBottomOf="@+id/previewCard"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- Review Button -->
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/review_button"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Review with AI"
-        android:textColor="#FFFFFF"
-        android:backgroundTint="#10B981"
-        android:drawableStart="@android:drawable/ic_menu_add"
-        android:drawableTint="#FFFFFF"
-        android:padding="12dp"
-        android:elevation="4dp"
+        android:textColor="@color/md_theme_onPrimary"
+        app:icon="@android:drawable/ic_menu_add"
+        app:iconTint="@color/md_theme_onPrimary"
+        app:cornerRadius="12dp"
+        app:elevation="4dp"
         app:layout_constraintTop_toBottomOf="@+id/upload_pdf_button"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Result Section -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/resultCard"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/md_theme_outline"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/review_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ScrollView
+            android:id="@+id/resultScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/resultTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:textSize="14sp"
+                android:fontFamily="@font/poppinsregular"
+                android:lineSpacingExtra="4sp" />
+
+        </ScrollView>
+
+    </com.google.android.material.card.MaterialCardView>
+
     <!-- Loading Indicator -->
-    <ProgressBar
+    <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        app:indicatorColor="@color/md_theme_primary"
+        app:trackColor="@color/md_theme_surfaceVariant"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

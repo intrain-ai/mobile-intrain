@@ -1,6 +1,5 @@
 package com.mercu.intrain.ui.cvcheck
 
-
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.pdf.PdfRenderer
@@ -8,17 +7,19 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.ParcelFileDescriptor
 import android.view.View
-import android.widget.Button
+import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.ai.client.generativeai.GenerativeModel
+import com.google.android.material.card.MaterialCardView
+import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.mercu.intrain.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,7 +27,6 @@ import kotlinx.coroutines.withContext
 import com.google.ai.client.generativeai.type.content
 import com.google.ai.client.generativeai.type.generationConfig
 import androidx.core.graphics.createBitmap
-
 
 class ReviewActivity : AppCompatActivity() {
     private var selectedPdfUri: Uri? = null
@@ -45,6 +45,7 @@ class ReviewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_review)
         setupButtons()
+        BatasLayar()
     }
 
     private fun setupButtons() {
@@ -90,6 +91,7 @@ class ReviewActivity : AppCompatActivity() {
 
         } catch (e: Exception) {
             e.printStackTrace()
+            Toast.makeText(this, "Error loading PDF preview", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -100,14 +102,6 @@ class ReviewActivity : AppCompatActivity() {
             showDummyAnalysisResult()
         }, 2000)
     }
-
-    // AI START - Area untuk implementasi asli
-    /*
-    private suspend fun analyzeWithGemini(text: String): String {
-        // Implementasi real AI akan ada di sini
-    }
-    */
-    // AI END
 
     private fun showDummyAnalysisResult() {
         val dummyResult = """
@@ -133,13 +127,22 @@ class ReviewActivity : AppCompatActivity() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        findViewById<ProgressBar>(R.id.progressBar).visibility = if (isLoading) View.VISIBLE else View.GONE
+        findViewById<CircularProgressIndicator>(R.id.progressBar).visibility = if (isLoading) View.VISIBLE else View.GONE
         findViewById<View>(R.id.upload_pdf_button).isEnabled = !isLoading
         findViewById<View>(R.id.review_button).isEnabled = !isLoading
     }
 
     private fun showResult(result: String) {
-        findViewById<ScrollView>(R.id.resultScrollView).visibility = View.VISIBLE
+        findViewById<MaterialCardView>(R.id.resultCard).visibility = View.VISIBLE
         findViewById<TextView>(R.id.resultTextView).text = result
+    }
+
+    private fun BatasLayar() {
+        val rootView = findViewById<ViewGroup>(android.R.id.content).getChildAt(0)
+        ViewCompat.setOnApplyWindowInsetsListener(rootView) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(insets.left, insets.top, insets.right, insets.bottom)
+            windowInsets
+        }
     }
 }
