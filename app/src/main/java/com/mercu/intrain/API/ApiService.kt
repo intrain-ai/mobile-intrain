@@ -1,9 +1,14 @@
 package com.mercu.intrain.API
 
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 
 interface ApiService {
 
@@ -17,12 +22,13 @@ interface ApiService {
         @Body request: RegisterRequest
     ): Call<RegisterResponse>
 
-//    @Multipart
-//    @POST("upload")
-//    suspend fun uploadPdfWithText(
-//        @Part pdf: MultipartBody.Part,
-//        @Part("description") description: RequestBody
-//    ): Response<CVuploadResponse>
+    @Multipart
+    @POST("/api/v1/feature/cv/upload")
+    suspend fun uploadPdfWithText(
+        @Part file: MultipartBody.Part,
+        @Part("user_id") userid: RequestBody
+    ): Response<CvResponse>
+
 
     @POST("/api/v1/feature/interview/chat")
     fun chatRequestInit(

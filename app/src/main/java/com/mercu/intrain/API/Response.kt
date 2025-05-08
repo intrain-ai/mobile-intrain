@@ -153,3 +153,79 @@ data class Evaluation(
     val sessionId: String? = null
 ) : Parcelable
 
+//CV UPLOAD
+
+@Parcelize
+data class CvResponse(
+
+    @field:SerializedName("review")
+    val review: Review? = null,
+
+    @field:SerializedName("submission")
+    val submission: Submission? = null,
+
+    @field:SerializedName("sections")
+    val sections: List<SectionsItem?>? = null
+) : Parcelable
+
+@Parcelize
+data class Submission(
+
+    @field:SerializedName("file_url")
+    val fileUrl: String? = null,
+
+    @field:SerializedName("uploaded_at")
+    val uploadedAt: String? = null,
+
+    @field:SerializedName("user_id")
+    val userId: String? = null,
+
+    @field:SerializedName("file_name")
+    val fileName: String? = null,
+
+    @field:SerializedName("file_type")
+    val fileType: String? = null,
+
+    @field:SerializedName("id")
+    val id: String? = null
+) : Parcelable
+
+@Parcelize
+data class Review(
+
+    @field:SerializedName("submission_id")
+    val submissionId: String? = null,
+
+    @field:SerializedName("ats_passed")
+    val atsPassed: Boolean? = null,
+
+    @field:SerializedName("reviewed_at")
+    val reviewedAt: String? = null,
+
+    @field:SerializedName("overall_feedback")
+    val overallFeedback: String? = null,
+
+    @field:SerializedName("id")
+    val id: String? = null
+) : Parcelable
+
+@Parcelize
+data class SectionsItem(
+
+    @field:SerializedName("feedback")
+    val feedback: String? = null,
+
+    @field:SerializedName("review_id")
+    val reviewId: String? = null,
+
+    @field:SerializedName("needs_improvement")
+    val needsImprovement: Boolean? = null,
+
+    @field:SerializedName("section")
+    val section: String? = null,
+
+    @field:SerializedName("id")
+    val id: String? = null
+) : Parcelable
+
+
