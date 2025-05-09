@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import android.view.ViewGroup
 import com.mercu.intrain.R
 import com.mercu.intrain.API.Evaluation
 
@@ -17,6 +20,12 @@ class EvaluationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_evaluation)
 
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById<ViewGroup>(android.R.id.content).getChildAt(0)) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+    
         txtScore = findViewById(R.id.txtScore)
         txtEvaluatedAt = findViewById(R.id.txtEvaluatedAt)
         txtRecommendations = findViewById(R.id.txtRecommendations)
