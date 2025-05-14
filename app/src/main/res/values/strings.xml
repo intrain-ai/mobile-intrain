@@ -3,6 +3,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_profile">Profile</string>
     <string name="email_validation_hint">Masukan Email</string>
     <string name="email_validation_isEmpty">Email tidak boleh kosong</string>
     <string name="email_validation_notValid">Email tidak valid</string>
@@ -19,7 +20,7 @@
     <string name="Input_pass">Password</string>
     <string name="welcoming_message">Hello, Aldi!</string>
     <string name="course">Course</string>
-    <string name="welcoming_message_2">Let’s check your activity today</string>
+    <string name="welcoming_message_2">Let\'s check your activity today</string>
     <string name="news">News</string>
     <string name="course_icon">Course Icon</string>
     <string name="intrain_ai">InTrain.ai</string>
