@@ -23,7 +23,7 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        binding.loading.visibility = View.GONE
         sharedPrefHelper = SharedPrefHelper (this)
 
         binding.registerButton.setOnClickListener {
@@ -38,6 +38,12 @@ class RegisterActivity : AppCompatActivity() {
             } else {
                 showToast("Please enter your data")
             }
+        }
+
+        binding.loginLink.setOnClickListener {
+            binding.loading.visibility = View.VISIBLE
+            navigateToLoginActivity()
+            binding.loading.visibility = View.GONE
         }
 
 

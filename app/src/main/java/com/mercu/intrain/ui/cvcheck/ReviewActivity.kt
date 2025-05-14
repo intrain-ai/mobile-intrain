@@ -6,6 +6,7 @@ import android.graphics.pdf.PdfRenderer
 import android.net.Uri
 import android.os.Bundle
 import android.os.ParcelFileDescriptor
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -17,6 +18,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.mercu.intrain.API.ApiConfig
 import com.mercu.intrain.API.ApiService
 import com.google.ai.client.generativeai.GenerativeModel
@@ -35,18 +38,20 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
+import com.mercu.intrain.API.SectionsItem
 
 private lateinit var sharedPrefHelper: SharedPrefHelper
 
 class ReviewActivity : AppCompatActivity() {
     private var selectedPdfUri: Uri? = null
+    private lateinit var sectionsAdapter: SectionsAdapter
 
     private val pdfPickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
             result.data?.data?.let { uri ->
                 selectedPdfUri = uri
                 showPdfPreview(uri)
-                showResult("PDF selected: ${uri.lastPathSegment}")
+                Toast.makeText(this, "PDF selected: ${uri.lastPathSegment}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -55,6 +60,7 @@ class ReviewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_review)
         setupButtons()
+        setupRecyclerView()
         sharedPrefHelper = SharedPrefHelper(this)
         BatasLayar()
     }
@@ -71,6 +77,15 @@ class ReviewActivity : AppCompatActivity() {
             } ?: run {
                 Toast.makeText(this, "Please select a PDF first", Toast.LENGTH_SHORT).show()
             }
+        }
+    }
+
+    private fun setupRecyclerView() {
+        val recyclerView = findViewById<RecyclerView>(R.id.sectionsRecyclerView)
+        sectionsAdapter = SectionsAdapter()
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(this@ReviewActivity)
+            adapter = sectionsAdapter
         }
     }
 
@@ -106,58 +121,68 @@ class ReviewActivity : AppCompatActivity() {
         }
     }
 
+    private fun showResult(response: CvResponse) {
+        findViewById<MaterialCardView>(R.id.resultCard).visibility = View.VISIBLE
+        
+        // Set overall feedback
+        findViewById<TextView>(R.id.overallFeedbackTextView).text = response.review?.overallFeedback
+
+        // Set ATS status
+        val atsStatusCard = findViewById<MaterialCardView>(R.id.atsStatusCard)
+        val atsStatusIcon = findViewById<ImageView>(R.id.atsStatusIcon)
+        val atsStatusText = findViewById<TextView>(R.id.atsStatusText)
+
+        if (response.review?.atsPassed == true) {
+            atsStatusIcon.setImageResource(R.drawable.ic_check_circle)
+            atsStatusIcon.setColorFilter(ContextCompat.getColor(this, R.color.success))
+            atsStatusText.text = "ATS Friendly"
+        } else {
+            atsStatusIcon.setImageResource(R.drawable.ic_warning)
+            atsStatusIcon.setColorFilter(ContextCompat.getColor(this, R.color.warning))
+            atsStatusText.text = "Needs ATS Optimization"
+        }
+
+        // Set section reviews
+        response.sections?.let { sections ->
+            sectionsAdapter.submitList(sections.filterNotNull())
+        }
+    }
+
     private fun uploadPdfWithUserId() {
         selectedPdfUri?.let { uri ->
-            // Get InputStream for the content URI
             val inputStream = contentResolver.openInputStream(uri)
-
-            // Check if the InputStream is not null before proceeding
             inputStream?.let {
-                // Create a temporary file to store the uploaded PDF
                 val tempFile = File.createTempFile("temp_pdf", ".pdf", cacheDir)
-
-                // Copy data from the InputStream to the temporary file
                 val outputStream = tempFile.outputStream()
                 inputStream.copyTo(outputStream)
 
-                // Use the temp file for the upload
                 val pdfRequestBody = tempFile.asRequestBody("application/pdf".toMediaTypeOrNull())
                 val pdfPart = MultipartBody.Part.createFormData("file", tempFile.name, pdfRequestBody)
-
-                // Get the user ID from shared preferences
                 val userId = sharedPrefHelper.getUid().toString()
                 val userIdRequestBody = userId.toRequestBody("text/plain".toMediaTypeOrNull())
 
-                // Perform the upload via Retrofit
                 lifecycleScope.launch {
                     try {
                         val response = ApiConfig.api.uploadPdfWithText(pdfPart, userIdRequestBody)
                         if (response.isSuccessful) {
                             response.body()?.let { cvResponse ->
-                                cvResponse.review?.let { review ->
-                                    val result = "Review: ${review.overallFeedback ?: "No feedback available"}"
-                                    showResult(result)
-                                } ?: run {
-                                    showResult("No review available.")
-                                }
+                                showResult(cvResponse)
                             }
                         } else {
-                            showResult("Failed to upload the file. Please try again.")
+                            Toast.makeText(this@ReviewActivity, "Failed to upload the file. Please try again.", Toast.LENGTH_SHORT).show()
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
-                        showResult("Error uploading file: ${e.message}")
+                        Toast.makeText(this@ReviewActivity, "Error uploading file: ${e.message}", Toast.LENGTH_SHORT).show()
                     } finally {
                         showLoading(false)
                     }
                 }
             } ?: run {
-                // Handle the case where InputStream is null
-                showResult("Error accessing the file. Please try again.")
+                Toast.makeText(this, "Error accessing the file. Please try again.", Toast.LENGTH_SHORT).show()
             }
         }
     }
-
 
     private fun getRealPathFromURI(uri: Uri): String? {
         if ("content" == uri.scheme) {
@@ -173,16 +198,10 @@ class ReviewActivity : AppCompatActivity() {
         return null
     }
 
-
     private fun showLoading(isLoading: Boolean) {
         findViewById<CircularProgressIndicator>(R.id.progressBar).visibility = if (isLoading) View.VISIBLE else View.GONE
         findViewById<View>(R.id.upload_pdf_button).isEnabled = !isLoading
         findViewById<View>(R.id.review_button).isEnabled = !isLoading
-    }
-
-    private fun showResult(result: String) {
-        findViewById<MaterialCardView>(R.id.resultCard).visibility = View.VISIBLE
-        findViewById<TextView>(R.id.resultTextView).text = result
     }
 
     private fun BatasLayar() {
@@ -191,6 +210,45 @@ class ReviewActivity : AppCompatActivity() {
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
             view.setPadding(insets.left, insets.top, insets.right, insets.bottom)
             windowInsets
+        }
+    }
+}
+
+class SectionsAdapter : RecyclerView.Adapter<SectionsAdapter.SectionViewHolder>() {
+    private var sections: List<SectionsItem> = emptyList()
+
+    fun submitList(newSections: List<SectionsItem>) {
+        sections = newSections
+        notifyDataSetChanged()
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SectionViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_section_review, parent, false)
+        return SectionViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: SectionViewHolder, position: Int) {
+        holder.bind(sections[position])
+    }
+
+    override fun getItemCount() = sections.size
+
+    class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val sectionTitle: TextView = itemView.findViewById(R.id.sectionTitleTextView)
+        private val sectionFeedback: TextView = itemView.findViewById(R.id.sectionFeedbackTextView)
+        private val improvementIcon: ImageView = itemView.findViewById(R.id.improvementIcon)
+
+        fun bind(section: SectionsItem) {
+            sectionTitle.text = section.section?.replace("_", " ")?.replaceFirstChar { it.uppercase() } ?: "-"
+            sectionFeedback.text = section.feedback ?: ""
+            if (section.needsImprovement == true) {
+                improvementIcon.setImageResource(R.drawable.ic_warning)
+                improvementIcon.setColorFilter(ContextCompat.getColor(itemView.context, R.color.warning))
+            } else {
+                improvementIcon.setImageResource(R.drawable.ic_check_circle)
+                improvementIcon.setColorFilter(ContextCompat.getColor(itemView.context, R.color.success))
+            }
         }
     }
 }

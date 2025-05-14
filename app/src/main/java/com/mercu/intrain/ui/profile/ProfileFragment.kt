@@ -9,6 +9,7 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -62,8 +63,14 @@ class ProfileFragment : Fragment() {
             binding.emailText.text = email
         }
 
+        binding.changePasswordButton.setOnClickListener {
+            // Handle password change logic
+            Toast.makeText(requireContext(), "Password changed successfully", Toast.LENGTH_SHORT).show()
+        }
+
         binding.logoutButton.setOnClickListener {
             sharedPrefHelper.clear()
+            Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT).show()
             navigateToLogin()
         }
 
