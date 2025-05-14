@@ -41,7 +41,6 @@ interface ApiService {
         @Body request: ChatContinous
     ): Call<ResponseBody>
 
-    // Course endpoints
     @GET("api/v1/feature/courses")
     suspend fun getAllCourses(): Response<List<Course>>
 
