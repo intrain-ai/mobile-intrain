@@ -44,7 +44,7 @@ class AvailableCoursesFragment : Fragment() {
                     val response = apiService.getCourseDetails(courseId)
                     if (response.isSuccessful) {
                         val courseDetail = response.body()
-                        val intent = Intent(requireContext(), CourseDetail::class.java)
+                        val intent = Intent(requireContext(), DetailCourseActivity::class.java)
                         intent.putExtra("course", courseDetail)
                         startActivity(intent)
 

@@ -6,7 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiConfig {
-    private const val BASE_URL = "https://buttons-stop-champagne-printable.trycloudflare.com/"
+    private const val BASE_URL = "https://patients-metal-madagascar-rough.trycloudflare.com/"
 
     private val interceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
