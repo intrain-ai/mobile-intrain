@@ -1,6 +1,6 @@
 package com.mercu.intrain.model
 
 data class EnrollmentRequest(
-    val userId: String,
-    val courseId: String
+    val user_id: String,
+    val course_id: String
 ) 
