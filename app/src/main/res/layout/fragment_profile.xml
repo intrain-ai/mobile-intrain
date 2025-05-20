@@ -1,177 +1,328 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.profile.ProfileFragment">
 
-    <!-- Profile Photo with Camera Icon -->
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/profileImageView"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:layout_marginTop="32dp"
-        android:src="@drawable/ic_person"
-        app:shapeAppearanceOverlay="@style/CircleImageView"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:scaleType="centerCrop"
-        android:backgroundTint="#F5F7FF"
-        android:elevation="8dp"/>
-
-    <ImageView
-        android:id="@+id/cameraIcon"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:src="@drawable/ic_camera"
-        android:background="@drawable/circle_white_bg"
-        android:padding="6dp"
-        app:layout_constraintBottom_toBottomOf="@id/profileImageView"
-        app:layout_constraintEnd_toEndOf="@id/profileImageView"
-        android:elevation="10dp"/>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/profileCard"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:cardCornerRadius="18dp"
-        app:cardElevation="8dp"
-        app:layout_constraintTop_toBottomOf="@id/profileImageView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:cardBackgroundColor="@color/md_theme_background">
+        android:paddingBottom="24dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <!-- ========== PROFILE PHOTO ========== -->
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/profileImageView"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginTop="32dp"
+            android:src="@drawable/ic_person"
+            app:shapeAppearanceOverlay="@style/CircleImageView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:scaleType="centerCrop"
+            android:backgroundTint="#F5F7FF"
+            android:elevation="8dp" />
+
+        <ImageView
+            android:id="@+id/cameraIcon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_camera"
+            android:background="@drawable/circle_white_bg"
+            android:padding="6dp"
+            app:layout_constraintBottom_toBottomOf="@id/profileImageView"
+            app:layout_constraintEnd_toEndOf="@id/profileImageView"
+            android:elevation="10dp" />
+
+        <!-- ========== PROFILE CARD ========== -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/profileCard"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Username"
-                android:textStyle="bold"
-                android:fontFamily="@font/poppinsbold"
-                android:textColor="#626FE2"/>
-
-            <TextView
-                android:id="@+id/usernameText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textSize="16sp"
-                tools:text="John Doe" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/poppinsbold"
-                android:text="Email"
-                android:textStyle="bold"
-                android:textColor="#626FE2"/>
-
-            <TextView
-                android:id="@+id/emailText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textSize="16sp"
-                tools:text="john.doe@example.com" />
-
-        </LinearLayout>
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/settingsCard"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:cardCornerRadius="18dp"
-        app:cardElevation="8dp"
-        app:layout_constraintTop_toBottomOf="@id/profileCard"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:cardBackgroundColor="@color/md_theme_background">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp">
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="@color/md_theme_background"
+            app:layout_constraintTop_toBottomOf="@id/profileImageView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_setting"
-                    app:tint="#626FE2"
-                    android:contentDescription="Settings icon"/>
+                android:orientation="vertical"
+                android:padding="20dp">
 
+                <!-- Name -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Settings"
+                    android:text="Name"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppinsbold"
-                    android:textColor="#626FE2"
-                    android:layout_marginStart="8dp"/>
+                    android:textColor="#626FE2" />
+
+                <TextView
+                    android:id="@+id/nameText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textSize="16sp"
+                    tools:text="John Doe" />
+
+                <EditText
+                    android:id="@+id/editName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Name"
+                    android:visibility="gone"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/poppinsbold"
+                    android:inputType="textPersonName"
+                    android:layout_marginTop="8dp" />
+
+                <!-- Username -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Username"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppinsbold"
+                    android:textColor="#626FE2" />
+
+                <TextView
+                    android:id="@+id/usernameText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textSize="16sp"
+                    tools:text="johndoe" />
+
+                <EditText
+                    android:id="@+id/editUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Masukkan Username Baru"
+                    android:visibility="gone"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/poppinsbold"
+                    android:inputType="textPersonName"
+                    android:layout_marginTop="4dp" />
+
+                <!-- Email -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Email"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppinsbold"
+                    android:textColor="#626FE2" />
+
+                <TextView
+                    android:id="@+id/emailText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textSize="16sp"
+                    tools:text="john.doe@example.com" />
+
+                <EditText
+                    android:id="@+id/editEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Masukkan Email Baru"
+                    android:visibility="gone"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/poppinsbold"
+                    android:inputType="textEmailAddress"
+                    android:layout_marginTop="8dp" />
+
+                <!-- Save & Cancel Buttons -->
+                <LinearLayout
+                    android:id="@+id/editButtonLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="end"
+                    android:visibility="gone"
+                    android:layout_marginTop="12dp"
+                    android:weightSum="2">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/cancelEditButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Cancel"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:textColor="@color/md_theme_primary" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/saveEditButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Save"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:textColor="@color/md_theme_primary" />
+                </LinearLayout>
+
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#E6E9F8"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"/>
+        </com.google.android.material.card.MaterialCardView>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/changePasswordButton"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:icon="@drawable/ic_lock"
-                app:iconPadding="12dp"
-                app:iconTint="#626FE2"
-                android:text="Change Password"
-                android:textAlignment="textStart"
-                android:textColor="#626FE2"
-                android:backgroundTint="@android:color/transparent"
-                android:layout_marginTop="0dp"/>
+        <!-- ========== SETTINGS CARD ========== -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/settingsCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="@color/md_theme_background"
+            app:layout_constraintTop_toBottomOf="@id/profileCard"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#E6E9F8"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/logoutButton"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:icon="@drawable/ic_logout"
-                app:iconPadding="12dp"
-                app:iconTint="#E26262"
-                android:text="Logout"
-                android:textStyle="bold"
-                android:textAlignment="textStart"
-                android:textColor="#E26262"
-                android:backgroundTint="@android:color/transparent"
-                android:layout_marginTop="0dp"/>
+                android:orientation="vertical"
+                android:padding="20dp">
 
-        </LinearLayout> 
-        
-    </com.google.android.material.card.MaterialCardView>
+                <!-- Header -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout> 
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_setting"
+                        app:tint="#626FE2"
+                        android:contentDescription="Settings icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Settings"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/poppinsbold"
+                        android:textColor="#626FE2"
+                        android:layout_marginStart="8dp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#E6E9F8"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Change Password -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/changePasswordButton"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:icon="@drawable/ic_lock"
+                    app:iconPadding="12dp"
+                    app:iconTint="#626FE2"
+                    android:text="Change Password"
+                    android:textAlignment="textStart"
+                    android:textColor="#626FE2"
+                    android:backgroundTint="@android:color/transparent" />
+
+                <EditText
+                    android:id="@+id/editPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Masukkan Password Baru"
+                    android:visibility="gone"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/poppinsbold"
+                    android:inputType="textPassword"
+                    android:layout_marginTop="8dp" />
+
+                <LinearLayout
+                    android:id="@+id/passwordButtonLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp"
+                    android:gravity="end"
+                    android:visibility="gone"
+                    android:weightSum="2">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/savePasswordButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Simpan Password"
+                        android:textColor="@color/md_theme_primary"
+                        style="@style/Widget.MaterialComponents.Button.TextButton" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/cancelPasswordButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Cancel Password"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:textColor="@color/md_theme_primary" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#E6E9F8"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp" />
+
+                <!-- Logout -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/logoutButton"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:icon="@drawable/ic_logout"
+                    app:iconPadding="12dp"
+                    app:iconTint="#E26262"
+                    android:text="Logout"
+                    android:textStyle="bold"
+                    android:textAlignment="textStart"
+                    android:textColor="#E26262"
+                    android:backgroundTint="@android:color/transparent" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Edit Profile Floating Button -->
+        <ImageButton
+            android:id="@+id/editProfileButton"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_edit"
+            android:background="@drawable/circle_white_bg"
+            android:contentDescription="Edit Profile"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:elevation="10dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

@@ -5,6 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class ProfileViewModel : ViewModel() {
+
+    private val _name = MutableLiveData<String>().apply {
+        value = "Loading..."
+    }
+    val name: LiveData<String> = _name
+
     private val _username = MutableLiveData<String>().apply {
         value = "Loading..."
     }
@@ -15,7 +21,8 @@ class ProfileViewModel : ViewModel() {
     }
     val email: LiveData<String> = _email
 
-    fun updateProfileInfo(username: String, email: String) {
+    fun updateProfileInfo(name: String, username: String, email: String) {
+        _name.value = name
         _username.value = username
         _email.value = email
     }

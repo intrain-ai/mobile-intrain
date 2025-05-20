@@ -39,24 +39,24 @@
                 android:orientation="vertical"
                 android:padding="24dp">
 
-                <TextView
-                    android:id="@+id/txtScore"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Score:"
+        <TextView
+            android:id="@+id/txtScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Score:"
                     android:textSize="26sp"
-                    android:textStyle="bold"
+            android:textStyle="bold"
                     android:textColor="?attr/colorOnSurface"
                     android:layout_marginBottom="16dp"
                     android:drawablePadding="8dp"
                     app:drawableStartCompat="@drawable/ic_score"/>
 
-                <TextView
-                    android:id="@+id/txtEvaluatedAt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Evaluated At:"
-                    android:textSize="18sp"
+        <TextView
+            android:id="@+id/txtEvaluatedAt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Evaluated At:"
+            android:textSize="18sp"
                     android:textColor="?attr/colorOnSurfaceVariant"
                     android:drawablePadding="8dp"
                     app:drawableStartCompat="@drawable/ic_calendar"/>
@@ -83,18 +83,18 @@
                     android:layout_height="wrap_content"
                     android:text="Recommendations"
                     android:textSize="22sp"
-                    android:textStyle="bold"
+            android:textStyle="bold"
                     android:textColor="?attr/colorPrimary"
                     android:layout_marginBottom="16dp"
                     android:drawablePadding="8dp"
                     app:drawableStartCompat="@drawable/ic_recommendations"/>
 
-                <TextView
-                    android:id="@+id/txtRecommendations"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="• Recommendation 1\n• Recommendation 2"
-                    android:textSize="16sp"
+        <TextView
+            android:id="@+id/txtRecommendations"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="• Recommendation 1\n• Recommendation 2"
+            android:textSize="16sp"
                     android:textColor="?attr/colorOnSurfaceVariant"
                     android:lineSpacingExtra="12dp"
                     android:paddingStart="8dp"/>

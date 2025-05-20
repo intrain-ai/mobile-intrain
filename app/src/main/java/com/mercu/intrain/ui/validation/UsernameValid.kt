@@ -1,50 +1,55 @@
 package com.mercu.intrain.ui.validation
 
+import android.R.id.input
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.widget.AppCompatEditText
-import com.mercu.intrain.R
 
-class PassValid @JvmOverloads constructor(
+class UsernameValid @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : AppCompatEditText(context, attrs, defStyleAttr) {
 
     init {
-        hint = context.getString(R.string.pass_input_hint)
+        hint = "Masukan Username anda"
         isFocusableInTouchMode = true
         requestFocus()
-        setupInputType()
-        setupValidation()
     }
 
     private fun setupInputType() {
-        inputType = EditorInfo.TYPE_CLASS_TEXT or EditorInfo.TYPE_TEXT_VARIATION_PASSWORD
+        inputType = EditorInfo.TYPE_CLASS_TEXT
     }
 
     private fun setupValidation() {
         addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
 
             override fun afterTextChanged(s: Editable?) {
-                validatePassword(s.toString())
+                validateUsername(s.toString())
             }
         })
     }
 
-    private fun validatePassword(input: String) {
+    private fun validateUsername(input: String) {
         val errorMessage = when {
-            input.isEmpty() -> context.getString(R.string.pass_isEmpty)
-            input.length < 6 -> context.getString(R.string.pass_min_character)
+            input.isEmpty() -> "Username tidak boleh kosong"
+            !isValidUsername(input) -> "Username tidak valid"
             else -> null
         }
 
         error = errorMessage
+    }
+
+    private fun isValidUsername(username: String): Boolean {
+        val usernameRegex = "^[a-zA-Z0-9]+$".toRegex()
+        return usernameRegex.matches(username)
     }
 }

@@ -47,13 +47,16 @@ class LoginActivity : AppCompatActivity() {
             val passwordBinding = binding.passwordLayout
             val username = usernameBinding.text.toString()
             val password = passwordBinding.text.toString()
-
+            binding.usernameLayout.requestFocus()
+            binding.passwordLayout.requestFocus()
 
             if (username.isNotEmpty() && password.isNotEmpty()) {
                 binding.loading.visibility = View.VISIBLE
                 login(username, password)
+                binding.loading.visibility = View.GONE
             } else {
                 showToast("Please enter email and password")
+                binding.loading.visibility = View.GONE
             }
         }
 
@@ -77,9 +80,9 @@ class LoginActivity : AppCompatActivity() {
                     val loginResponse = response.body()
                     if (loginResponse != null) {
                         sharedPrefHelper.saveUid(loginResponse.user.id)
+                        sharedPrefHelper.saveName(loginResponse.user.name ?: "")
                         sharedPrefHelper.saveUsername(loginResponse.user.username)
                         sharedPrefHelper.saveEmail(loginResponse.user.email)
-
                         Log.d("VALUE", sharedPrefHelper.getUid().toString())
                         navigateToMainActivity()
                     } else {

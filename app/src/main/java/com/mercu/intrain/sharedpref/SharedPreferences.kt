@@ -15,6 +15,14 @@ class SharedPrefHelper(context: Context) {
         sharedPreferences.edit().putString("auth_uid", uid).apply()
     }
 
+    fun saveName(name: String) {
+        sharedPreferences.edit().putString("name", name).apply()
+    }
+
+    fun savePassword(password: String) {
+        sharedPreferences.edit().putString("password", password).apply()
+    }
+
     fun saveUsername(username: String) {
         sharedPreferences.edit().putString("username", username).apply()
     }
@@ -35,8 +43,16 @@ class SharedPrefHelper(context: Context) {
         return getString("username")
     }
 
+    fun getName(): String? {
+        return getString("name")
+    }
+
     fun getEmail(): String? {
         return getString("email")
+    }
+
+    fun getPassword(): String? {
+        return getString("password")
     }
 
     fun getDarkMode(): Boolean {

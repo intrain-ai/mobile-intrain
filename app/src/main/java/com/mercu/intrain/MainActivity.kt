@@ -13,6 +13,10 @@ import androidx.navigation.ui.setupWithNavController
 import com.mercu.intrain.databinding.ActivityMainBinding
 import com.mercu.intrain.sharedpref.SharedPrefHelper
 import com.mercu.intrain.ui.LoginActivity
+import android.view.ViewGroup
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import android.view.View
 
 class MainActivity : AppCompatActivity() {
 
@@ -38,17 +42,20 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         } else {
+
             val navView: BottomNavigationView = binding.navView
-
             val navController = findNavController(R.id.nav_host_fragment_activity_main)
-
-//        val appBarConfiguration = AppBarConfiguration(
-//            setOf(
-//                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
-//            )
-//        )
-
             navView.setupWithNavController(navController)
+         }
+        BatasLayar()
+    }
+
+    private fun BatasLayar() {
+        val rootView = findViewById<ViewGroup>(android.R.id.content).getChildAt(0)
+        ViewCompat.setOnApplyWindowInsetsListener(rootView) { view: View, windowInsets: WindowInsetsCompat ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(insets.left, insets.top, insets.right, insets.bottom)
+            windowInsets
         }
     }
 }

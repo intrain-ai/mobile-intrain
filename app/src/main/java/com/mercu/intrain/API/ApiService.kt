@@ -58,4 +58,16 @@ interface ApiService {
 
     @POST("api/v1/feature/courses/unenroll")
     suspend fun unenrollCourse(@Body request: EnrollmentRequest): Response<Map<String, String>>
+
+    @PUT("api/v1/auth/user/update")
+    suspend fun updateUser(@Body request: UpdateUserRequest): Response<UpdateUserResponse>
+
+    @GET("v2/everything")
+    suspend fun getNews(
+        @Query("q") query: String,
+        @Query("apiKey") apiKey: String = "bf4374ec295e42a99952261bef02bbb9",
+        @Query("language") language: String = "id",
+        @Query("pageSize") pageSize: Int = 5
+    ): Response<NewsResponse>
+
 }

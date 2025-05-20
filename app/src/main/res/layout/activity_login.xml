@@ -58,11 +58,13 @@
                         android:fontFamily="@font/poppinsbold"
                         android:layout_marginBottom="8dp" />
 
-                    <com.mercu.intrain.ui.validation.EmailValid
+                    <com.mercu.intrain.ui.validation.UsernameValid
                         android:id="@+id/usernameLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/masukkan_username"
+                        android:inputType="text"
+                        android:maxLines="1"
                         android:background="@null"
                         android:padding="12dp"
                         android:textColorHint="?attr/colorOnSurfaceVariant" />
@@ -89,6 +91,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/Pass_hint"
+                        android:inputType="textPassword"
+                        android:maxLines="1"
                         android:background="@null"
                         android:padding="12dp"
                         android:textColorHint="?attr/colorOnSurfaceVariant" />

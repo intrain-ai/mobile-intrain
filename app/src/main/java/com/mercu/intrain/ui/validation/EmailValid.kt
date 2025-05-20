@@ -16,6 +16,7 @@ class EmailValid @JvmOverloads constructor(
     init {
         hint = context.getString(R.string.email_validation_hint)
         isFocusableInTouchMode = true
+        requestFocus()
         setupValidation()
     }
 

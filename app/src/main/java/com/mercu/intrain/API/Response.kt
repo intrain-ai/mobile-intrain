@@ -228,4 +228,65 @@ data class SectionsItem(
     val id: String? = null
 ) : Parcelable
 
+// Update Data
+@Parcelize
+data class UpdateUserRequest(
+    @field:SerializedName("user_id")
+    val user_id: String,
 
+    @field:SerializedName("username")
+    val username: String,
+
+    @field:SerializedName("password")
+    val password: String,
+
+    @field:SerializedName("name")
+    val name: String,
+
+    @field:SerializedName("email")
+    val email: String
+
+) : Parcelable
+
+@Parcelize
+data class UpdateUserResponse(
+    @field:SerializedName("message")
+    val message: String? = null
+) : Parcelable
+
+//News
+@Parcelize
+data class NewsResponse(
+    @field:SerializedName("status")
+    val status: String,
+    @field:SerializedName("totalResults")
+    val totalResults: Int,
+    @field:SerializedName("articles")
+    val articles: List<Article>
+) : Parcelable
+
+@Parcelize
+data class Article(
+    @field:SerializedName("source")
+    val source: Source,
+    @field:SerializedName("author")
+    val author: String?,
+    @field:SerializedName("title")
+    val title: String?,
+    @field:SerializedName("description")
+    val description: String?,
+    @field:SerializedName("url")
+    val url: String?,
+    @field:SerializedName("urlToImage")
+    val urlToImage: String?,
+    @field:SerializedName("publishedAt")
+    val publishedAt: String?
+) : Parcelable
+
+@Parcelize
+data class Source(
+    @field:SerializedName("id")
+    val id: String?,
+    @field:SerializedName("name")
+    val name: String?
+) : Parcelable
