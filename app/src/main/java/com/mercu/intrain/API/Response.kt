@@ -290,3 +290,53 @@ data class Source(
     @field:SerializedName("name")
     val name: String?
 ) : Parcelable
+
+//Work Experience
+@Parcelize
+data class WorkExperience(
+    @SerializedName("job_title")
+    val jobTitle: String,
+
+    @SerializedName("company_name")
+    val companyName: String,
+
+    @SerializedName("job_desc")
+    val jobDescription: String,
+
+    @SerializedName("start_month")
+    val startMonth: Int,
+
+    @SerializedName("start_year")
+    val startYear: Int,
+
+    @SerializedName("end_month")
+    val endMonth: Int?, // Bisa null jika is_current true
+
+    @SerializedName("end_year")
+    val endYear: Int?,   // Bisa null jika is_current true
+
+    @SerializedName("is_current")
+    val isCurrent: Boolean
+) : Parcelable
+
+@Parcelize
+data class Experience(
+    @SerializedName("id")
+    val id: String,
+    @SerializedName("job_title")
+    val jobTitle: String,
+    @SerializedName("company_name")
+    val companyName: String,
+    @SerializedName("company_logo_url")
+    val companyLogoUrl: String? = null,
+    @SerializedName("start_date")
+    val startDate: String,
+    @SerializedName("end_date")
+    val endDate: String,
+    @SerializedName("duration")
+    val duration: String,
+    @SerializedName("description")
+    val description: String?,
+    @SerializedName("location")
+    val location: String? = null
+) : Parcelable

@@ -14,10 +14,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mercu.intrain.API.ApiConfig
 import com.mercu.intrain.API.UpdateUserRequest
 import com.mercu.intrain.R
 import com.mercu.intrain.databinding.FragmentProfileBinding
+import com.mercu.intrain.model.WorkExperience
 import com.mercu.intrain.sharedpref.SharedPrefHelper
 import com.mercu.intrain.ui.LoginActivity
 import kotlinx.coroutines.launch
@@ -31,6 +34,7 @@ class ProfileFragment : Fragment() {
 
     private lateinit var sharedPrefHelper: SharedPrefHelper
     private lateinit var profileViewModel: ProfileViewModel
+    private lateinit var workExperienceAdapter: WorkExperienceAdapter
 
     private val PROFILE_IMAGE_NAME = "profile_image.png"
     private var isEditing = false
@@ -50,7 +54,10 @@ class ProfileFragment : Fragment() {
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         sharedPrefHelper = SharedPrefHelper(requireContext())
-        profileViewModel = ViewModelProvider(this)[ProfileViewModel::class.java]
+        
+        val apiService = ApiConfig.api
+        val factory = ProfileViewModelFactory(apiService)
+        profileViewModel = ViewModelProvider(this, factory)[ProfileViewModel::class.java]
 
         // Load profile data from SharedPref and update ViewModel
         val username = sharedPrefHelper.getUsername() ?: ""
@@ -219,6 +226,8 @@ class ProfileFragment : Fragment() {
             Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT).show()
             navigateToLogin()
         }
+
+        setupWorkExperience()
     }
 
     private fun toggleEditMode(enabled: Boolean) {
@@ -264,6 +273,151 @@ class ProfileFragment : Fragment() {
         } else {
             binding.profileImageView.setImageResource(R.drawable.ic_person)
         }
+    }
+
+    private fun setupWorkExperience() {
+        // Setup RecyclerView
+        workExperienceAdapter = WorkExperienceAdapter(
+            emptyList(),
+            onEditClick = { workExperience -> showWorkExperienceDialog(workExperience) },
+            onDeleteClick = { workExperience -> showDeleteConfirmationDialog(workExperience) }
+        )
+
+        binding.workExperienceRecyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = workExperienceAdapter
+        }
+
+        // Load work experiences
+        val userId = sharedPrefHelper.getUid()
+        if (!userId.isNullOrEmpty()) {
+            profileViewModel.loadWorkExperiences(userId)
+        }
+
+        // Observe work experiences
+        profileViewModel.workExperiences.observe(viewLifecycleOwner) { experiences ->
+            workExperienceAdapter.updateWorkExperiences(experiences)
+        }
+
+        // Observe loading state
+        profileViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.addWorkExperienceButton.isEnabled = !isLoading
+        }
+
+        // Observe errors
+        profileViewModel.error.observe(viewLifecycleOwner) { error ->
+            error?.let {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // Add work experience button
+        binding.addWorkExperienceButton.setOnClickListener {
+            showWorkExperienceDialog()
+        }
+
+        // Edit work experience button
+        binding.editExperienceButton.setOnClickListener {
+            val isEditMode = workExperienceAdapter.getEditMode()
+            workExperienceAdapter.setEditMode(!isEditMode)
+            // Change the icon based on edit mode
+            binding.editExperienceButton.setImageResource(
+                if (!isEditMode) R.drawable.ic_check else R.drawable.ic_edit
+            )
+        }
+    }
+
+    private fun showWorkExperienceDialog(workExperience: WorkExperience? = null) {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_work_experience, null)
+        val dialog = MaterialAlertDialogBuilder(requireContext())
+            .setTitle(if (workExperience == null) "Add Work Experience" else "Edit Work Experience")
+            .setView(dialogView)
+            .setPositiveButton("Save", null)
+            .setNegativeButton("Cancel", null)
+            .create()
+
+        // Initialize views
+        val jobTitleInput = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.jobTitleInput)
+        val companyNameInput = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.companyNameInput)
+        val jobDescInput = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.jobDescInput)
+        val startMonthInput = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.startMonthInput)
+        val startYearInput = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.startYearInput)
+        val endMonthInput = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.endMonthInput)
+        val endYearInput = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.endYearInput)
+        val isCurrentJobSwitch = dialogView.findViewById<com.google.android.material.switchmaterial.SwitchMaterial>(R.id.isCurrentJobSwitch)
+
+        // Pre-fill data if editing
+        workExperience?.let {
+            jobTitleInput.setText(it.jobTitle)
+            companyNameInput.setText(it.companyName)
+            jobDescInput.setText(it.jobDesc)
+            startMonthInput.setText(it.startMonth.toString())
+            startYearInput.setText(it.startYear.toString())
+            endMonthInput.setText(it.endMonth.toString())
+            endYearInput.setText(it.endYear.toString())
+            isCurrentJobSwitch.isChecked = it.isCurrent
+        }
+
+        // Handle current job switch
+        isCurrentJobSwitch.setOnCheckedChangeListener { _, isChecked ->
+            endMonthInput.isEnabled = !isChecked
+            endYearInput.isEnabled = !isChecked
+        }
+
+        dialog.setOnShowListener {
+            dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                val userId = sharedPrefHelper.getUid() ?: return@setOnClickListener
+
+                // Validate inputs
+                if (jobTitleInput.text.isNullOrEmpty() ||
+                    companyNameInput.text.isNullOrEmpty() ||
+                    jobDescInput.text.isNullOrEmpty() ||
+                    startMonthInput.text.isNullOrEmpty() ||
+                    startYearInput.text.isNullOrEmpty() ||
+                    (!isCurrentJobSwitch.isChecked && (endMonthInput.text.isNullOrEmpty() || endYearInput.text.isNullOrEmpty()))
+                ) {
+                    Toast.makeText(requireContext(), "Please fill all required fields", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
+                val newWorkExperience = WorkExperience(
+                    id = workExperience?.id,
+                    userId = userId,
+                    jobTitle = jobTitleInput.text.toString(),
+                    companyName = companyNameInput.text.toString(),
+                    jobDesc = jobDescInput.text.toString(),
+                    startMonth = startMonthInput.text.toString().toInt(),
+                    startYear = startYearInput.text.toString().toInt(),
+                    endMonth = if (isCurrentJobSwitch.isChecked) 0 else endMonthInput.text.toString().toInt(),
+                    endYear = if (isCurrentJobSwitch.isChecked) 0 else endYearInput.text.toString().toInt(),
+                    isCurrent = isCurrentJobSwitch.isChecked
+                )
+
+                if (workExperience == null) {
+                    profileViewModel.createWorkExperience(userId, newWorkExperience)
+                } else {
+                    profileViewModel.updateWorkExperience(userId, workExperience.id!!, newWorkExperience)
+                }
+
+                dialog.dismiss()
+            }
+        }
+
+        dialog.show()
+    }
+
+    private fun showDeleteConfirmationDialog(workExperience: WorkExperience) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Delete Work Experience")
+            .setMessage("Are you sure you want to delete this work experience?")
+            .setPositiveButton("Delete") { _, _ ->
+                val userId = sharedPrefHelper.getUid()
+                if (!userId.isNullOrEmpty() && workExperience.id != null) {
+                    profileViewModel.deleteWorkExperience(userId, workExperience.id)
+                }
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
     }
 
     override fun onDestroyView() {
