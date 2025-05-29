@@ -62,7 +62,7 @@
                         android:id="@+id/usernameLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/masukkan_username"
+                        android:hint="@string/masukan_username"
                         android:inputType="text"
                         android:maxLines="1"
                         android:background="@null"

@@ -4,7 +4,7 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_profile">Profile</string>
-    <string name="email_validation_hint">Masukkan Email</string>
+    <string name="email_validation_hint">Masukan Email</string>
     <string name="email_validation_isEmpty">Email tidak boleh kosong</string>
     <string name="email_validation_notValid">Email tidak valid</string>
     <string name="pass_isEmpty">Passsword tidak boleh kosong</string>

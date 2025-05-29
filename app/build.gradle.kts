@@ -56,6 +56,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    testImplementation ("com.squareup.okhttp3:mockwebserver:4.9.3")
 
     implementation("androidx.core:core-splashscreen:1.0.1")
 

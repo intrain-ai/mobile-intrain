@@ -9,10 +9,10 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.mercu.intrain.R
 import com.mercu.intrain.model.Course
-import com.mercu.intrain.model.Enrollment
+import com.mercu.intrain.model.EnrollMock
 
 class EnrolledCoursesAdapter(
-    private var enrollList: List<Enrollment>,
+    private var enrollList: List<EnrollMock>,
     private val onClick: ((Course) -> Unit)? = null
 ) : RecyclerView.Adapter<EnrolledCoursesAdapter.CourseViewHolder>() {
 
@@ -34,23 +34,46 @@ class EnrolledCoursesAdapter(
     override fun onBindViewHolder(holder: CourseViewHolder, position: Int) {
         val enrollment = enrollList[position]
 
-        holder.title.text = enrollment.title
-        holder.provider.text = course.provider
-        holder.enrolledDate.text = "Enrolled: ${enrollment.enrolled_at}"
-        holder.status.text = if (enrollment.is_completed) "Completed" else "In Progress"
-        holder.progressBar.progress = enrollment.progress
+        holder.title.text = enrollment.course_title
+        holder.provider.text = enrollment.provider
 
-        holder.btnAction.text = "Detail"
+        if (enrollment.is_completed) {
+            holder.status.text = "Completed"
+            holder.status.visibility = View.VISIBLE
+
+            holder.enrolledDate.visibility = View.VISIBLE
+            holder.enrolledDate.text = "Completed: ${enrollment.completed_at}"
+
+            holder.progressBar.visibility = View.GONE
+
+            holder.btnAction.text = "See Certificate"
+        } else {
+            holder.status.text = "In Progress"
+            holder.status.visibility = View.VISIBLE
+
+            holder.enrolledDate.visibility = View.VISIBLE
+            holder.enrolledDate.text = "Enrolled: ${enrollment.enrolled_at}"
+
+            holder.progressBar.visibility = View.VISIBLE
+            holder.progressBar.progress = enrollment.progress
+
+            holder.btnAction.text = "Detail"
+        }
+
         holder.btnAction.setOnClickListener {
-            onClick?.invoke(course) // Handle click event
+
         }
     }
 
-    override fun getItemCount(): Int = enrollList.size  // Count based on enrollList
+    override fun getItemCount(): Int = enrollList.size
 
-    // Update enrollment data
-    fun updateDataEnroll(newEnrollList: List<Enrollment>) {
-        enrollList = newEnrollList
+    fun updateDataEnroll(allEnrollments: List<EnrollMock>) {
+        enrollList = allEnrollments.filter { it.completed_at == null }
+        notifyDataSetChanged()
+    }
+
+    fun updateDataComplete(allEnrollments: List<EnrollMock>) {
+        enrollList = allEnrollments.filter { it.completed_at != null }
         notifyDataSetChanged()
     }
 }

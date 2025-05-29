@@ -143,4 +143,7 @@
     <color name="md_theme_surfaceContainerHighest_highContrast">#C7C6CD</color>
     <color name="success">#4CAF50</color>
     <color name="warning">#FFC107</color>
+    <color name="purple_200">#B7B3F9</color>
+    <color name="purple_700">#4A3FFF</color>
+
 </resources>

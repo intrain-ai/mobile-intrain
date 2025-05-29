@@ -1,7 +1,9 @@
 package com.mercu.intrain.API
 
 import com.mercu.intrain.model.Course
+import com.mercu.intrain.model.EnrollMock
 import com.mercu.intrain.model.Enrollment
+import com.mercu.intrain.model.EnrollmentMockResponse
 import com.mercu.intrain.model.EnrollmentRequest
 import com.mercu.intrain.model.EnrollmentResponse
 import okhttp3.MultipartBody
@@ -58,6 +60,17 @@ interface ApiService {
 
     @POST("api/v1/feature/courses/unenroll")
     suspend fun unenrollCourse(@Body request: EnrollmentRequest): Response<Map<String, String>>
+
+
+    //INI MOCK
+    @GET("/enrollments")
+    suspend fun g2etUserEnrollmentsMK(@Query("user_id") userId: String): Response<List<Enrollment>>
+
+    @GET("api/v1/feature/courses/user/{userId}/enrollments")
+    suspend fun getUserEnrollmentsMK(@Path("userId") userId: String): Response<List<EnrollMock>>
+
+    @GET("api/v1/feature/courses")
+    suspend fun getAllCoursesMK(): Response<List<Course>>
 
     @PUT("api/v1/auth/user/update")
     suspend fun updateUser(@Body request: UpdateUserRequest): Response<UpdateUserResponse>

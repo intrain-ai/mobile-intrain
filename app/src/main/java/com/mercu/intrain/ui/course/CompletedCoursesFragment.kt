@@ -13,14 +13,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mercu.intrain.API.ApiConfig
 import com.mercu.intrain.R
 import com.mercu.intrain.repository.CourseRepository
+import com.mercu.intrain.sharedpref.SharedPrefHelper
 import kotlinx.coroutines.launch
 
 class CompletedCoursesFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var textEmpty: TextView
-    private lateinit var adapter: CourseAdapter
+    private lateinit var adapter: EnrolledCoursesAdapter
     private val apiService = ApiConfig.api
+    private lateinit var sharedPrefHelper: SharedPrefHelper
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,11 +32,11 @@ class CompletedCoursesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         recyclerView = view.findViewById(R.id.recyclerView)
         textEmpty = view.findViewById(R.id.textEmpty)
+        sharedPrefHelper = SharedPrefHelper(requireContext())
+
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        adapter = CourseAdapter(
-            courseList = emptyList(),
-            enrollList = emptyList()) { course ->
+        adapter = EnrolledCoursesAdapter(emptyList()) { course ->
             Toast.makeText(requireContext(), "Klik: ${course.title}", Toast.LENGTH_SHORT).show()
         }
         recyclerView.adapter = adapter
@@ -43,12 +45,13 @@ class CompletedCoursesFragment : Fragment() {
     }
 
     private fun fetchCompletedCourse() {
+        val userid = sharedPrefHelper.getUid().toString()
         lifecycleScope.launch {
             try {
-                val response = apiService.getAllCourses()
+                val response = apiService.getUserEnrollmentsMK(userid)
                 if (response.isSuccessful) {
                     val data = response.body() ?: emptyList()
-                    adapter.updateData(data)
+                    adapter.updateDataComplete(data)
 
                     if (::textEmpty.isInitialized) {
                         textEmpty.visibility = if (data.isEmpty()) View.VISIBLE else View.GONE

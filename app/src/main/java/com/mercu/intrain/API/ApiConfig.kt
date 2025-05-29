@@ -13,7 +13,9 @@ object ApiConfig {
     }
 
     private val client = OkHttpClient.Builder()
-        .addInterceptor(interceptor)
+
+        //ganti mockintercept ke interceptor (di atas)
+        .addInterceptor(MockInterceptor())
         .build()
 
     private val retrofit: Retrofit by lazy {

@@ -8,23 +8,28 @@
     android:background="@color/md_theme_background"
     android:padding="12dp">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/courseTitle_activity"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#2196F3"
-        android:elevation="4dp"
-        app:tabIndicatorColor="@android:color/white"
-        app:tabSelectedTextColor="@android:color/white"
-        app:tabTextColor="#E0E0E0"
-        app:tabMode="fixed"
-        app:tabGravity="fill"
-        app:tabIndicatorAnimationMode="elastic"
-        app:tabIndicatorHeight="3dp"
-        app:tabPaddingStart="16dp"
-        app:tabPaddingEnd="16dp"
-        app:tabTextAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:text="List Course"
+        android:fontFamily="@font/poppinsbold"
+        android:textSize="30sp"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tabLayout"
+        android:layout_margin="20dp"
+        />
+
+    <com.mercu.intrain.ui.test.CustomSegmentedTabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@drawable/tablayout_background"
+        app:tabIndicatorHeight="0dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:padding="2dp"
+        app:layout_constraintTop_toBottomOf="@id/courseTitle_activity"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -40,7 +45,7 @@
         app:layout_constraintTop_toBottomOf="@id/tabLayout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -55,6 +60,6 @@
         app:borderWidth="0dp"
         android:contentDescription="Back button"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
