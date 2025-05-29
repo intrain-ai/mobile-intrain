@@ -1,5 +1,6 @@
 package com.mercu.intrain.ui.home
 
+import android.R.attr.text
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
@@ -14,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.mercu.intrain.API.ApiService
 import com.mercu.intrain.databinding.FragmentHomeBinding
 import com.mercu.intrain.ui.chat.DiffSelectActivity
 import com.mercu.intrain.ui.course.CourseActivity
@@ -21,6 +23,7 @@ import com.mercu.intrain.ui.cvcheck.ReviewActivity
 import com.mercu.intrain.ui.news.NewsAdapter
 import com.mercu.intrain.API.Article
 import com.mercu.intrain.R
+import com.mercu.intrain.sharedpref.SharedPrefHelper
 import com.mercu.intrain.ui.custom.CarouselItemDecoration
 import kotlin.math.abs
 
@@ -30,6 +33,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var newsAdapter: NewsAdapter
+    private lateinit var sharedPrefHelper : SharedPrefHelper
     private var sliderHandler: Handler? = null
     private var sliderRunnable: Runnable? = null
     private var currentItem = 0
@@ -39,13 +43,17 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        sharedPrefHelper = SharedPrefHelper(requireContext())
+        val factory = HomeViewModelFactory(sharedPrefHelper)
+        homeViewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        sharedPrefHelper = SharedPrefHelper(requireContext())
 
         setupUI()
         setupObservers()
@@ -66,7 +74,7 @@ class HomeFragment : Fragment() {
 
     private fun setupObservers() {
         homeViewModel.apply {
-            text.observe(viewLifecycleOwner) { binding.helloText.text = it }
+            name.observe(viewLifecycleOwner) { binding.helloText.text = it }
             courseDescription.observe(viewLifecycleOwner) { binding.courseDescription.text = it }
             courseProgress.observe(viewLifecycleOwner) {
                 binding.courseProgress.progress = it.toInt()

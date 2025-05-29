@@ -4,6 +4,7 @@ import com.mercu.intrain.model.Course
 import com.mercu.intrain.model.Enrollment
 import com.mercu.intrain.model.EnrollmentRequest
 import com.mercu.intrain.model.EnrollmentResponse
+import com.mercu.intrain.model.WorkExperience
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -62,6 +63,41 @@ interface ApiService {
     @PUT("api/v1/auth/user/update")
     suspend fun updateUser(@Body request: UpdateUserRequest): Response<UpdateUserResponse>
 
+    //Profle Work Experience
+
+    //Create
+    @POST("api/v1/users/{userId}/work_experiences")
+    suspend fun createWorkExperience(
+        @Path("userId") userId: String,
+        @Body workExperience: WorkExperience
+    ): Response<WorkExperience>
+
+    //Ambil Work Experience
+    @GET("api/v1/users/{userId}/work_experiences")
+    suspend fun getWorkExperiences(
+        @Path("userId") userId: String
+    ): Response<List<WorkExperience>>
+
+    @GET("api/v1/users/{userId}/work_experiences/{expId}")
+    suspend fun getWorkExperienceDetail(
+        @Path("userId") userId: String,
+        @Path("expId") expId: String
+    ): Response<WorkExperience>
+
+    @PUT("api/v1/users/{userId}/work_experiences/{expId}")
+    suspend fun updateWorkExperience(
+        @Path("userId") userId: String,
+        @Path("expId") expId: String,
+        @Body workExperience: WorkExperience
+    ): Response<WorkExperience>
+
+    @DELETE("api/v1/users/{userId}/work_experiences/{expId}")
+    suspend fun deleteWorkExperience(
+        @Path("userId") userId: String,
+        @Path("expId") expId: String
+    ): Response<Unit>
+
+    //News
     @GET("v2/everything")
     suspend fun getNews(
         @Query("q") query: String,

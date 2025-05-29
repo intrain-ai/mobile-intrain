@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/companyLogo"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_pdf_placeholder"
+        android:scaleType="centerCrop"
+        android:contentDescription="Company Logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/jobTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textStyle="bold"
+        android:fontFamily="@font/poppinsbold"
+        android:textColor="#626FE2"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@id/companyLogo"
+        app:layout_constraintTop_toTopOf="@id/companyLogo"
+        app:layout_constraintHorizontal_bias="0.0"
+        tools:text="Senior Software Engineer" />
+
+    <TextView
+        android:id="@+id/companyName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppinsregular"
+        android:textColor="?android:attr/textColorSecondary"
+        app:layout_constraintStart_toStartOf="@id/jobTitle"
+        app:layout_constraintTop_toBottomOf="@id/jobTitle"
+        app:layout_constraintEnd_toEndOf="@id/jobTitle"
+        tools:text="Tech Solutions Inc." />
+
+    <TextView
+        android:id="@+id/dateRange"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceCaption"
+        android:textColor="?android:attr/textColorSecondary"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="@id/companyName"
+        app:layout_constraintTop_toBottomOf="@id/companyName"
+        app:layout_constraintEnd_toEndOf="@id/companyName"
+        tools:text="Jan 2022 - Present · 1 thn 5 bln" />
+
+    <TextView
+        android:id="@+id/locationText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceCaption"
+        android:textColor="?android:attr/textColorSecondary"
+        android:layout_marginTop="2dp"
+        app:layout_constraintStart_toStartOf="@id/dateRange"
+        app:layout_constraintTop_toBottomOf="@id/dateRange"
+        app:layout_constraintEnd_toEndOf="@id/dateRange"
+        tools:text="Jakarta, Indonesia" />
+
+    <TextView
+        android:id="@+id/jobDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppinsregular"
+        android:textAppearance="?attr/textAppearanceBody2"
+        android:textColor="?android:attr/textColorSecondary"
+        android:layout_marginTop="8dp"
+        android:maxLines="2"
+        android:ellipsize="end"
+        app:layout_constraintStart_toStartOf="@id/companyLogo"
+        app:layout_constraintTop_toBottomOf="@id/locationText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="Mengembangkan dan memelihara aplikasi mobile Android menggunakan Kotlin, Jetpack Compose, dan arsitektur MVVM. Berkolaborasi dengan tim lintas fungsi untuk..." />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
