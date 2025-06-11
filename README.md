@@ -1,11 +1,20 @@
-# Android Learning
-================
+# Repository Pembelajaran Android
 
-Repository ini berisi kumpulan kode program Android yang digunakan dengan menggunakan Android Studio dan bahasa pemrograman Kotlin.
+Repository ini menyediakan kumpulan kode program Android yang dibangun menggunakan Android Studio dan bahasa pemrograman Kotlin. Dirancang sebagai sumber pembelajaran komprehensif untuk pengembangan aplikasi Android.
 
-## Tools
-- Android Studio
-- Native Kotlin
+## Teknologi yang Digunakan
+
+*   **IDE:** Android Studio
+*   **Bahasa Pemrograman:** Kotlin (Native)
 
 ## Lisensi
-Repository ini untuk tugas PPSI. Anda bebas menggunakan, memodifikasi, dan mengembangkan kode program ini untuk keperluan Pembelajaran.
+
+Proyek ini ditujukan untuk keperluan pendidikan dan merupakan bagian dari tugas PPSI. Anda dipersilakan untuk menggunakan, memodifikasi, dan mengembangkan kode ini lebih lanjut untuk keperluan belajar dan eksperimen pribadi. Kontribusi dan saran perbaikan sangat dihargai.
+
+## Kontribusi
+
+Jika Anda menemukan kesalahan, memiliki saran perbaikan, atau ingin berkontribusi pada proyek ini, silakan ajukan *pull request*.
+
+## Catatan
+
+Repository ini dikembangkan sebagai sumber daya pembelajaran. Mungkin tidak mencakup semua aspek pengembangan Android, tetapi diharapkan dapat memberikan dasar yang kuat untuk memulai perjalanan Anda di dunia pengembangan aplikasi Android.
