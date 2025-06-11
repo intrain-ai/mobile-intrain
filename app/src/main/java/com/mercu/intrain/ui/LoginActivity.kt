@@ -95,6 +95,7 @@ class LoginActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 binding.loading.visibility = View.GONE
+                Log.d("ERROR", t.message.toString())
                 showToast("Network request failed: ${t.message}")
             }
 

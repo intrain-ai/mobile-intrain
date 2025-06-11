@@ -28,7 +28,7 @@ class CourseActivity : AppCompatActivity() {
 
         viewPager.adapter = CoursePagerAdapter(this)
 
-        tabLayout.setTabs(listOf("Enrolled", "Available", "Completed"))
+        tabLayout.setTabs(listOf("Available", "Enrolled", "Completed"))
 
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -43,6 +43,11 @@ class CourseActivity : AppCompatActivity() {
             override fun onTabUnselected(tab: TabLayout.Tab) {}
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
+
+        val fab: FloatingActionButton = binding.fab
+        fab.setOnClickListener {
+            onBackPressed()
+        }
 
     }
 }

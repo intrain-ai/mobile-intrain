@@ -6,12 +6,13 @@ import com.mercu.intrain.API.ApiService
 import com.mercu.intrain.sharedpref.SharedPrefHelper
 
 class HomeViewModelFactory(
-    private val sharedPrefHelper: SharedPrefHelper
+    private val sharedPrefHelper: SharedPrefHelper,
+    private val apiService: ApiService
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return HomeViewModel(sharedPrefHelper) as T
+            return HomeViewModel(sharedPrefHelper, apiService) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

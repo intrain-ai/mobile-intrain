@@ -10,17 +10,18 @@ import com.mercu.intrain.model.Course
 import com.mercu.intrain.model.EnrollmentItem
 import kotlinx.coroutines.launch
 
-class EnrollCourseViewModel : ViewModel() {
+class AvailableCoursesViewModel : ViewModel() {
 
-    // --- DATA UNTUK "ENROLLED" (IN-PROGRESS) ---
-    private val _enrolledCourses = MutableLiveData<List<EnrollmentItem>>()
-    val enrolledCourses: LiveData<List<EnrollmentItem>> get() = _enrolledCourses
+    // LiveData untuk daftar semua kursus yang tersedia
+    private val _availableCourses = MutableLiveData<List<Course>>()
+    val availableCourses: LiveData<List<Course>> get() = _availableCourses
 
-    // --- DATA UNTUK "COMPLETED" ---
-    private val _completedCourses = MutableLiveData<List<EnrollmentItem>>()
-    val completedCourses: LiveData<List<EnrollmentItem>> get() = _completedCourses
+    // --- TAMBAHAN ---
+    // LiveData untuk daftar kursus yang diikuti pengguna
+    private val _userEnrollments = MutableLiveData<List<EnrollmentItem>>()
+    val userEnrollments: LiveData<List<EnrollmentItem>> get() = _userEnrollments
 
-    // --- DATA DETAIL & STATE BERSAMA ---
+    // LiveData untuk menampung hasil fetch detail course (digunakan saat item diklik)
     private val _courseDetails = MutableLiveData<Course?>()
     val courseDetails: LiveData<Course?> get() = _courseDetails
 
@@ -30,43 +31,43 @@ class EnrollCourseViewModel : ViewModel() {
     private val _emptyMessage = MutableLiveData<String?>()
     val emptyMessage: LiveData<String?> get() = _emptyMessage
 
-    fun fetchEnrolledCourse(userId: String) {
-        fetchUserEnrollments(userId, isCompleted = false)
-    }
-
-    fun fetchCompletedCourses(userId: String) {
-        fetchUserEnrollments(userId, isCompleted = true)
-    }
-
-    private fun fetchUserEnrollments(userId: String, isCompleted: Boolean) {
+    fun fetchAllCourses() {
         _isLoading.value = true
-        _emptyMessage.value = null // Reset pesan setiap kali fetch
         viewModelScope.launch {
             try {
-                val response = ApiConfig.api.getUserEnrollments(userId)
+                val response = ApiConfig.api.getAllCourses()
                 if (response.isSuccessful) {
-                    val allEnrollments = response.body() ?: emptyList()
-                    // Filter berdasarkan status
-                    val filteredList = allEnrollments.filter { it.isCompleted == isCompleted }
-
-                    if (filteredList.isEmpty()) {
-                        val message = if (isCompleted) "You have not completed any courses yet." else "You haven't enrolled in any course yet."
-                        _emptyMessage.postValue(message)
-                    }
-
-                    // Post ke LiveData yang sesuai
-                    if (isCompleted) {
-                        _completedCourses.postValue(filteredList)
+                    val courses = response.body() ?: emptyList()
+                    if (courses.isEmpty()) {
+                        _emptyMessage.postValue("No courses available at the moment.")
                     } else {
-                        _enrolledCourses.postValue(filteredList)
+                        _availableCourses.postValue(courses)
+                        _emptyMessage.postValue(null)
                     }
                 } else {
                     _emptyMessage.postValue("Failed to load courses.")
                 }
             } catch (e: Exception) {
-                Log.e("EnrollCourseViewModel", "Exception: ${e.message}")
+                Log.e("AvailableCoursesVM", "Exception fetching all courses: ${e.message}")
                 _emptyMessage.postValue("An error occurred.")
             } finally {
+                // Jangan set loading ke false di sini, tunggu fetch enrollments selesai
+            }
+        }
+    }
+
+    // --- FUNGSI TAMBAHAN ---
+    fun fetchUserEnrollments(userId: String) {
+        viewModelScope.launch {
+            try {
+                val response = ApiConfig.api.getUserEnrollments(userId)
+                if (response.isSuccessful) {
+                    _userEnrollments.postValue(response.body() ?: emptyList())
+                }
+            } catch (e: Exception) {
+                Log.e("AvailableCoursesVM", "Exception fetching enrollments: ${e.message}")
+            } finally {
+                // Set loading ke false setelah kedua data selesai diambil
                 _isLoading.value = false
             }
         }

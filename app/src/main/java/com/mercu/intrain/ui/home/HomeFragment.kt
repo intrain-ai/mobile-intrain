@@ -1,6 +1,5 @@
 package com.mercu.intrain.ui.home
 
-import android.R.attr.text
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
@@ -15,13 +14,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.mercu.intrain.API.ApiService
+import com.mercu.intrain.API.ApiConfig
 import com.mercu.intrain.databinding.FragmentHomeBinding
 import com.mercu.intrain.ui.chat.DiffSelectActivity
 import com.mercu.intrain.ui.course.CourseActivity
 import com.mercu.intrain.ui.cvcheck.ReviewActivity
 import com.mercu.intrain.ui.news.NewsAdapter
-import com.mercu.intrain.API.Article
 import com.mercu.intrain.R
 import com.mercu.intrain.sharedpref.SharedPrefHelper
 import com.mercu.intrain.ui.custom.CarouselItemDecoration
@@ -44,20 +42,24 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         sharedPrefHelper = SharedPrefHelper(requireContext())
-        val factory = HomeViewModelFactory(sharedPrefHelper)
+        val factory = HomeViewModelFactory(sharedPrefHelper, ApiConfig.api)
         homeViewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
+
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sharedPrefHelper = SharedPrefHelper(requireContext())
 
         setupUI()
         setupObservers()
         setupClickListeners()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        homeViewModel.loadCourseData()
     }
 
     private fun setupUI() {
@@ -71,22 +73,22 @@ class HomeFragment : Fragment() {
         }
     }
 
-
     private fun setupObservers() {
         homeViewModel.apply {
             name.observe(viewLifecycleOwner) { binding.helloText.text = it }
             courseDescription.observe(viewLifecycleOwner) { binding.courseDescription.text = it }
-            courseProgress.observe(viewLifecycleOwner) {
-                binding.courseProgress.progress = it.toInt()
-                binding.progressText.text = "${it.toInt()}%"
+
+            completionPercentage.observe(viewLifecycleOwner) { percentage ->
+                binding.progressText.text = "$percentage%"
+                binding.courseProgress.progress = percentage
             }
+
             activityContent.observe(viewLifecycleOwner) { binding.activityLabel.text = it }
             newsArticles.observe(viewLifecycleOwner) { articles ->
                 newsAdapter.submitList(articles ?: emptyList())
                 setupAutoScroll(articles?.size ?: 0)
             }
         }
-        homeViewModel.loadNews()
     }
 
     private fun setupClickListeners() {
@@ -96,12 +98,10 @@ class HomeFragment : Fragment() {
             }
 
             inTrainIcon.setOnClickListener {
-                homeViewModel.updateProgress(20f)
                 startActivity(Intent(requireContext(), DiffSelectActivity::class.java))
             }
 
             courseIcon.setOnClickListener {
-                homeViewModel.updateProgress(80f)
                 startActivity(Intent(requireContext(), CourseActivity::class.java))
             }
         }
@@ -120,15 +120,14 @@ class HomeFragment : Fragment() {
                 child.scaleY = scale
                 child.alpha = alpha
 
-                // Parallax effect for image
                 child.findViewById<View>(R.id.newsImage).translationY = -(distance * 0.2f)
             }
         }
     }
 
     private fun setupAutoScroll(itemCount: Int) {
-        if (itemCount <= 0) return // Prevent auto-scroll for empty list
-        
+        if (itemCount <= 0) return
+
         sliderHandler = Handler(Looper.getMainLooper())
         sliderRunnable = object : Runnable {
             override fun run() {

@@ -3,6 +3,7 @@ package com.mercu.intrain.repository
 import com.mercu.intrain.API.ApiService
 import com.mercu.intrain.model.Course
 import com.mercu.intrain.model.Enrollment
+import com.mercu.intrain.model.EnrollmentItem
 import com.mercu.intrain.model.EnrollmentRequest
 import com.mercu.intrain.model.EnrollmentResponse
 import retrofit2.Response
@@ -16,7 +17,7 @@ class CourseRepository(private val apiService: ApiService) {
         return apiService.getCourseDetails(courseId)
     }
 
-    suspend fun getUserEnrollments(userId: String): Response<List<Enrollment>> {
+    suspend fun getUserEnrollments(userId: String): Response<List<EnrollmentItem>> {
         return apiService.getUserEnrollments(userId)
     }
 

@@ -8,12 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.mercu.intrain.R
-import com.mercu.intrain.model.Course
-import com.mercu.intrain.model.EnrollMock
+import com.mercu.intrain.model.EnrollmentItem
 
 class EnrolledCoursesAdapter(
-    private var enrollList: List<EnrollMock>,
-    private val onClick: ((Course) -> Unit)? = null
+    private var enrollList: List<EnrollmentItem>,
+    private val onClick: ((EnrollmentItem) -> Unit)? = null
 ) : RecyclerView.Adapter<EnrolledCoursesAdapter.CourseViewHolder>() {
 
     inner class CourseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -34,46 +33,39 @@ class EnrolledCoursesAdapter(
     override fun onBindViewHolder(holder: CourseViewHolder, position: Int) {
         val enrollment = enrollList[position]
 
-        holder.title.text = enrollment.course_title
-        holder.provider.text = enrollment.provider
+        holder.title.text = enrollment.courseTitle ?: "No Title"
+        holder.provider.text = enrollment.provider ?: "No Provider"
 
-        if (enrollment.is_completed) {
+        if (enrollment.isCompleted == true) {
             holder.status.text = "Completed"
             holder.status.visibility = View.VISIBLE
-
             holder.enrolledDate.visibility = View.VISIBLE
-            holder.enrolledDate.text = "Completed: ${enrollment.completed_at}"
-
+            holder.enrolledDate.text = "Completed: ${enrollment.completedAt?.toString() ?: "N/A"}"
             holder.progressBar.visibility = View.GONE
-
             holder.btnAction.text = "See Certificate"
         } else {
             holder.status.text = "In Progress"
             holder.status.visibility = View.VISIBLE
-
             holder.enrolledDate.visibility = View.VISIBLE
-            holder.enrolledDate.text = "Enrolled: ${enrollment.enrolled_at}"
-
-            holder.progressBar.visibility = View.VISIBLE
-            holder.progressBar.progress = enrollment.progress
-
-            holder.btnAction.text = "Detail"
+            holder.enrolledDate.text = "Enrolled: ${enrollment.enrolledAt ?: "N/A"}"
+            holder.progressBar.visibility = View.GONE
+            holder.btnAction.text = "Continue"
         }
 
         holder.btnAction.setOnClickListener {
-
+            onClick?.invoke(enrollment)
         }
     }
 
     override fun getItemCount(): Int = enrollList.size
 
-    fun updateDataEnroll(allEnrollments: List<EnrollMock>) {
-        enrollList = allEnrollments.filter { it.completed_at == null }
+    fun updateDataEnroll(allEnrollments: List<EnrollmentItem>) {
+        enrollList = allEnrollments.filter { it.isCompleted != true }
         notifyDataSetChanged()
     }
 
-    fun updateDataComplete(allEnrollments: List<EnrollMock>) {
-        enrollList = allEnrollments.filter { it.completed_at != null }
+    fun updateDataComplete(allEnrollments: List<EnrollmentItem>) {
+        enrollList = allEnrollments.filter { it.isCompleted == true }
         notifyDataSetChanged()
     }
 }

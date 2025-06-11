@@ -6,7 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiConfig {
-    private const val BASE_URL = "https://patients-metal-madagascar-rough.trycloudflare.com/"
+    private const val BASE_URL = "https://leu-suburban-contract-sponsorship.trycloudflare.com"
 
     private val interceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
@@ -15,7 +15,7 @@ object ApiConfig {
     private val client = OkHttpClient.Builder()
 
         //ganti mockintercept ke interceptor (di atas)
-        .addInterceptor(MockInterceptor())
+        .addInterceptor(interceptor)
         .build()
 
     private val retrofit: Retrofit by lazy {
