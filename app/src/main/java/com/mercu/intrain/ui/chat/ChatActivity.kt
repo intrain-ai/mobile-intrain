@@ -8,6 +8,9 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.datastore.preferences.protobuf.Value
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -40,6 +43,13 @@ class ChatActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { view, insets ->
+            val ime = insets.getInsets(WindowInsetsCompat.Type.ime())
+            view.setPadding(0, 0, 0, ime.bottom)
+            insets
+        }
+
 
         recyclerView = findViewById(R.id.recyclerView)
         editTextMessage = findViewById(R.id.editTextMessage)

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/sectionNameText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Section Name"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:textColor="#000000"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/needsImprovementChip"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Needs Improvement"
+            app:chipBackgroundColor="@color/md_theme_errorContainer"
+            app:chipStrokeColor="@color/md_theme_error"
+            app:chipStrokeWidth="1dp"
+            app:chipCornerRadius="8dp"
+            android:textColor="@color/md_theme_error"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/sectionFeedbackText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Section feedback goes here..."
+        android:textSize="14sp"
+        android:textColor="#666666"
+        android:layout_marginTop="2dp"/>
+
+</LinearLayout> 

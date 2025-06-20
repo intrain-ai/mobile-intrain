@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/navigation_chat"
-        android:name="com.mercu.intrain.ui.chat.ChatFragment"
-        android:label="Chat"
-        tools:layout="@layout/fragment_chat" />
+        android:name="com.mercu.intrain.ui.history.HistoryFragment"
+        android:label="History"
+        tools:layout="@layout/fragment_history" />
 
     <fragment
         android:id="@+id/navigation_notifications"

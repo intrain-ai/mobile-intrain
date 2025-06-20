@@ -83,7 +83,6 @@ class HomeFragment : Fragment() {
                 binding.courseProgress.progress = percentage
             }
 
-            activityContent.observe(viewLifecycleOwner) { binding.activityLabel.text = it }
             newsArticles.observe(viewLifecycleOwner) { articles ->
                 newsAdapter.submitList(articles ?: emptyList())
                 setupAutoScroll(articles?.size ?: 0)

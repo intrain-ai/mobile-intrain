@@ -8,8 +8,8 @@
 
     <item
         android:id="@+id/navigation_chat"
-        android:icon="@drawable/ic_roadmap"
-        android:title="Roadmap" />
+        android:icon="@drawable/ic_history"
+        android:title="History" />
 
     <item
         android:id="@+id/navigation_notifications"

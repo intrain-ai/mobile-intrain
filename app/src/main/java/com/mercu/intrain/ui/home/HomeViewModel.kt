@@ -35,10 +35,6 @@ class HomeViewModel(
     }
     val courseDescription: LiveData<String> = _courseDescription
 
-    private val _activityContent = MutableLiveData<String>().apply {
-        value = "Let's check your activity today"
-    }
-    val activityContent: LiveData<String> = _activityContent
 
     init {
         loadNews()

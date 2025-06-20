@@ -8,96 +8,88 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/md_theme_background"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:background="@color/md_theme_background">
 
-        <!-- Header Section -->
+        <!-- Header -->
         <TextView
             android:id="@+id/helloText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
             android:text="@string/welcoming_message"
-            android:textStyle="bold"
             android:textSize="24sp"
+            android:textStyle="bold"
             android:fontFamily="@font/poppinsbold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:padding="16dp"
             app:layout_constraintTop_toTopOf="parent"
-            android:padding="16dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
             android:id="@+id/activityText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/welcoming_message_2"
-            android:fontFamily="@font/poppinsbold"
             android:textSize="16sp"
             android:textStyle="bold"
+            android:fontFamily="@font/poppinsbold"
             android:textColor="#4560b6"
-            android:layout_gravity="start"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:padding="8dp"
             app:layout_constraintTop_toBottomOf="@id/helloText"
-            android:padding="8dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Course Progress Section -->
+        <!-- Course Section -->
         <LinearLayout
             android:id="@+id/courseSection"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:padding="16dp"
             app:layout_constraintTop_toBottomOf="@id/activityText"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:padding="16dp">
+            app:layout_constraintEnd_toEndOf="parent">
 
             <TextView
                 android:id="@+id/courseTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="8dp"
+                android:text="@string/course"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#4560b6"
                 android:fontFamily="@font/poppinsbold"
                 android:padding="8dp"
-                android:text="@string/course"
-                android:textColor="#4560b6"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp">
 
-                <!-- Circular Progress Bar -->
                 <com.google.android.material.progressindicator.CircularProgressIndicator
                     android:id="@+id/courseProgress"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
+                    android:max="100"
+                    android:progress="0"
                     app:indicatorColor="#4D78FF"
                     app:indicatorSize="100dp"
-                    android:layout_centerInParent="true"
                     app:trackColor="#A9A4A4"
                     app:trackThickness="10dp"
-                    android:progress="0"
-                    android:max="100" />
+                    android:layout_centerInParent="true" />
 
-                <!-- Progress Number -->
                 <TextView
                     android:id="@+id/progressText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
                     android:textSize="24sp"
-                    android:textColor="#4D78FF"
-                    android:layout_centerInParent="true"
                     android:textStyle="bold"
-                    android:fontFamily="@font/poppinsbold"/>
+                    android:textColor="#4D78FF"
+                    android:fontFamily="@font/poppinsbold"
+                    android:layout_centerInParent="true" />
             </RelativeLayout>
 
             <TextView
@@ -107,8 +99,8 @@
                 android:text="@string/course_completed"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:fontFamily="@font/poppinsregular"
-                android:textColor="#6B6B6B" />
+                android:textColor="#6B6B6B"
+                android:fontFamily="@font/poppinsregular" />
         </LinearLayout>
 
         <!-- Activity Section -->
@@ -117,12 +109,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:padding="16dp"
             app:layout_constraintTop_toBottomOf="@id/courseSection"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:padding="16dp">
+            app:layout_constraintEnd_toEndOf="parent">
 
-            <!-- Activity Text Above Icons -->
             <TextView
                 android:id="@+id/activityLabel"
                 android:layout_width="wrap_content"
@@ -130,12 +121,11 @@
                 android:text="@string/activity"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/poppinsbold"
                 android:textColor="#4560b6"
-                android:layout_gravity="start"
-                android:padding="8dp"/>
+                android:padding="8dp"
+                android:layout_marginBottom="8dp" />
 
-            <!-- Icon Row -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -143,20 +133,22 @@
                 android:gravity="center"
                 android:paddingTop="8dp">
 
-                <!-- CV Checker Icon -->
+                <!-- CV Checker -->
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
                     android:layout_marginEnd="16dp">
+
                     <ImageView
                         android:id="@+id/cvCheckerIcon"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:src="@drawable/ic_cv_checker"
                         android:scaleType="centerInside"
+                        android:src="@drawable/ic_cv_checker"
                         android:contentDescription="@string/cv_checker_icon" />
+
                     <TextView
                         android:id="@+id/cvCheckerText"
                         android:layout_width="wrap_content"
@@ -165,41 +157,45 @@
                         android:textSize="12sp" />
                 </LinearLayout>
 
-                <!-- InTrain.ai Icon -->
+                <!-- InTrain.ai -->
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
                     android:layout_marginEnd="16dp">
+
                     <ImageView
                         android:id="@+id/inTrainIcon"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:scaleType="centerInside"
                         android:src="@drawable/ic_course"
-                        android:contentDescription="@string/intrain_ai_icon"/>
+                        android:contentDescription="@string/intrain_ai_icon" />
+
                     <TextView
                         android:id="@+id/inTrainText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/intrain_ai"
-                        android:textSize="12sp"/>
+                        android:textSize="12sp" />
                 </LinearLayout>
 
-                <!-- Course Icon -->
+                <!-- Course -->
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:gravity="center"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
                     <ImageView
                         android:id="@+id/courseIcon"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:scaleType="centerInside"
                         android:src="@drawable/ic_chat"
-                        android:contentDescription="@string/course_icon"/>
+                        android:contentDescription="@string/course_icon" />
+
                     <TextView
                         android:id="@+id/courseText"
                         android:layout_width="wrap_content"
@@ -216,10 +212,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:padding="16dp"
             app:layout_constraintTop_toBottomOf="@id/activitySection"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:padding="16dp">
+            app:layout_constraintEnd_toEndOf="parent">
 
             <TextView
                 android:id="@+id/newsTitle"
@@ -228,21 +224,17 @@
                 android:text="Berita"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:fontFamily="@font/poppinsbold"
                 android:textColor="#4560b6"
-                android:layout_gravity="start"
-                android:padding="8dp"/>
+                android:fontFamily="@font/poppinsbold"
+                android:padding="8dp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/newsRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="16dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/newsTitle"/>
+                android:padding="16dp" />
         </LinearLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

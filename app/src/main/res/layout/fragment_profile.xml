@@ -358,6 +358,7 @@
                     android:hint="Masukkan Password Baru"
                     android:visibility="gone"
                     android:textSize="16sp"
+                    android:textStyle="bold"
                     android:fontFamily="@font/poppinsbold"
                     android:inputType="textPassword"
                     android:layout_marginTop="8dp" />
@@ -390,6 +391,24 @@
                         style="@style/Widget.MaterialComponents.Button.TextButton"
                         android:textColor="@color/md_theme_primary" />
                 </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#E6E9F8"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/roadmapButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Roadmap"
+                    android:textStyle="bold"
+                    android:textAlignment="textStart"
+                    android:textColor="#626FE2"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:backgroundTint="@android:color/transparent" />
 
                 <View
                     android:layout_width="match_parent"

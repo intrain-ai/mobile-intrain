@@ -1,5 +1,6 @@
 package com.mercu.intrain.API
 
+import com.mercu.intrain.model.CompletedStepResponse
 import com.mercu.intrain.model.Course
 //import com.mercu.intrain.model.EnrollMock
 import com.mercu.intrain.model.Enrollment
@@ -7,6 +8,10 @@ import com.mercu.intrain.model.EnrollmentItem
 //import com.mercu.intrain.model.EnrollmentMockResponse
 import com.mercu.intrain.model.EnrollmentRequest
 import com.mercu.intrain.model.EnrollmentResponse
+import com.mercu.intrain.model.ProgressStep
+import com.mercu.intrain.model.Roadmap
+import com.mercu.intrain.model.UserRoadmap
+import com.mercu.intrain.model.UserRoadmapHistory
 import com.mercu.intrain.model.WorkExperience
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -33,7 +38,6 @@ interface ApiService {
         @Part file: MultipartBody.Part,
         @Part("user_id") userid: RequestBody
     ): Response<CvResponse>
-
 
     @POST("/api/v1/feature/interview/chat")
     fun chatRequestInit(
@@ -63,6 +67,33 @@ interface ApiService {
     @POST("api/v1/feature/courses/unenroll")
     suspend fun unenrollCourse(@Body request: EnrollmentRequest): Response<Map<String, String>>
 
+    //History
+// Chat Endpoints
+    @GET("api/v1/feature/interview/chat/history/{user_id}")
+    suspend fun getChatHistory(
+        @Path("user_id") userId: String
+    ): Response<ChatHistoryResponse>
+
+    @GET("api/v1/feature/interview/chat/{session_id}/history")
+    suspend fun getSessionHistory(
+        @Path("session_id") sessionId: String
+    ): Response<SessionHistoryResponse>
+
+    // CV Endpoints
+    @GET("api/v1/feature/cv/history/{submission_id}")
+    suspend fun getCVSubmission(
+        @Path("submission_id") submissionId: String
+    ): Response<CVSubmissionResponse>
+
+    @GET("api/v1/feature/cv/history/user/{user_id}/reviews")
+    suspend fun getCVReviews(
+        @Path("user_id") userId: String
+    ): Response<List<CVReviewHistoryResponse>>
+
+    @GET("api/v1/feature/cv/history/user/{user_id}")
+    suspend fun getReviewedCVs(
+        @Path("user_id") userId: String
+    ): Response<List<CVListResponse>>
 
 //    //INI MOCK
 //    @GET("/enrollments")
@@ -119,5 +150,44 @@ interface ApiService {
         @Query("language") language: String = "id",
         @Query("pageSize") pageSize: Int = 5
     ): Response<NewsResponse>
+
+    //Roadmap
+    @GET("api/v1/roadmaps")
+    suspend fun getAllRoadmaps(): Response<List<Roadmap>>
+
+    @GET("api/v1/roadmaps/{rm_id}")
+    suspend fun getRoadmapDetails(
+        @Path("rm_id") roadmapId: String
+    ): Response<Roadmap>
+
+    @POST("api/v1/users/{user_id}/roadmaps/{rm_id}/start")
+    suspend fun startRoadmap(
+        @Path("user_id") userId: String,
+        @Path("rm_id") roadmapId: String
+    ): Response<UserRoadmap>
+
+    @GET("api/v1/users/{user_id}/roadmaps")
+    suspend fun getUserRoadmaps(
+        @Path("user_id") userId: String
+    ): Response<List<UserRoadmapHistory>>
+
+    @POST("api/v1/users/{user_id}/roadmaps/{roadmap_id}/steps/{step_id}/complete")
+    suspend fun completeStep(
+        @Path("user_id") userId: String,
+        @Path("roadmap_id") roadmapId: String,
+        @Path("step_id") stepId: String
+    ): Response<CompletedStepResponse>
+
+    @GET("api/v1/users/{user_id}/roadmaps/{roadmap_id}/progress")
+    suspend fun getRoadmapProgress(
+        @Path("user_id") userId: String,
+        @Path("roadmap_id") roadmapId: String
+    ): Response<List<ProgressStep>>
+
+    @DELETE("api/v1/users/{user_id}/roadmaps/{roadmap_id}")
+    suspend fun deleteRoadmap(
+        @Path("user_id") userId: String,
+        @Path("roadmap_id") roadmapId: String
+    ): Response<Unit>
 
 }

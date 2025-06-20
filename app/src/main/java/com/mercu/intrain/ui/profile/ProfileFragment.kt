@@ -23,6 +23,7 @@ import com.mercu.intrain.databinding.FragmentProfileBinding
 import com.mercu.intrain.model.WorkExperience
 import com.mercu.intrain.sharedpref.SharedPrefHelper
 import com.mercu.intrain.ui.LoginActivity
+import com.mercu.intrain.ui.roadmap.RoadmapActivity
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
@@ -218,7 +219,11 @@ class ProfileFragment : Fragment() {
             binding.editPassword.text?.clear()
         }
 
-
+        // Roadmap button
+        binding.roadmapButton.setOnClickListener {
+            val intent = Intent(requireContext(), RoadmapActivity::class.java)
+            startActivity(intent)
+        }
 
         // Logout button
         binding.logoutButton.setOnClickListener {

@@ -1,51 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".ui.chat.ChatActivity">
 
-    <!-- RecyclerView -->
+    <!-- RecyclerView (isi chat) -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:contentDescription="Chat"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constrainedHeight="true"
         android:padding="8dp"
+        android:contentDescription="Chat"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/chatbox"
+        app:layout_constraintBottom_toTopOf="@+id/chatbox"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!--    <FrameLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        app:layout_constraintTop_toTopOf="parent"-->
-    <!--        app:layout_constraintBottom_toTopOf="@id/chatbox"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        android:background="@color/md_theme_tertiary">-->
-    <!--        <TextView-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:text="Content goes here"-->
-    <!--            android:layout_gravity="center"/>-->
-
-    <!--    </FrameLayout>-->
-
+    <!-- Chat Box: input + kirim -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/chatbox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="8dp"
         app:layout_constraintTop_toBottomOf="@id/recyclerView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- EditText -->
+        <!-- Input teks -->
         <EditText
             android:id="@+id/editTextMessage"
             android:layout_width="0dp"
@@ -54,19 +41,19 @@
             android:inputType="text"
             android:maxLines="5"
             android:padding="10dp"
+            android:background="@drawable/bg_chat_input"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/buttonSend"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
 
-        <!-- Send Button -->
+        <!-- Tombol Kirim -->
         <ImageButton
             android:id="@+id/buttonSend"
-            android:contentDescription="Send Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:contentDescription="Send"
             android:padding="10dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:scaleType="centerInside"

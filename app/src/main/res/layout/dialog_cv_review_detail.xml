@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="@android:color/white">
+
+    <TextView
+        android:id="@+id/cvFileNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="cv_final.pdf"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="#000000"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/fileTypeChip"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PDF"
+            app:chipBackgroundColor="@color/md_theme_primaryContainer"
+            app:chipStrokeColor="@color/md_theme_primary"
+            app:chipStrokeWidth="1dp"
+            app:chipCornerRadius="8dp"
+            android:textColor="@color/md_theme_primary"/>
+
+        <TextView
+            android:id="@+id/uploadedAtText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Uploaded: 2025-04-26"
+            android:textSize="12sp"
+            android:textColor="@android:color/darker_gray"
+            android:layout_marginStart="12dp"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/overallFeedbackLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Overall Feedback"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/overallFeedbackText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Feedback goes here..."
+        android:textSize="14sp"
+        android:textColor="#666666"
+        android:layout_marginTop="4dp"/>
+
+    <TextView
+        android:id="@+id/sectionFeedbackLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Section Feedbacks"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:layout_marginTop="16dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/sectionFeedbackRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="4dp"/>
+
+</LinearLayout> 
