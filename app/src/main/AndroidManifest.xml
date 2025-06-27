@@ -71,7 +71,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.cvcheck.ReviewActivity"
+            android:name=".ui.cvcheck.ReviewComposeActivity"
             android:exported="true" />
         <activity
             android:name=".ui.course.CourseActivity"

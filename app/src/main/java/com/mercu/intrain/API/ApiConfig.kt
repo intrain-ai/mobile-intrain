@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object ApiConfig {
-    private const val BASE_URL = "https://group-executed-spent-forests.trycloudflare.com"
+    private const val BASE_URL = "https://fifth-merge-navigation-subsidiaries.trycloudflare.com/"
 
     private val interceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY

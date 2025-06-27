@@ -145,5 +145,6 @@
     <color name="warning">#FFC107</color>
     <color name="purple_200">#B7B3F9</color>
     <color name="purple_700">#4A3FFF</color>
+    <color name="intrain_primary">#5A63DA</color>
 
 </resources>

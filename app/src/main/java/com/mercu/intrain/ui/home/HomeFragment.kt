@@ -18,11 +18,11 @@ import com.mercu.intrain.API.ApiConfig
 import com.mercu.intrain.databinding.FragmentHomeBinding
 import com.mercu.intrain.ui.chat.DiffSelectActivity
 import com.mercu.intrain.ui.course.CourseActivity
-import com.mercu.intrain.ui.cvcheck.ReviewActivity
 import com.mercu.intrain.ui.news.NewsAdapter
 import com.mercu.intrain.R
 import com.mercu.intrain.sharedpref.SharedPrefHelper
 import com.mercu.intrain.ui.custom.CarouselItemDecoration
+import com.mercu.intrain.ui.cvcheck.ReviewComposeActivity
 import kotlin.math.abs
 
 class HomeFragment : Fragment() {
@@ -93,7 +93,7 @@ class HomeFragment : Fragment() {
     private fun setupClickListeners() {
         binding.apply {
             cvCheckerIcon.setOnClickListener {
-                startActivity(Intent(requireContext(), ReviewActivity::class.java))
+                startActivity(Intent(requireContext(), ReviewComposeActivity::class.java))
             }
 
             inTrainIcon.setOnClickListener {
