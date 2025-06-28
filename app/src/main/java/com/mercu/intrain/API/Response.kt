@@ -30,7 +30,10 @@ data class User(
     val email: String,
 
     @field:SerializedName("username")
-    val username: String
+    val username: String,
+
+    @field:SerializedName("is_mentor")
+    val isMentor: Boolean
 ) : Parcelable
 
 @Parcelize

@@ -7,12 +7,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.mercu.intrain.databinding.ActivityMainBinding
 import com.mercu.intrain.sharedpref.SharedPrefHelper
-import com.mercu.intrain.ui.LoginActivity
+import com.mercu.intrain.ui.auth.LoginActivity
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
