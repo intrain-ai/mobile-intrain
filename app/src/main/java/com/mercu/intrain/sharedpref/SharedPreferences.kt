@@ -11,6 +11,10 @@ class SharedPrefHelper(context: Context) {
     private val gson = Gson()
 
     // Save data methods
+    fun saveIsMentor(isMentor: Boolean) {
+        sharedPreferences.edit().putBoolean("is_mentor", isMentor).apply()
+    }
+
     fun saveUid(uid: String) {
         sharedPreferences.edit().putString("auth_uid", uid).apply()
     }
@@ -53,6 +57,10 @@ class SharedPrefHelper(context: Context) {
 
     fun getPassword(): String? {
         return getString("password")
+    }
+
+    fun getIsMentor(): Boolean {
+        return sharedPreferences.getBoolean("is_mentor", false)
     }
 
     fun getDarkMode(): Boolean {
