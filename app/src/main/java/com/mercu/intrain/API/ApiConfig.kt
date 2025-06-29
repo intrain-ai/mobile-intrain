@@ -8,9 +8,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 object ApiConfig {
-    private const val BASE_URL = "https://extensive-healthy-hundred-influenced.trycloudflare.com"
+    private const val BASE_URL = "https://examples-implications-spine-msgstr.trycloudflare.com"
 
     private val interceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
@@ -18,6 +19,9 @@ object ApiConfig {
 
     private val client = OkHttpClient.Builder()
         .addInterceptor(interceptor)
+        .connectTimeout(30, TimeUnit.SECONDS) // Timeout untuk koneksi
+        .readTimeout(60, TimeUnit.SECONDS)    // Timeout untuk membaca response
+        .writeTimeout(60, TimeUnit.SECONDS)   // Timeout untuk menulis request
         .build()
 
     private val gson: Gson by lazy {
