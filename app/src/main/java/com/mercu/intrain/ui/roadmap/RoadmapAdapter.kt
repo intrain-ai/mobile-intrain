@@ -15,9 +15,9 @@ class RoadmapAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(roadmap: Roadmap) {
             binding.apply {
-                tvTitle.text = roadmap.title
-                tvDescription.text = roadmap.description
-                tvJobType.text = roadmap.jobType
+                tvTitle.text = roadmap.title ?: "Unknown Roadmap"
+                tvDescription.text = roadmap.description ?: "No description available"
+                tvJobType.text = roadmap.jobType ?: "Unknown Type"
 
                 root.setOnClickListener { onItemClick(roadmap) }
             }

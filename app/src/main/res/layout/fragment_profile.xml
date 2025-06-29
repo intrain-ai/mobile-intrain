@@ -175,6 +175,35 @@
                     android:inputType="textEmailAddress"
                     android:layout_marginTop="8dp" />
 
+                <!-- Job Type -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Tipe Pekerjaan"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppinsbold"
+                    android:textColor="#626FE2" />
+
+                <TextView
+                    android:id="@+id/jobTypeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textSize="16sp"
+                    tools:text="Software Engineer" />
+
+                <EditText
+                    android:id="@+id/editJobType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Masukkan Tipe Pekerjaan"
+                    android:visibility="gone"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/poppinsbold"
+                    android:inputType="text"
+                    android:layout_marginTop="8dp" />
+
                 <!-- Save & Cancel Buttons -->
                 <LinearLayout
                     android:id="@+id/editButtonLayout"
@@ -347,6 +376,19 @@
                     app:iconPadding="12dp"
                     app:iconTint="#626FE2"
                     android:text="Change Password"
+                    android:textAlignment="textStart"
+                    android:textColor="#626FE2"
+                    android:backgroundTint="@android:color/transparent" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/editJobTypeButton"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:icon="@drawable/ic_work"
+                    app:iconPadding="12dp"
+                    app:iconTint="#626FE2"
+                    android:text="Edit Job Type"
                     android:textAlignment="textStart"
                     android:textColor="#626FE2"
                     android:backgroundTint="@android:color/transparent" />

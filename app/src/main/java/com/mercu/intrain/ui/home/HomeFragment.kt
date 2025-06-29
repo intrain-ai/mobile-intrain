@@ -16,13 +16,13 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.mercu.intrain.API.ApiConfig
 import com.mercu.intrain.databinding.FragmentHomeBinding
-import com.mercu.intrain.ui.chat.DiffSelectActivity
 import com.mercu.intrain.ui.course.CourseActivity
 import com.mercu.intrain.ui.news.NewsAdapter
 import com.mercu.intrain.R
 import com.mercu.intrain.sharedpref.SharedPrefHelper
 import com.mercu.intrain.ui.custom.CarouselItemDecoration
 import com.mercu.intrain.ui.cvcheck.ReviewComposeActivity
+import com.mercu.intrain.utils.ChatUtils
 import kotlin.math.abs
 
 class HomeFragment : Fragment() {
@@ -97,7 +97,7 @@ class HomeFragment : Fragment() {
             }
 
             inTrainIcon.setOnClickListener {
-                startActivity(Intent(requireContext(), DiffSelectActivity::class.java))
+                ChatUtils.checkJobTypeAndOpenChat(this@HomeFragment)
             }
 
             courseIcon.setOnClickListener {

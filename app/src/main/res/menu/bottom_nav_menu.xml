@@ -12,6 +12,11 @@
         android:title="History" />
 
     <item
+        android:id="@+id/navigation_mentor"
+        android:icon="@drawable/ic_mentorship"
+        android:title="Mentorship" />
+
+    <item
         android:id="@+id/navigation_notifications"
         android:icon="@drawable/ic_person"
         android:title="@string/title_profile" />

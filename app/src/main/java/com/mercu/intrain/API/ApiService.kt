@@ -1,13 +1,17 @@
 package com.mercu.intrain.API
 
+import com.mercu.intrain.model.Availability
 import com.mercu.intrain.model.CompletedStepResponse
 import com.mercu.intrain.model.Course
 //import com.mercu.intrain.model.EnrollMock
-import com.mercu.intrain.model.Enrollment
 import com.mercu.intrain.model.EnrollmentItem
 //import com.mercu.intrain.model.EnrollmentMockResponse
 import com.mercu.intrain.model.EnrollmentRequest
 import com.mercu.intrain.model.EnrollmentResponse
+import com.mercu.intrain.model.MentorFeedback
+import com.mercu.intrain.model.MentorProfile
+import com.mercu.intrain.model.MentorProfileWithExperience
+import com.mercu.intrain.model.MentorshipSession
 import com.mercu.intrain.model.ProgressStep
 import com.mercu.intrain.model.Roadmap
 import com.mercu.intrain.model.UserRoadmap
@@ -189,5 +193,45 @@ interface ApiService {
         @Path("user_id") userId: String,
         @Path("roadmap_id") roadmapId: String
     ): Response<Unit>
+
+    // -------------------- Mentorship Feature --------------------
+
+    @POST("api/v1/mentorship/register")
+    suspend fun registerMentor(
+        @Body request : Map<String, String>
+    ): Response<MentorProfile>
+
+    @GET("api/v1/mentorship/mentors")
+    suspend fun listMentors(
+        @Query("q") query: String = ""
+    ): Response<List<MentorProfile>>
+
+    @POST("api/v1/mentorship/mentors/{mentor_id}/availability")
+    suspend fun setAvailability(
+        @Path("mentor_id") mentorId : String,
+        @Body request : Map<String, String>
+    ): Response<Availability>
+
+    @GET("api/v1/mentorship/mentors/{mentor_id}/availability")
+    suspend fun getAvailability(
+        @Path("mentor_id") mentorId: String
+    ): Response<List<Availability>>
+
+    @POST("api/v1/mentorship/sessions")
+    suspend fun bookSession(
+        @Body request : Map<String, String>
+    ): Response<MentorshipSession>
+
+    @POST("api/v1/mentorship/sessions/{session_id}/feedback")
+    suspend fun submitFeedback(
+        @Path("session_id") sessionId : String,
+        @Body request : Map<String, String>
+    ): Response<MentorFeedback>
+
+    @GET("api/v1/mentorship/mentors/{mentor_id}/profile")
+    suspend fun getMentorProfile(
+        @Path("mentor_id") mentorId: String
+    ): Response<MentorProfileWithExperience>
+
 
 }

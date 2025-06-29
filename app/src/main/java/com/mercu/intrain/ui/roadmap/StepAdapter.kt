@@ -14,9 +14,11 @@ class StepAdapter : ListAdapter<Step, StepAdapter.ViewHolder>(StepDiffCallback()
         RecyclerView.ViewHolder(binding.root) {
         fun bind(step: Step) {
             binding.apply {
-                tvStepOrder.text = "${step.stepOrder}."
-                tvStepTitle.text = step.title
-                tvStepDescription.text = step.description
+                tvStepOrder.text = "${step.stepOrder ?: 0}."
+                tvStepTitle.text = step.title ?: "Unknown Step"
+                tvStepDescription.text = step.description ?: "No description available"
+                
+                val hasCourse = !step.courseId.isNullOrEmpty()
             }
         }
     }

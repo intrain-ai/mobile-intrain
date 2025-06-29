@@ -33,7 +33,7 @@ class CVHistoryFragment : Fragment() {
         })
         recyclerView.adapter = adapter
         viewModel.cvReviews.observe(viewLifecycleOwner) { list ->
-            adapter.submitList(list)
+            adapter.submitCVList(list)
         }
         viewModel.loadAllHistories()
     }

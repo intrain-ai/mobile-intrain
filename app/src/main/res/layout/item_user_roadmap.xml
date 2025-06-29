@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="4dp">
+    android:layout_margin="4dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp"
+    app:strokeWidth="1dp"
+    app:strokeColor="?attr/colorSurfaceVariant">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,41 +16,131 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
-            android:id="@+id/tvTitle"
+        <!-- Header with Title and Job Type -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="UI/UX Designer"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
 
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_roadmap"
+                android:tint="?attr/colorPrimary"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="UI/UX Designer"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="?android:textColorPrimary"
+                android:maxLines="2"
+                android:ellipsize="end" />
+
+            <TextView
+                android:id="@+id/tvJobType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_job_type"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:text="Full Time"
+                android:textColor="#FFFFFF"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Description -->
         <TextView
             android:id="@+id/tvDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Learning about UI/UX design"
-            android:textSize="14sp" />
+            android:layout_marginBottom="12dp"
+            android:text="Learning about UI/UX design principles and tools"
+            android:textSize="14sp"
+            android:textColor="?android:textColorSecondary"
+            android:maxLines="2"
+            android:ellipsize="end" />
 
-        <TextView
-            android:id="@+id/tvJobType"
-            android:layout_width="wrap_content"
+        <!-- Progress Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/bg_job_type"
-            android:padding="4dp"
-            android:text="Full Time"
-            android:textColor="#FFFFFF"
-            android:textSize="12sp" />
+            android:orientation="vertical"
+            android:layout_marginBottom="8dp">
 
-        <TextView
-            android:id="@+id/tvStartedAt"
-            android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Progress"
+                    android:textSize="12sp"
+                    android:textColor="?android:textColorSecondary"
+                    android:layout_marginEnd="8dp" />
+
+                <TextView
+                    android:id="@+id/tvProgress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="0/5 steps completed"
+                    android:textSize="12sp"
+                    android:textColor="?attr/colorPrimary"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/progressIndicator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:trackCornerRadius="8dp"
+                app:indicatorColor="?attr/colorPrimary"
+                app:trackColor="?attr/colorSurfaceVariant"
+                android:progress="0" />
+        </LinearLayout>
+
+        <!-- Footer with Start Date -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Started at 20/08/2020"
-            android:textSize="12sp"
-            android:textStyle="italic" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_calendar"
+                android:tint="?android:textColorSecondary"
+                android:layout_marginEnd="4dp" />
+
+            <TextView
+                android:id="@+id/tvStartedAt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Started: 20 Aug 2024"
+                android:textSize="12sp"
+                android:textColor="?android:textColorSecondary" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_arrow"
+                android:tint="?android:textColorSecondary"
+                android:rotation="180" />
+        </LinearLayout>
 
     </LinearLayout>
 

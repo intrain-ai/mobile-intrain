@@ -7,6 +7,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mercu.intrain.databinding.ActivityRoadmapDetailBinding
 
@@ -22,14 +24,27 @@ class RoadmapDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
+        // Enable edge-to-edge display
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        
         binding = ActivityRoadmapDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupSystemUI()
         setupRecyclerView()
         setupObservers()
         setupListeners()
 
         viewModel.loadRoadmapDetails(roadmapId)
+    }
+
+    private fun setupSystemUI() {
+        // Make the status bar transparent and icons dark
+        window.statusBarColor = android.graphics.Color.TRANSPARENT
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            isAppearanceLightStatusBars = true
+        }
     }
 
     private fun setupRecyclerView() {
@@ -40,14 +55,26 @@ class RoadmapDetailActivity : AppCompatActivity() {
 
     private fun setupObservers() {
         viewModel.roadmapDetails.observe(this) { roadmap ->
-            binding.tvTitle.text = roadmap.title
-            binding.tvDescription.text = roadmap.description
-            binding.tvJobType.text = roadmap.jobType
-            adapter.submitList(roadmap.steps)
+            if (roadmap != null) {
+                // Update header information
+                binding.tvTitle.text = roadmap.title ?: "Unknown Roadmap"
+                binding.tvDescription.text = roadmap.description ?: "No description available"
+                binding.tvJobType.text = roadmap.jobType ?: "Unknown Type"
+                
+                // Update steps list
+                adapter.submitList(roadmap.steps ?: emptyList())
+            } else {
+                // Handle null roadmap
+                binding.tvTitle.text = "Roadmap Not Found"
+                binding.tvDescription.text = "The requested roadmap could not be loaded."
+                binding.tvJobType.text = "Unknown"
+                adapter.submitList(emptyList())
+            }
         }
 
         viewModel.isLoading.observe(this) { isLoading ->
-            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+            binding.progressBar.visibility = if (isLoading == true) View.VISIBLE else View.GONE
+            binding.btnStart.isEnabled = isLoading != true
         }
 
         viewModel.errorMessage.observe(this) { error ->
@@ -59,8 +86,9 @@ class RoadmapDetailActivity : AppCompatActivity() {
 
     private fun setupListeners() {
         binding.btnStart.setOnClickListener {
+            binding.btnStart.isEnabled = false
             viewModel.startRoadmap(roadmapId) {
-                Toast.makeText(this, "Roadmap started!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Roadmap started successfully!", Toast.LENGTH_SHORT).show()
                 finish()
             }
         }

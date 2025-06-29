@@ -100,7 +100,7 @@ fun DiffSelectScreen(
                     viewModel.initializeChat(
                         userId = userId,
                         hrLevel = selected.id,
-                        jobType = "Back-End Engineer",
+                        jobType = SharedPrefHelper(context).getJobType() ?: "",
                         onSuccess = { sessionId, response ->
                             navToChat(sessionId, response, selected.id)
                         },

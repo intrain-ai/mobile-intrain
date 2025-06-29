@@ -77,4 +77,4 @@ class SectionFeedbackAdapter(private val items: List<com.mercu.intrain.API.Revie
             needsImprovementChip?.visibility = if (data.needsImprovement) View.VISIBLE else View.GONE
         }
     }
-} 
+}

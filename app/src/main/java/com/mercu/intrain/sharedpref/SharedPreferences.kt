@@ -39,6 +39,10 @@ class SharedPrefHelper(context: Context) {
         sharedPreferences.edit().putBoolean("dark_mode", isDarkMode).apply()
     }
 
+    fun saveJobType(jobType: String) {
+        sharedPreferences.edit().putString("job_type", jobType).apply()
+    }
+
     fun getUid(): String? {
         return getString("auth_uid")
     }
@@ -65,6 +69,14 @@ class SharedPrefHelper(context: Context) {
 
     fun getDarkMode(): Boolean {
         return sharedPreferences.getBoolean("dark_mode", false)
+    }
+
+    fun getJobType(): String? {
+        return getString("job_type")
+    }
+
+    fun hasJobType(): Boolean {
+        return getJobType() != null && getJobType()!!.isNotEmpty()
     }
 
     private fun getString(key: String, default: String? = null): String? {

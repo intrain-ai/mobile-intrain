@@ -39,12 +39,15 @@ class RoadmapViewModel(application: Application) : AndroidViewModel(application)
             try {
                 val response = repository.getAllRoadmaps()
                 if (response.isSuccessful) {
-                    _roadmaps.value = response.body()
+                    val roadmaps = response.body()
+                    _roadmaps.value = roadmaps ?: emptyList()
                 } else {
                     _errorMessage.value = "Error: ${response.code()} - ${response.message()}"
+                    _roadmaps.value = emptyList()
                 }
             } catch (e: Exception) {
                 _errorMessage.value = "Network error: ${e.message}"
+                _roadmaps.value = emptyList()
             } finally {
                 _isLoading.value = false
             }
@@ -57,7 +60,12 @@ class RoadmapViewModel(application: Application) : AndroidViewModel(application)
             try {
                 val response = repository.getRoadmapDetails(roadmapId)
                 if (response.isSuccessful) {
-                    _roadmapDetails.value = response.body()
+                    val roadmap = response.body()
+                    if (roadmap != null) {
+                        _roadmapDetails.value = roadmap
+                    } else {
+                        _errorMessage.value = "No roadmap details received"
+                    }
                 } else {
                     _errorMessage.value = "Error loading roadmap: ${response.code()}"
                 }
@@ -107,27 +115,33 @@ class RoadmapViewModel(application: Application) : AndroidViewModel(application)
                         } else {
                             android.util.Log.e("RoadmapViewModel", "Response body is null")
                             _errorMessage.value = "No roadmaps data received"
+                            _userRoadmaps.value = emptyList()
                         }
                     }
                     response.code() == 401 -> {
                         android.util.Log.e("RoadmapViewModel", "Authentication required")
                         _errorMessage.value = "Please login to view your roadmaps"
+                        _userRoadmaps.value = emptyList()
                     }
                     response.code() == 403 -> {
                         android.util.Log.e("RoadmapViewModel", "Permission denied")
                         _errorMessage.value = "You don't have permission to view roadmaps"
+                        _userRoadmaps.value = emptyList()
                     }
                     else -> {
                         android.util.Log.e("RoadmapViewModel", "Error: ${response.code()} - ${response.message()}")
                         _errorMessage.value = "Error loading your roadmaps: ${response.code()} - ${response.message()}"
+                        _userRoadmaps.value = emptyList()
                     }
                 }
             } catch (e: IllegalStateException) {
                 android.util.Log.e("RoadmapViewModel", "Authentication error", e)
                 _errorMessage.value = "Authentication required. Please login first."
+                _userRoadmaps.value = emptyList()
             } catch (e: Exception) {
                 android.util.Log.e("RoadmapViewModel", "Network error", e)
                 _errorMessage.value = "Network error: ${e.message}"
+                _userRoadmaps.value = emptyList()
             } finally {
                 _isLoading.value = false
             }
@@ -155,12 +169,15 @@ class RoadmapViewModel(application: Application) : AndroidViewModel(application)
             try {
                 val response = repository.getRoadmapProgress(roadmapId)
                 if (response.isSuccessful) {
-                    _roadmapProgress.value = response.body()
+                    val progress = response.body()
+                    _roadmapProgress.value = progress ?: emptyList()
                 } else {
                     _errorMessage.value = "Error loading progress: ${response.code()}"
+                    _roadmapProgress.value = emptyList()
                 }
             } catch (e: Exception) {
                 _errorMessage.value = "Error: ${e.message}"
+                _roadmapProgress.value = emptyList()
             } finally {
                 _isLoading.value = false
             }

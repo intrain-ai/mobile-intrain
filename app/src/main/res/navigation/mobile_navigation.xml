@@ -18,6 +18,12 @@
         tools:layout="@layout/fragment_history" />
 
     <fragment
+        android:id="@+id/navigation_mentor"
+        android:name="com.mercu.intrain.ui.mentor.MentorFragment"
+        android:label="Mentorship"
+        tools:layout="@layout/fragment_mentor" />
+
+    <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.mercu.intrain.ui.profile.ProfileFragment"
         android:label="@string/title_profile"

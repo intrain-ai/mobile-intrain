@@ -13,24 +13,34 @@ import java.text.SimpleDateFormat
 import java.util.*
 import com.google.android.material.chip.Chip
 
+sealed class HistoryItem {
+    data class ChatItem(val chatSession: ChatSession) : HistoryItem()
+    data class CVItem(val cvReview: CVReviewHistoryResponse) : HistoryItem()
+}
+
 class HistoryAdapter(
     private val onChatClick: ((ChatSession) -> Unit)? = null,
     private val onCVClick: ((CVReviewHistoryResponse) -> Unit)? = null
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val items = mutableListOf<Any>()
+    private val items = mutableListOf<HistoryItem>()
 
-    fun submitList(data: List<Any>) {
+    fun submitChatList(data: List<ChatSession>) {
         items.clear()
-        items.addAll(data)
+        items.addAll(data.map { HistoryItem.ChatItem(it) })
+        notifyDataSetChanged()
+    }
+
+    fun submitCVList(data: List<CVReviewHistoryResponse>) {
+        items.clear()
+        items.addAll(data.map { HistoryItem.CVItem(it) })
         notifyDataSetChanged()
     }
 
     override fun getItemViewType(position: Int): Int {
         return when (items[position]) {
-            is ChatSession -> 0
-            is CVReviewHistoryResponse -> 1
-            else -> throw IllegalArgumentException("Unknown item type")
+            is HistoryItem.ChatItem -> 0
+            is HistoryItem.CVItem -> 1
         }
     }
 
@@ -45,8 +55,8 @@ class HistoryAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = items[position]) {
-            is ChatSession -> (holder as ChatViewHolder).bind(item)
-            is CVReviewHistoryResponse -> (holder as CvViewHolder).bind(item)
+            is HistoryItem.ChatItem -> (holder as ChatViewHolder).bind(item.chatSession)
+            is HistoryItem.CVItem -> (holder as CvViewHolder).bind(item.cvReview)
         }
     }
 

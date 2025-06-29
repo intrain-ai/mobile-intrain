@@ -37,8 +37,13 @@ class ChatHistoryFragment : Fragment() {
         })
         recyclerView.adapter = adapter
         viewModel.chatHistory.observe(viewLifecycleOwner) { list ->
-            adapter.submitList(list)
+            adapter.submitChatList(list)
         }
+        
+        // Test the endpoint first
+        viewModel.testChatHistoryEndpoint()
+        
+        // Then load all histories
         viewModel.loadAllHistories()
     }
 } 

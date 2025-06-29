@@ -15,20 +15,29 @@ class ProgressStepAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(step: ProgressStep) {
             binding.apply {
-                tvStepOrder.text = "${step.stepOrder}."
-                tvStepTitle.text = step.title
-                tvStepDescription.text = step.description
+                tvStepOrder.text = "${step.stepOrder ?: 0}."
+                tvStepTitle.text = step.title ?: "Unknown Step"
+                tvStepDescription.text = step.description ?: "No description available"
 
-                if (step.completed) {
+                if (step.completed == true) {
                     cbComplete.isChecked = true
                     cbComplete.isEnabled = false
-                    root.alpha = 0.6f
+                    root.alpha = 0.7f
+                    
+                    tvStepTitle.setTextColor(binding.root.context.getColor(android.R.color.darker_gray))
+                    tvStepDescription.setTextColor(binding.root.context.getColor(android.R.color.darker_gray))
                 } else {
                     cbComplete.isChecked = false
                     cbComplete.isEnabled = true
-                    root.alpha = 1f
+                    root.alpha = 1.0f
+                    
+                    tvStepTitle.setTextColor(binding.root.context.getColor(android.R.color.black))
+                    tvStepDescription.setTextColor(binding.root.context.getColor(android.R.color.darker_gray))
+                    
                     cbComplete.setOnCheckedChangeListener { _, isChecked ->
-                        if (isChecked) onCompleteClick(step)
+                        if (isChecked) {
+                            onCompleteClick(step)
+                        }
                     }
                 }
             }

@@ -8,6 +8,7 @@ junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 appcompat = "1.7.0"
+lifecycleRuntimeCompose = "2.9.1"
 lifecycleRuntimeKtx = "2.9.1"
 material = "1.12.0"
 constraintlayout = "2.2.1"
@@ -19,6 +20,7 @@ navigationUiKtx = "2.8.9"
 activity = "1.10.1"
 legacySupportV4 = "1.0.0"
 fragmentKtx = "1.5.6"
+runtimeLivedata = "1.8.3"
 swiperefreshlayout = "1.1.0"
 uiToolingPreview = "1.8.3"
 
@@ -27,10 +29,12 @@ androidx-activity-compose = { module = "androidx.activity:activity-compose", ver
 androidx-compose-bom = { module = "androidx.compose:compose-bom" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-foundation = { module = "androidx.compose.foundation:foundation" }
+androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleRuntimeCompose" }
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 androidx-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
+androidx-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata", version.ref = "runtimeLivedata" }
 androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
 androidx-ui = { module = "androidx.compose.ui:ui", version.ref = "uiToolingPreview" }
 androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
@@ -52,6 +56,9 @@ androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", ve
 material-v190 = { module = "com.google.android.material:material", version.ref = "googleMaterialVersion" }
 material3 = { module = "androidx.compose.material3:material3" }
 ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

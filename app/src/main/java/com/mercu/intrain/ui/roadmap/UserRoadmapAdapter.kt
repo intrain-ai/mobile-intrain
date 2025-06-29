@@ -41,18 +41,30 @@ class UserRoadmapAdapter(
         }
 
         fun bind(userRoadmap: UserRoadmapHistory) {
-            binding.tvTitle.text = userRoadmap.roadmap.title
-            binding.tvDescription.text = userRoadmap.roadmap.description
-            binding.tvJobType.text = userRoadmap.roadmap.jobType
+            // Safe access to roadmap properties
+            val roadmap = userRoadmap.roadmap
+            binding.tvTitle.text = roadmap?.title ?: "Unknown Roadmap"
+            binding.tvDescription.text = roadmap?.description ?: "No description available"
+            binding.tvJobType.text = roadmap?.jobType ?: "Unknown Type"
             
-            // Format the date
+            // Display total steps (progress will be loaded separately)
+            val totalSteps = roadmap?.steps?.size ?: 0
+            binding.tvProgress.text = "$totalSteps steps total"
+            binding.progressIndicator.progress = 0 // Will be updated when progress is loaded
+            
+            // Format the date with null safety
             val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
             val displayFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
             try {
-                val date = dateFormat.parse(userRoadmap.startedAt)
-                binding.tvStartedAt.text = "Started: ${displayFormat.format(date)}"
+                val startedAt = userRoadmap.startedAt
+                if (!startedAt.isNullOrEmpty()) {
+                    val date = dateFormat.parse(startedAt)
+                    binding.tvStartedAt.text = "Started: ${displayFormat.format(date)}"
+                } else {
+                    binding.tvStartedAt.text = "Started: Unknown date"
+                }
             } catch (e: Exception) {
-                binding.tvStartedAt.text = "Started: ${userRoadmap.startedAt}"
+                binding.tvStartedAt.text = "Started: ${userRoadmap.startedAt ?: "Unknown date"}"
             }
         }
     }
