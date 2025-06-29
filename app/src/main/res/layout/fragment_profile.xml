@@ -175,35 +175,6 @@
                     android:inputType="textEmailAddress"
                     android:layout_marginTop="8dp" />
 
-                <!-- Job Type -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Tipe Pekerjaan"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/poppinsbold"
-                    android:textColor="#626FE2" />
-
-                <TextView
-                    android:id="@+id/jobTypeText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:textSize="16sp"
-                    tools:text="Software Engineer" />
-
-                <EditText
-                    android:id="@+id/editJobType"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Masukkan Tipe Pekerjaan"
-                    android:visibility="gone"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/poppinsbold"
-                    android:inputType="text"
-                    android:layout_marginTop="8dp" />
-
                 <!-- Save & Cancel Buttons -->
                 <LinearLayout
                     android:id="@+id/editButtonLayout"
@@ -417,6 +388,77 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Cancel Password"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:textColor="@color/md_theme_primary" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#E6E9F8"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp" />
+
+                <!-- Job Type Setting -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/jobTypeButton"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:icon="@drawable/ic_work"
+                    app:iconPadding="12dp"
+                    app:iconTint="#626FE2"
+                    android:text="Tipe Pekerjaan"
+                    android:textAlignment="textStart"
+                    android:textColor="#626FE2"
+                    android:backgroundTint="@android:color/transparent" />
+
+                <TextView
+                    android:id="@+id/jobTypeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="44dp"
+                    android:layout_marginTop="4dp"
+                    android:textSize="14sp"
+                    android:textColor="#666666"
+                    tools:text="Software Engineer" />
+
+                <EditText
+                    android:id="@+id/editJobType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Masukkan Tipe Pekerjaan"
+                    android:visibility="gone"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/poppinsbold"
+                    android:inputType="text"
+                    android:layout_marginTop="8dp" />
+
+                <LinearLayout
+                    android:id="@+id/jobTypeButtonLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp"
+                    android:gravity="end"
+                    android:visibility="gone"
+                    android:weightSum="2">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/saveJobTypeButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Simpan"
+                        android:textColor="@color/md_theme_primary"
+                        style="@style/Widget.MaterialComponents.Button.TextButton" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/cancelJobTypeButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Batal"
                         style="@style/Widget.MaterialComponents.Button.TextButton"
                         android:textColor="@color/md_theme_primary" />
                 </LinearLayout>

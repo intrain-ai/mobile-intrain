@@ -81,7 +81,7 @@ class ProfileFragment : Fragment() {
             binding.emailText.text = it
         }
 
-        // Set job type text
+        // Set job type text in settings
         binding.jobTypeText.text = jobType
 
         return binding.root
@@ -108,7 +108,6 @@ class ProfileFragment : Fragment() {
             binding.editUsername.setText(binding.usernameText.text)
             binding.editEmail.setText(binding.emailText.text)
             binding.editName.setText(sharedPrefHelper.getName() ?: "")
-            binding.editJobType.setText(sharedPrefHelper.getJobType() ?: "")
             binding.editPassword.setText("") // empty for security
         }
 
@@ -128,7 +127,6 @@ class ProfileFragment : Fragment() {
             val username = binding.editUsername.text.toString().trim()
             val name = binding.editName.text.toString().trim()
             val email = binding.editEmail.text.toString().trim()
-            val jobType = binding.editJobType.text.toString().trim()
 
             if (username.isEmpty() || name.isEmpty() || email.isEmpty()) {
                 Toast.makeText(requireContext(), "Semua field harus diisi", Toast.LENGTH_SHORT).show()
@@ -154,16 +152,8 @@ class ProfileFragment : Fragment() {
                         sharedPrefHelper.saveEmail(email)
                         sharedPrefHelper.saveName(name)
                         
-                        // Save job type if provided
-                        if (jobType.isNotEmpty()) {
-                            sharedPrefHelper.saveJobType(jobType)
-                        }
-
                         profileViewModel.updateProfileInfo(name, username, email)
                         
-                        // Update job type display
-                        binding.jobTypeText.text = if (jobType.isNotEmpty()) jobType else "Belum diatur"
-
                         Toast.makeText(requireContext(), "Profile updated!", Toast.LENGTH_SHORT).show()
                         toggleEditMode(false)
                     } else {
@@ -235,6 +225,41 @@ class ProfileFragment : Fragment() {
             binding.editPassword.text?.clear()
         }
 
+        // Job Type button
+        binding.jobTypeButton.setOnClickListener {
+            binding.editJobType.visibility = View.VISIBLE
+            binding.jobTypeButtonLayout.visibility = View.VISIBLE
+            binding.editJobType.setText(sharedPrefHelper.getJobType() ?: "")
+            binding.editJobType.requestFocus()
+            Toast.makeText(requireContext(), "Masukkan tipe pekerjaan baru", Toast.LENGTH_SHORT).show()
+        }
+
+        // Save Job Type button
+        binding.saveJobTypeButton.setOnClickListener {
+            val newJobType = binding.editJobType.text.toString().trim()
+            if (newJobType.isEmpty()) {
+                Toast.makeText(requireContext(), "Tipe pekerjaan tidak boleh kosong", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            sharedPrefHelper.saveJobType(newJobType)
+            binding.jobTypeText.text = newJobType
+            Toast.makeText(requireContext(), "Tipe pekerjaan berhasil diperbarui", Toast.LENGTH_SHORT).show()
+            
+            // Hide job type editing UI
+            binding.editJobType.visibility = View.GONE
+            binding.jobTypeButtonLayout.visibility = View.GONE
+            binding.editJobType.text?.clear()
+        }
+
+        // Cancel Job Type button
+        binding.cancelJobTypeButton.setOnClickListener {
+            // Hide job type editing UI
+            binding.editJobType.visibility = View.GONE
+            binding.jobTypeButtonLayout.visibility = View.GONE
+            binding.editJobType.text?.clear()
+        }
+
         // Roadmap button
         binding.roadmapButton.setOnClickListener {
             val intent = Intent(requireContext(), RoadmapComposeActivity::class.java)
@@ -256,12 +281,10 @@ class ProfileFragment : Fragment() {
         binding.nameText.visibility = if (enabled) View.GONE else View.VISIBLE
         binding.usernameText.visibility = if (enabled) View.GONE else View.VISIBLE
         binding.emailText.visibility = if (enabled) View.GONE else View.VISIBLE
-        binding.jobTypeText.visibility = if (enabled) View.GONE else View.VISIBLE
 
         binding.editUsername.visibility = if (enabled) View.VISIBLE else View.GONE
         binding.editEmail.visibility = if (enabled) View.VISIBLE else View.GONE
         binding.editName.visibility = if (enabled) View.VISIBLE else View.GONE
-        binding.editJobType.visibility = if (enabled) View.VISIBLE else View.GONE
         binding.editButtonLayout.visibility = if (enabled) View.VISIBLE else View.GONE
 
         // Biarkan password tetap tersembunyi
