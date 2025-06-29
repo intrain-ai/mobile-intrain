@@ -17,7 +17,7 @@ class StepAdapter : ListAdapter<Step, StepAdapter.ViewHolder>(StepDiffCallback()
                 tvStepOrder.text = "${step.stepOrder ?: 0}."
                 tvStepTitle.text = step.title ?: "Unknown Step"
                 tvStepDescription.text = step.description ?: "No description available"
-                
+
                 val hasCourse = !step.courseId.isNullOrEmpty()
             }
         }

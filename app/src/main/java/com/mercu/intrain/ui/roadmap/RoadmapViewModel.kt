@@ -109,7 +109,7 @@ class RoadmapViewModel(application: Application) : AndroidViewModel(application)
                 android.util.Log.d("RoadmapViewModel", "Loading user roadmaps...")
                 val response = repository.getUserRoadmaps()
                 android.util.Log.d("RoadmapViewModel", "Response code: ${response.code()}")
-                
+
                 when {
                     response.isSuccessful -> {
                         val roadmaps = response.body()

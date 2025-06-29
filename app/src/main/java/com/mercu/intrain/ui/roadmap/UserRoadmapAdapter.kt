@@ -46,12 +46,12 @@ class UserRoadmapAdapter(
             binding.tvTitle.text = roadmap?.title ?: "Unknown Roadmap"
             binding.tvDescription.text = roadmap?.description ?: "No description available"
             binding.tvJobType.text = roadmap?.jobType ?: "Unknown Type"
-            
+
             // Display total steps (progress will be loaded separately)
             val totalSteps = roadmap?.steps?.size ?: 0
             binding.tvProgress.text = "$totalSteps steps total"
             binding.progressIndicator.progress = 0 // Will be updated when progress is loaded
-            
+
             // Format the date with null safety
             val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
             val displayFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
@@ -78,4 +78,4 @@ class UserRoadmapAdapter(
             return oldItem == newItem
         }
     }
-} 
+}

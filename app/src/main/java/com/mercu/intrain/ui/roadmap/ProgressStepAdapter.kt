@@ -23,17 +23,17 @@ class ProgressStepAdapter(
                     cbComplete.isChecked = true
                     cbComplete.isEnabled = false
                     root.alpha = 0.7f
-                    
+
                     tvStepTitle.setTextColor(binding.root.context.getColor(android.R.color.darker_gray))
                     tvStepDescription.setTextColor(binding.root.context.getColor(android.R.color.darker_gray))
                 } else {
                     cbComplete.isChecked = false
                     cbComplete.isEnabled = true
                     root.alpha = 1.0f
-                    
+
                     tvStepTitle.setTextColor(binding.root.context.getColor(android.R.color.black))
                     tvStepDescription.setTextColor(binding.root.context.getColor(android.R.color.darker_gray))
-                    
+
                     cbComplete.setOnCheckedChangeListener { _, isChecked ->
                         if (isChecked) {
                             onCompleteClick(step)

@@ -1,4 +1,5 @@
 package com.mercu.intrain.ui.roadmap
+
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
