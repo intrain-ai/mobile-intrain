@@ -23,11 +23,12 @@ import com.mercu.intrain.databinding.FragmentProfileBinding
 import com.mercu.intrain.model.WorkExperience
 import com.mercu.intrain.sharedpref.SharedPrefHelper
 import com.mercu.intrain.ui.auth.LoginActivity
-import com.mercu.intrain.ui.roadmap.RoadmapActivity
+import com.mercu.intrain.ui.roadmap.RoadmapComposeActivity
 import com.mercu.intrain.utils.ChatUtils
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
+import kotlin.jvm.java
 
 class ProfileFragment : Fragment() {
 
@@ -188,16 +189,6 @@ class ProfileFragment : Fragment() {
             Toast.makeText(requireContext(), "Masukkan password baru", Toast.LENGTH_SHORT).show()
         }
 
-        // Edit Job Type button
-        binding.editJobTypeButton.setOnClickListener {
-            ChatUtils.showEditJobTypeDialog(this) {
-                // Update the job type display after editing
-                val updatedJobType = sharedPrefHelper.getJobType() ?: "Belum diatur"
-                binding.jobTypeText.text = updatedJobType
-                Toast.makeText(requireContext(), "Job type updated!", Toast.LENGTH_SHORT).show()
-            }
-        }
-
         // Save Password button
         binding.savePasswordButton.setOnClickListener {
             val newPassword = binding.editPassword.text.toString()
@@ -246,7 +237,7 @@ class ProfileFragment : Fragment() {
 
         // Roadmap button
         binding.roadmapButton.setOnClickListener {
-            val intent = Intent(requireContext(), RoadmapActivity::class.java)
+            val intent = Intent(requireContext(), RoadmapComposeActivity::class.java)
             startActivity(intent)
         }
 

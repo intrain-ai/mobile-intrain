@@ -380,19 +380,6 @@
                     android:textColor="#626FE2"
                     android:backgroundTint="@android:color/transparent" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/editJobTypeButton"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:icon="@drawable/ic_work"
-                    app:iconPadding="12dp"
-                    app:iconTint="#626FE2"
-                    android:text="Edit Job Type"
-                    android:textAlignment="textStart"
-                    android:textColor="#626FE2"
-                    android:backgroundTint="@android:color/transparent" />
-
                 <EditText
                     android:id="@+id/editPassword"
                     android:layout_width="match_parent"

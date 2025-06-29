@@ -49,7 +49,10 @@ class MentorViewModel : ViewModel() {
         viewModelScope.launch {
             _mentorListState.value = MentorListState.Loading
             try {
-                val response = apiService.listMentors(query.replace(" ", "_"))
+                // Format query: convert to lowercase and replace spaces with underscores
+                // This searches mentors by their expertise/skills
+                val formattedQuery = query.lowercase().replace(" ", "_")
+                val response = apiService.listMentors(formattedQuery)
                 if (response.isSuccessful) {
                     val mentors = response.body() ?: emptyList()
                     _mentorListState.value = MentorListState.Success(mentors)

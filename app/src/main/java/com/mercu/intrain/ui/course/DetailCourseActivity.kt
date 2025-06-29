@@ -24,32 +24,88 @@ class DetailCourseActivity : AppCompatActivity() {
     private lateinit var backButton: FloatingActionButton
     private lateinit var actionButton: Button
     private lateinit var sharedPrefHelper: SharedPrefHelper
-    private lateinit var course: Course
+    private var course: Course? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_course_detail)
 
+        initializeViews()
+        sharedPrefHelper = SharedPrefHelper(this)
+
+        // Try to get course from intent extras
+        course = intent.getParcelableExtra<Course>("course")
+        val courseId = intent.getStringExtra("course_id")
+
+        if (course != null) {
+            // Course object was passed directly
+            displayCourse(course!!)
+        } else if (courseId != null) {
+            // Course ID was passed, need to fetch course data
+            loadCourseById(courseId)
+        } else {
+            // No course data provided
+            showError("No course data provided")
+            return
+        }
+
+        setupBackButton()
+    }
+
+    private fun initializeViews() {
         courseTitle = findViewById(R.id.tvCourseTitle)
         courseDescription = findViewById(R.id.tvCourseDescription)
         courseProvider = findViewById(R.id.tvCourseProvider)
         courseUrl = findViewById(R.id.tvCourseUrl)
         actionButton = findViewById(R.id.btnEnroll)
         backButton = findViewById(R.id.fabBack)
+    }
 
-        course = intent.getParcelableExtra<Course>("course")!!
-        sharedPrefHelper = SharedPrefHelper(this)
-
+    private fun displayCourse(course: Course) {
         courseTitle.text = course.title
         courseDescription.text = course.description
         courseProvider.text = course.provider
         courseUrl.text = course.url
 
+        setupActionButton(course)
+    }
+
+    private fun loadCourseById(courseId: String) {
+        // Show loading state
+        courseTitle.text = "Loading..."
+        courseDescription.text = ""
+        courseProvider.text = ""
+        courseUrl.text = ""
+        actionButton.isEnabled = false
+        actionButton.text = "Loading..."
+
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val response = ApiConfig.api.getCourseDetails(courseId)
+                if (response.isSuccessful) {
+                    course = response.body()
+                    if (course != null) {
+                        displayCourse(course!!)
+                    } else {
+                        showError("Course not found")
+                    }
+                } else {
+                    showError("Failed to load course: ${response.message()}")
+                }
+            } catch (e: Exception) {
+                showError("Error loading course: ${e.message}")
+            }
+        }
+    }
+
+    private fun setupBackButton() {
         backButton.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
+    }
 
-        val uid = sharedPrefHelper.getUid().toString()
+    private fun setupActionButton(course: Course) {
+        val uid = sharedPrefHelper.getUid()?.toString() ?: ""
         val isEnrolled = intent.getBooleanExtra("IS_ENROLLED", false)
         val isCompleted = intent.getBooleanExtra("IS_COMPLETED", false)
 
@@ -73,7 +129,22 @@ class DetailCourseActivity : AppCompatActivity() {
         }
     }
 
+    private fun showError(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        courseTitle.text = "Error"
+        courseDescription.text = message
+        courseProvider.text = ""
+        courseUrl.text = ""
+        actionButton.isEnabled = false
+        actionButton.text = "Error"
+    }
+
     private fun enrollCourse(userId: String, courseId: String) {
+        if (userId.isEmpty()) {
+            Toast.makeText(this, "Please login first", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         val enroll = EnrollmentRequest(userId, courseId)
         CoroutineScope(Dispatchers.Main).launch {
             try {
@@ -91,6 +162,11 @@ class DetailCourseActivity : AppCompatActivity() {
     }
 
     private fun completeCourse(userId: String, courseId: String) {
+        if (userId.isEmpty()) {
+            Toast.makeText(this, "Please login first", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         val enroll = EnrollmentRequest(userId, courseId)
         CoroutineScope(Dispatchers.Main).launch {
             try {

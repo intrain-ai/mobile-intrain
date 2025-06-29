@@ -37,6 +37,9 @@ class RoadmapRepository(private val context: Context) {
     suspend fun getRoadmapProgress(roadmapId: String): Response<List<ProgressStep>> =
         withContext(Dispatchers.IO) { api.getRoadmapProgress(getUserId(), roadmapId) }
 
+    suspend fun getUserRoadmapProgress(roadmapId: String): Response<UserRoadmapHistory> =
+        withContext(Dispatchers.IO) { api.getUserRoadmapProgress(getUserId(), roadmapId) }
+
     suspend fun deleteRoadmap(roadmapId: String): Response<Unit> =
         withContext(Dispatchers.IO) { api.deleteRoadmap(getUserId(), roadmapId) }
 }

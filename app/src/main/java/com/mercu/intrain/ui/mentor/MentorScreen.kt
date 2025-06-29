@@ -207,7 +207,7 @@ fun MentorListScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Cari Mentor") },
+                title = { Text("Cari Mentor berdasarkan Keahlian") },
                 actions = {
                     if (!isMentor) {
                         IconButton(onClick = onRegisterClick) {
@@ -234,10 +234,24 @@ fun MentorListScreen(
             TextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
-                label = { Text("Cari mentor...") },
-                leadingIcon = { Icon(Icons.Default.Search, null) },
+                label = { Text("Cari berdasarkan keahlian...") },
+                placeholder = { Text("Contoh: Java, Python, UI/UX, Marketing") },
+                leadingIcon = { 
+                    Icon(
+                        Icons.Default.Search, 
+                        contentDescription = "Cari keahlian"
+                    ) 
+                },
                 modifier = Modifier.fillMaxWidth(),
-                singleLine = true
+                singleLine = true,
+                supportingText = {
+                    if (searchQuery.isNotEmpty()) {
+                        val formattedQuery = searchQuery.lowercase().replace(" ", "_")
+                        Text("Mencari keahlian: $formattedQuery", style = MaterialTheme.typography.bodySmall)
+                    } else {
+                        Text("Ketik keahlian yang ingin dicari", style = MaterialTheme.typography.bodySmall)
+                    }
+                }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -253,10 +267,36 @@ fun MentorListScreen(
 
                     if (mentors.isEmpty()) {
                         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                            Text("Tidak ada mentor ditemukan", style = MaterialTheme.typography.bodyLarge)
+                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                Text(
+                                    if (searchQuery.isNotEmpty()) "Tidak ada mentor dengan keahlian tersebut" 
+                                    else "Tidak ada mentor tersedia", 
+                                    style = MaterialTheme.typography.bodyLarge
+                                )
+                                if (searchQuery.isNotEmpty()) {
+                                    Spacer(modifier = Modifier.height(8.dp))
+                                    Text(
+                                        "Coba cari dengan kata kunci lain",
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
+                                }
+                            }
                         }
                     } else {
                         LazyColumn {
+                            // Show search results count
+                            if (searchQuery.isNotEmpty()) {
+                                item {
+                                    Text(
+                                        "Ditemukan ${mentors.size} mentor dengan keahlian \"$searchQuery\"",
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        modifier = Modifier.padding(bottom = 8.dp)
+                                    )
+                                }
+                            }
+                            
                             items(mentors) { mentor ->
                                 MentorCard(
                                     mentor = mentor,
@@ -348,11 +388,17 @@ fun MentorCard(
 
                 Spacer(Modifier.height(4.dp))
 
-                Text(
-                    mentor.expertise,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
+                // Expertise badge
+                Badge(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                ) {
+                    Text(
+                        mentor.expertise,
+                        style = MaterialTheme.typography.labelMedium,
+                        fontWeight = FontWeight.Medium
+                    )
+                }
 
                 Spacer(Modifier.height(8.dp))
 

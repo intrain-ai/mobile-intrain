@@ -188,6 +188,12 @@ interface ApiService {
         @Path("roadmap_id") roadmapId: String
     ): Response<List<ProgressStep>>
 
+    @GET("api/v1/users/{user_id}/roadmaps/{roadmap_id}")
+    suspend fun getUserRoadmapProgress(
+        @Path("user_id") userId: String,
+        @Path("roadmap_id") roadmapId: String
+    ): Response<UserRoadmapHistory>
+
     @DELETE("api/v1/users/{user_id}/roadmaps/{roadmap_id}")
     suspend fun deleteRoadmap(
         @Path("user_id") userId: String,

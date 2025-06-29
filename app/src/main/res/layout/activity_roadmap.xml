@@ -4,19 +4,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:colorBackground">
+    android:background="?android:colorBackground"
+    android:fitsSystemWindows="true">
 
     <!-- Top Bar -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
+        android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
+            app:title="Learning Roadmaps"
             app:titleTextColor="?attr/colorOnPrimary"
+            app:navigationIcon="@drawable/ic_back"
             app:navigationIconTint="?attr/colorOnPrimary"
             app:layout_scrollFlags="scroll|enterAlways" />
     </com.google.android.material.appbar.AppBarLayout>
@@ -31,81 +36,174 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:fillViewport="true"
+            android:clipToPadding="false"
+            android:paddingBottom="16dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="20dp">
+                android:padding="16dp">
 
                 <!-- My Roadmaps Button -->
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnMyRoadmaps"
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="My Learning Progress"
-                    android:icon="@drawable/ic_roadmap"
-                    app:iconGravity="textStart"
-                    app:cornerRadius="16dp"
-                    app:strokeWidth="0dp"
-                    app:iconTint="?attr/colorOnPrimary"
-                    app:backgroundTint="?attr/colorPrimary"
-                    android:textColor="?attr/colorOnPrimary" />
+                    android:layout_marginBottom="16dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="4dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="?attr/colorPrimary">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnMyRoadmaps"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="My Learning Progress"
+                            android:icon="@drawable/ic_roadmap"
+                            app:iconGravity="textStart"
+                            app:cornerRadius="12dp"
+                            app:strokeWidth="0dp"
+                            app:iconTint="?attr/colorOnPrimary"
+                            app:backgroundTint="?attr/colorPrimary"
+                            android:textColor="?attr/colorOnPrimary"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Track your progress and continue where you left off"
+                            android:textSize="12sp"
+                            android:textColor="?android:textColorSecondary"
+                            android:gravity="center" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
                 <!-- My Roadmaps Section -->
-                <com.google.android.material.textview.MaterialTextView
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:text="My Roadmaps"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="?android:textColorPrimary" />
+                    android:layout_marginBottom="16dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvUserRoadmaps"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:nestedScrollingEnabled="false" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
 
-                <TextView
-                    android:id="@+id/tvEmptyUserRoadmaps"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:gravity="center"
-                    android:text="You haven't started any roadmaps yet"
-                    android:textColor="?android:textColorSecondary"
-                    android:visibility="gone" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="12dp">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_history"
+                                app:tint="?attr/colorPrimary"
+                                android:layout_marginEnd="8dp" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="My Roadmaps"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:textColor="?android:textColorPrimary" />
+                        </LinearLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvUserRoadmaps"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:nestedScrollingEnabled="false"
+                            android:minHeight="100dp" />
+
+                        <TextView
+                            android:id="@+id/tvEmptyUserRoadmaps"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:gravity="center"
+                            android:text="You haven't started any roadmaps yet"
+                            android:textColor="?android:textColorSecondary"
+                            android:drawableTop="@drawable/ic_roadmap"
+                            android:drawableTint="?android:textColorSecondary"
+                            android:visibility="gone" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
                 <!-- Available Roadmaps Section -->
-                <com.google.android.material.textview.MaterialTextView
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    android:text="Available Roadmaps"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="?android:textColorPrimary" />
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvRoadmaps"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:nestedScrollingEnabled="false" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
 
-                <TextView
-                    android:id="@+id/tvEmpty"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:gravity="center"
-                    android:text="No roadmaps available"
-                    android:textColor="?android:textColorSecondary"
-                    android:visibility="gone" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="12dp">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_course"
+                                app:tint="?attr/colorPrimary"
+                                android:layout_marginEnd="8dp" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Available Roadmaps"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:textColor="?android:textColorPrimary" />
+                        </LinearLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvRoadmaps"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:nestedScrollingEnabled="false"
+                            android:minHeight="100dp" />
+
+                        <TextView
+                            android:id="@+id/tvEmpty"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:gravity="center"
+                            android:text="No roadmaps available"
+                            android:textColor="?android:textColorSecondary"
+                            android:drawableTop="@drawable/ic_course"
+                            android:drawableTint="?android:textColorSecondary"
+                            android:visibility="gone" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
@@ -120,4 +218,5 @@
         android:visibility="gone"
         app:indicatorSize="48dp"
         app:indicatorColor="?attr/colorPrimary" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
