@@ -37,7 +37,7 @@ fun EvaluationScreen(evaluation: Evaluation) {
             .verticalScroll(scrollState)
     ) {
         Text(
-            text = "Evaluation Result",
+            text = "Hasil Evaluasi",
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onPrimary,
@@ -55,7 +55,7 @@ fun EvaluationScreen(evaluation: Evaluation) {
         ) {
             Column(modifier = Modifier.padding(24.dp)) {
                 Text(
-                    text = "Score:",
+                    text = "Hasil Skor:",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Medium,
                     modifier = Modifier.padding(bottom = 8.dp),
@@ -65,7 +65,7 @@ fun EvaluationScreen(evaluation: Evaluation) {
                 ScoreBar(score = evaluation.score)
 
                 Text(
-                    text = "Evaluated at: ${evaluation.evaluatedAt ?: "-"}",
+                    text = "Dievaluasi pada: ${evaluation.evaluatedAt ?: "-"}",
                     fontSize = 18.sp,
                     modifier = Modifier.padding(top = 8.dp),
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -80,7 +80,7 @@ fun EvaluationScreen(evaluation: Evaluation) {
         ) {
             Column(modifier = Modifier.padding(24.dp)) {
                 Text(
-                    text = "Recommendations",
+                    text = "Rekomendasi",
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary,
@@ -88,7 +88,7 @@ fun EvaluationScreen(evaluation: Evaluation) {
                 )
                 Text(
                     text = evaluation.recommendations?.joinToString("\n• ", prefix = "• ")
-                        ?: "No recommendations",
+                        ?: "Tidak ada Rekomendasi",
                     fontSize = 16.sp,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     lineHeight = 22.sp
@@ -127,7 +127,7 @@ fun ScoreBar(score: Int?) {
     ) {
         Box(
             modifier = Modifier
-                .fillMaxWidth(validScore / 10f)
+                .fillMaxWidth()
                 .fillMaxHeight()
                 .clip(RoundedCornerShape(8.dp))
                 .background(color),

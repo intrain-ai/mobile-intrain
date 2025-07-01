@@ -18,7 +18,7 @@ class EvaluationActivity : ComponentActivity() {
                 if (evaluation != null) {
                     EvaluationScreen(evaluation = evaluation)
                 } else {
-                    Text("Evaluation data not found.")
+                    Text("Data Evaluasi Tidak Ada")
                 }
             }
         }

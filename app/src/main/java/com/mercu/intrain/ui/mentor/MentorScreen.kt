@@ -1,3 +1,5 @@
+package com.mercu.intrain.ui.mentor
+
 import android.R.attr.onClick
 import android.content.ClipData
 import android.content.ClipboardManager

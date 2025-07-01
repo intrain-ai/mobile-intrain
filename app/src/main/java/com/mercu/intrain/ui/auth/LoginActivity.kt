@@ -5,7 +5,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -51,6 +53,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mercu.intrain.MainActivity
 import com.mercu.intrain.R
 import com.mercu.intrain.sharedpref.SharedPrefHelper
+import com.mercu.intrain.theme.intrainPrimary
+import com.spr.jetpack_loading.components.indicators.BallSpinFadeLoaderIndicator
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -93,20 +97,17 @@ fun LoginScreen(
 
     // Collect state from ViewModel
     val loginState by viewModel.loginState.collectAsState()
+    var isTransitioning by remember { mutableStateOf(false) }
     val isLoading by viewModel.isLoading.collectAsState()
 
     // Handle state changes
     LaunchedEffect(loginState) {
         when (loginState) {
             is LoginState.Success -> {
+                isTransitioning = true
+                delay(1000)
                 val successMessage = (loginState as LoginState.Success).message
                 snackbarHostState.showSnackbar(successMessage)
-
-                // Delay navigation to show success message
-                scope.launch {
-                    delay(1500) // Show success message for 1.5 seconds
-                    onLoginSuccess()
-                }
             }
             is LoginState.Error -> {
                 val error = (loginState as LoginState.Error).message
@@ -117,10 +118,19 @@ fun LoginScreen(
         }
     }
 
+    LaunchedEffect(isTransitioning) {
+        if (isTransitioning) {
+            onLoginSuccess()
+        }
+    }
+
+
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
         containerColor = MaterialTheme.colorScheme.background
     ) { paddingValues ->
+
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -129,6 +139,8 @@ fun LoginScreen(
                 .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
+
             Image(
                 painter = painterResource(id = R.drawable.splash_logo),
                 contentDescription = "Logo",
@@ -214,6 +226,9 @@ fun LoginScreen(
                         }
                     }
 
+
+
+
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.Center
@@ -235,6 +250,21 @@ fun LoginScreen(
                         }
                     }
                 }
+            }
+
+
+        }
+
+        if (isTransitioning) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(intrainPrimary),
+                contentAlignment = Alignment.Center
+            ) {
+                BallSpinFadeLoaderIndicator(
+                    color = Color.White
+                )
             }
         }
     }
