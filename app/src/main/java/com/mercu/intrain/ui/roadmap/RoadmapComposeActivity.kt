@@ -11,9 +11,11 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.mercu.intrain.ui.course.DetailCourseActivity
 import com.mercu.intrain.ui.theme.InTrainTheme
+import com.mercu.intrain.sharedpref.SharedPrefHelper
 
 @OptIn(ExperimentalAnimationApi::class)
 class RoadmapComposeActivity : ComponentActivity() {
@@ -51,7 +53,10 @@ fun RoadmapComposeContent(
     onNavigateBack: () -> Unit,
     onOpenCourse: (String) -> Unit
 ) {
-    var currentScreen by remember { mutableStateOf(RoadmapScreen.Main) }
+    val context = LocalContext.current
+    val sharedPrefHelper = remember { SharedPrefHelper(context) }
+    val currentUserId = sharedPrefHelper.getUid() ?: ""
+    var currentScreen by remember { mutableStateOf(RoadmapScreenType.Main) }
     var selectedRoadmapId by remember { mutableStateOf<String?>(null) }
     
     Scaffold(
@@ -71,45 +76,46 @@ fun RoadmapComposeContent(
             }
         ) { screen ->
             when (screen) {
-                RoadmapScreen.Main -> {
+                RoadmapScreenType.Main -> {
                     RoadmapScreen(
                         viewModel = viewModel,
+                        currentUserId = currentUserId,
                         onNavigateToDetail = { roadmapId ->
                             selectedRoadmapId = roadmapId
-                            currentScreen = RoadmapScreen.Detail
+                            currentScreen = RoadmapScreenType.Detail
                         },
                         onNavigateToProgress = { roadmapId ->
                             selectedRoadmapId = roadmapId
-                            currentScreen = RoadmapScreen.Progress
+                            currentScreen = RoadmapScreenType.Progress
                         },
                         onNavigateBack = onNavigateBack
                     )
                 }
                 
-                RoadmapScreen.Detail -> {
+                RoadmapScreenType.Detail -> {
                     selectedRoadmapId?.let { roadmapId ->
                         RoadmapDetailScreen(
                             viewModel = viewModel,
                             roadmapId = roadmapId,
                             onNavigateBack = {
-                                currentScreen = RoadmapScreen.Main
+                                currentScreen = RoadmapScreenType.Main
                                 selectedRoadmapId = null
                             },
                             onStartRoadmap = {
-                                currentScreen = RoadmapScreen.Progress
+                                currentScreen = RoadmapScreenType.Progress
                             },
                             onOpenCourse = onOpenCourse
                         )
                     }
                 }
                 
-                RoadmapScreen.Progress -> {
+                RoadmapScreenType.Progress -> {
                     selectedRoadmapId?.let { roadmapId ->
                         RoadmapProgressScreen(
                             viewModel = viewModel,
                             roadmapId = roadmapId,
                             onNavigateBack = {
-                                currentScreen = RoadmapScreen.Main
+                                currentScreen = RoadmapScreenType.Main
                                 selectedRoadmapId = null
                             },
                             onOpenCourse = onOpenCourse
@@ -121,7 +127,7 @@ fun RoadmapComposeContent(
     }
 }
 
-enum class RoadmapScreen {
+internal enum class RoadmapScreenType {
     Main,
     Detail,
     Progress

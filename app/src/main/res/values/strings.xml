@@ -1,44 +1,44 @@
 <resources>
     <string name="app_name">InTrain</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_dashboard">Dasbor</string>
+    <string name="title_notifications">Notifikasi</string>
     <string name="title_profile">Profile</string>
-    <string name="email_validation_hint">Masukan Email</string>
+    <string name="email_validation_hint">Masukkan Email</string>
     <string name="email_validation_isEmpty">Email tidak boleh kosong</string>
     <string name="email_validation_notValid">Email tidak valid</string>
-    <string name="pass_isEmpty">Passsword tidak boleh kosong</string>
+    <string name="pass_isEmpty">Password tidak boleh kosong</string>
     <string name="pass_min_character">Panjang password minimal 6 karakter</string>
-    <string name="pass_input_hint">Masukan Password</string>
-    <string name="Pass_hint">Masukan Password</string>
-    <string name="login">Login</string>
+    <string name="pass_input_hint">Masukkan Password</string>
+    <string name="Pass_hint">Masukkan Password</string>
+    <string name="login">Masuk</string>
     <string name="register">Daftar</string>
     <string name="forgot_password">Lupa Password?</string>
     <string name="logo_intrain">Logo intrain</string>
     <string name="email">Email</string>
-    <string name="input_email">Masukan Email</string>
+    <string name="input_email">Masukkan Email</string>
     <string name="Input_pass">Password</string>
-    <string name="welcoming_message">Hello, Aldi!</string>
-    <string name="course">Course</string>
-    <string name="welcoming_message_2">Let\'s check your activity today</string>
-    <string name="news">News</string>
-    <string name="course_icon">Course Icon</string>
-    <string name="intrain_ai">InTrain.ai</string>
-    <string name="intrain_ai_icon">InTrain.ai Icon</string>
-    <string name="cv_checker">CV Checker</string>
-    <string name="cv_checker_icon">CV Checker Icon</string>
-    <string name="activity">Activity</string>
-    <string name="course_completed">Course Completed</string>
+    <string name="welcoming_message">Hai, Aldi!</string>
+    <string name="course">Kursus</string>
+    <string name="welcoming_message_2">Lihat kegiatan Anda hari ini</string>
+    <string name="news">Berita</string>
+    <string name="course_icon">Ikon Kursus</string>
+    <string name="intrain_ai">Chatbot</string>
+    <string name="intrain_ai_icon">Ikon InTrain.ai</string>
+    <string name="cv_checker">Check CV</string>
+    <string name="cv_checker_icon">Ikon Pengecekan CV</string>
+    <string name="activity">Aktivitas</string>
+    <string name="course_completed">Kursus Selesai</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="chat">Chat</string>
+    <string name="hello_blank_fragment">Hai, fragment kosong!</string>
+    <string name="chat">Obrolan</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="first_fragment_label">Fragment Pertama</string>
+    <string name="second_fragment_label">Fragment Kedua</string>
+    <string name="next">Berikutnya</string>
+    <string name="previous">Sebelumnya</string>
 
-    <string name="masukan_username">Masukan Username</string>
+    <string name="masukan_username">Masukkan Nama Pengguna</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
@@ -76,6 +76,8 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
-    <string name="username">Username</string>
-    <string name="masukkan_username">Masukkan Username</string>
+    <string name="username">Nama Pengguna</string>
+    <string name="masukkan_username">Masukkan Nama Pengguna</string>
+    <string name="title_activity_mentor">MentorActivity</string>
+    <string name="percent_home">0</string>
 </resources>

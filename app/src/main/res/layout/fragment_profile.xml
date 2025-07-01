@@ -31,6 +31,7 @@
             android:id="@+id/cameraIcon"
             android:layout_width="32dp"
             android:layout_height="32dp"
+            android:contentDescription="Camera Icon"
             android:src="@drawable/ic_camera"
             android:background="@drawable/circle_white_bg"
             android:padding="6dp"
@@ -68,13 +69,14 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
+                        android:contentDescription="Edit Icon"
                         android:src="@drawable/ic_person"
                         app:tint="#626FE2"/>
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Profile"
+                        android:text="Profil"
                         android:textStyle="bold"
                         android:fontFamily="@font/poppinsbold"
                         android:textColor="#626FE2"
@@ -93,7 +95,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Name"
+                    android:text="Nama"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppinsbold"
                     android:textColor="#626FE2" />
@@ -243,7 +245,7 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Experience"
+                        android:text="Pengalaman Kerja"
                         android:textStyle="bold"
                         android:fontFamily="@font/poppinsbold"
                         android:textColor="#626FE2"
@@ -256,7 +258,7 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_edit"
                         android:background="@android:color/transparent"
-                        android:contentDescription="Edit Experience"
+                        android:contentDescription="Edit Pengalaman Kerja"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
                         app:tint="#626FE2"/>
@@ -267,7 +269,7 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_add_work"
                         android:background="@android:color/transparent"
-                        android:contentDescription="Add Experience"
+                        android:contentDescription="Tambah Pengalaman Kerja"
                         android:layout_marginEnd="8dp"
                         app:tint="#626FE2"/>
                 </LinearLayout>
@@ -323,7 +325,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Settings"
+                        android:text="Pengaturan"
                         android:textStyle="bold"
                         android:fontFamily="@font/poppinsbold"
                         android:textColor="#626FE2"
@@ -346,7 +348,7 @@
                     android:icon="@drawable/ic_lock"
                     app:iconPadding="12dp"
                     app:iconTint="#626FE2"
-                    android:text="Change Password"
+                    android:text="Ubah Password"
                     android:textAlignment="textStart"
                     android:textColor="#626FE2"
                     android:backgroundTint="@android:color/transparent" />
@@ -408,60 +410,10 @@
                     android:icon="@drawable/ic_work"
                     app:iconPadding="12dp"
                     app:iconTint="#626FE2"
-                    android:text="Tipe Pekerjaan"
+                    android:text="Pilih Pekerjaan"
                     android:textAlignment="textStart"
                     android:textColor="#626FE2"
                     android:backgroundTint="@android:color/transparent" />
-
-                <TextView
-                    android:id="@+id/jobTypeText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="44dp"
-                    android:layout_marginTop="4dp"
-                    android:textSize="14sp"
-                    android:textColor="#666666"
-                    tools:text="Software Engineer" />
-
-                <EditText
-                    android:id="@+id/editJobType"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Masukkan Tipe Pekerjaan"
-                    android:visibility="gone"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/poppinsbold"
-                    android:inputType="text"
-                    android:layout_marginTop="8dp" />
-
-                <LinearLayout
-                    android:id="@+id/jobTypeButtonLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="8dp"
-                    android:gravity="end"
-                    android:visibility="gone"
-                    android:weightSum="2">
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/saveJobTypeButton"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Simpan"
-                        android:textColor="@color/md_theme_primary"
-                        style="@style/Widget.MaterialComponents.Button.TextButton" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/cancelJobTypeButton"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Batal"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:textColor="@color/md_theme_primary" />
-                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"

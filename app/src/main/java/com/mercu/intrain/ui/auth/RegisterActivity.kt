@@ -2,6 +2,7 @@ package com.mercu.intrain.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Patterns
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -39,10 +40,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mercu.intrain.R
+import com.mercu.intrain.ui.theme.InTrainTheme
+import com.mercu.intrain.ui.theme.intrainPrimaryColor
+import com.mercu.intrain.ui.theme.intrainAccentColor
+import com.mercu.intrain.ui.theme.intrainSuccessColor
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -50,7 +57,7 @@ class RegisterActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MaterialTheme {
+            InTrainTheme {
                 RegisterScreen(
                     onRegisterSuccess = {
                         startActivity(Intent(this, LoginActivity::class.java))
@@ -143,7 +150,7 @@ fun RegisterScreen(
                     Text(
                         text = "Name",
                         style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.primary
+                        color = MaterialTheme.intrainPrimaryColor
                     )
 
                     OutlinedTextField(
@@ -161,7 +168,7 @@ fun RegisterScreen(
                     Text(
                         text = "Username",
                         style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.primary
+                        color = MaterialTheme.intrainPrimaryColor
                     )
 
                     OutlinedTextField(
@@ -179,7 +186,7 @@ fun RegisterScreen(
                     Text(
                         text = "Email",
                         style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.primary
+                        color = MaterialTheme.intrainPrimaryColor
                     )
 
                     OutlinedTextField(
@@ -197,7 +204,7 @@ fun RegisterScreen(
                     Text(
                         text = "Password",
                         style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.primary
+                        color = MaterialTheme.intrainPrimaryColor
                     )
 
                     OutlinedTextField(
@@ -207,6 +214,7 @@ fun RegisterScreen(
                             passwordError = ""
                         },
                         modifier = Modifier.fillMaxWidth(),
+                        visualTransformation = PasswordVisualTransformation(),
                         label = { Text("Enter password") },
                         isError = passwordError.isNotEmpty(),
                         supportingText = { if (passwordError.isNotEmpty()) Text(passwordError) }
@@ -230,7 +238,7 @@ fun RegisterScreen(
                             if (email.isEmpty()) {
                                 emailError = "Email is required"
                                 valid = false
-                            } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                            } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                                 emailError = "Invalid email format"
                                 valid = false
                             }
@@ -256,12 +264,13 @@ fun RegisterScreen(
                         },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(56.dp)
+                            .height(56.dp),
+                        colors = androidx.compose.material3.ButtonDefaults.buttonColors(containerColor = MaterialTheme.intrainPrimaryColor)
                     ) {
                         if (isLoading) {
-                            CircularProgressIndicator(color = Color.White)
+                            CircularProgressIndicator(color = MaterialTheme.intrainAccentColor)
                         } else {
-                            Text("Register")
+                            Text("Register", color = Color.White)
                         }
                     }
 
@@ -271,11 +280,24 @@ fun RegisterScreen(
                     ) {
                         Text(
                             text = "Back to Login",
-                            textDecoration = TextDecoration.Underline
+                            textDecoration = TextDecoration.Underline,
+                            color = MaterialTheme.intrainAccentColor
                         )
                     }
                 }
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun RegisterScreenPreview() {
+    InTrainTheme {
+        RegisterScreen(
+            onLoginClick = {},
+            viewModel = viewModel(),
+            onRegisterSuccess = {}
+        )
     }
 }

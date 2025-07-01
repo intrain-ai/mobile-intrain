@@ -39,11 +39,8 @@ class ChatHistoryFragment : Fragment() {
         viewModel.chatHistory.observe(viewLifecycleOwner) { list ->
             adapter.submitChatList(list)
         }
-        
-        // Test the endpoint first
-        viewModel.testChatHistoryEndpoint()
-        
+
         // Then load all histories
         viewModel.loadAllHistories()
     }
-} 
+}

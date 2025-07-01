@@ -1,9 +1,12 @@
 package com.mercu.intrain.ui.roadmap
 
 import android.app.Application
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.mercu.intrain.API.ApiService
+import com.mercu.intrain.model.Achievement
 import com.mercu.intrain.model.ProgressStep
 import com.mercu.intrain.model.Roadmap
 import com.mercu.intrain.model.UserRoadmapHistory
@@ -36,6 +39,32 @@ class RoadmapViewModel(application: Application) : AndroidViewModel(application)
 
     private val _errorMessage = MutableStateFlow<String?>(null)
     val errorMessage: StateFlow<String?> = _errorMessage.asStateFlow()
+
+    private val _achievements = MutableStateFlow<List<Achievement>>(emptyList())
+    val achievements: StateFlow<List<Achievement>> = _achievements.asStateFlow()
+
+    private val _isLoadingAchievements = MutableStateFlow(false)
+    val isLoadingAchievements: StateFlow<Boolean> = _isLoadingAchievements.asStateFlow()
+
+    fun loadUserAchievements(userId: String) {
+        viewModelScope.launch {
+            _isLoadingAchievements.value = true
+            try {
+                val response = repository.getUserAchievements(userId)
+                if (response.isSuccessful) {
+                    response.body()?.let { achievementsList ->
+                        _achievements.value = achievementsList
+                    }
+                } else {
+                    _errorMessage.value = "Failed to load achievements: ${response.code()}"
+                }
+            } catch (e: Exception) {
+                _errorMessage.value = "Failed to load achievements: ${e.message}"
+            } finally {
+                _isLoadingAchievements.value = false
+            }
+        }
+    }
 
     fun loadAllRoadmaps() {
         _isLoading.value = true

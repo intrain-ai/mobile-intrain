@@ -12,6 +12,8 @@ import android.widget.ImageView
 import java.text.SimpleDateFormat
 import java.util.*
 import com.google.android.material.chip.Chip
+import androidx.compose.material3.MaterialTheme
+import androidx.core.content.ContextCompat
 
 sealed class HistoryItem {
     data class ChatItem(val chatSession: ChatSession) : HistoryItem()
@@ -76,9 +78,14 @@ class HistoryAdapter(
         fun bind(data: ChatSession) {
             currentData = data
             jobText.text = data.jobType
+            jobText.setTextColor(ContextCompat.getColor(itemView.context, android.R.color.holo_blue_dark))
+            jobText.setTypeface(null, android.graphics.Typeface.BOLD)
             messageText.text = data.lastMessage
+            messageText.setTextColor(ContextCompat.getColor(itemView.context, android.R.color.black))
             lastMessageTime.text = formatTime(data.lastMessageAt)
+            lastMessageTime.setTextColor(ContextCompat.getColor(itemView.context, android.R.color.darker_gray))
             chatIcon.setImageResource(R.drawable.ic_chat)
+            chatIcon.setColorFilter(ContextCompat.getColor(itemView.context, android.R.color.holo_blue_light))
         }
         private fun formatTime(iso: String): String {
             return try {
@@ -106,19 +113,29 @@ class HistoryAdapter(
         }
         fun bind(data: CVReviewHistoryResponse) {
             currentData = data
-            fileName.text = data.submission.fileName
+            val dateLabel = formatDate(data.submission.uploadedAt)
+            fileName.text = "CV_$dateLabel"
+            fileName.setTextColor(ContextCompat.getColor(itemView.context, android.R.color.holo_blue_dark))
+            fileName.setTypeface(null, android.graphics.Typeface.BOLD)
             val feedbackText = data.review?.overallFeedback
             if (feedbackText.isNullOrEmpty()) {
                 feedback.text = "No feedback yet."
+                feedback.setTextColor(ContextCompat.getColor(itemView.context, android.R.color.darker_gray))
             } else {
                 feedback.text = feedbackText
+                feedback.setTextColor(ContextCompat.getColor(itemView.context, android.R.color.holo_blue_light))
             }
             uploadedAt.text = "Uploaded: ${formatDate(data.submission.uploadedAt)}"
+            uploadedAt.setTextColor(ContextCompat.getColor(itemView.context, android.R.color.darker_gray))
             fileTypeChip.text = data.submission.fileType.uppercase(Locale.getDefault())
+            fileTypeChip.setChipBackgroundColorResource(android.R.color.holo_blue_dark)
+            fileTypeChip.setTextColor(ContextCompat.getColor(itemView.context, android.R.color.white))
             if (data.submission.fileType.equals("pdf", ignoreCase = true)) {
                 fileIcon.setImageResource(R.drawable.ic_pdf_placeholder)
+                fileIcon.setColorFilter(ContextCompat.getColor(itemView.context, android.R.color.holo_blue_dark))
             } else {
                 fileIcon.setImageResource(R.drawable.ic_file)
+                fileIcon.setColorFilter(ContextCompat.getColor(itemView.context, android.R.color.holo_blue_dark))
             }
         }
         private fun formatDate(iso: String): String {

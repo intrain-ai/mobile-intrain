@@ -12,6 +12,11 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
+        android:id="@+id/navigation_jobs"
+        android:name="com.mercu.intrain.ui.jobs.JobsFragment"
+        android:label="Jobs"/>
+
+    <fragment
         android:id="@+id/navigation_chat"
         android:name="com.mercu.intrain.ui.history.HistoryFragment"
         android:label="History"
@@ -20,8 +25,7 @@
     <fragment
         android:id="@+id/navigation_mentor"
         android:name="com.mercu.intrain.ui.mentor.MentorFragment"
-        android:label="Mentorship"
-        tools:layout="@layout/fragment_mentor" />
+        android:label="Mentorship" />
 
     <fragment
         android:id="@+id/navigation_notifications"

@@ -90,6 +90,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -99,6 +100,7 @@ import com.mercu.intrain.model.MentorProfile
 import com.mercu.intrain.model.WorkExperience
 import com.mercu.intrain.sharedpref.SharedPrefHelper
 import com.mercu.intrain.ui.mentor.MentorViewModel
+import com.mercu.intrain.ui.theme.InTrainTheme
 import kotlinx.coroutines.delay
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -209,84 +211,156 @@ fun MentorListScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Cari Mentor berdasarkan Keahlian") },
+                title = { 
+                    Text(
+                        "Cari Mentor",
+                        style = MaterialTheme.typography.headlineSmall.copy(
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
+                },
+                colors = androidx.compose.material3.TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    titleContentColor = MaterialTheme.colorScheme.onSurface
+                ),
                 actions = {
                     if (!isMentor) {
                         IconButton(onClick = onRegisterClick) {
-                            Icon(Icons.Default.PersonAdd, "Daftar sebagai Mentor")
+                            Icon(
+                                Icons.Default.PersonAdd, 
+                                contentDescription = "Daftar sebagai Mentor",
+                                tint = MaterialTheme.colorScheme.primary
+                            )
                         }
                     }
                 }
             )
         },
-        floatingActionButton = {
-            if (!isMentor) {
-                FloatingActionButton(onClick = onRegisterClick) {
-                    Icon(Icons.Default.Add, "Daftar sebagai Mentor")
-                }
-            }
-        }
     ) { innerPadding ->
         Column(
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
-                .padding(16.dp)
+                .background(MaterialTheme.colorScheme.background)
+                .padding(horizontal = 20.dp)
         ) {
-            TextField(
+            Spacer(modifier = Modifier.height(16.dp))
+            
+            // Modern Search Field
+            OutlinedTextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
-                label = { Text("Cari berdasarkan keahlian...") },
-                placeholder = { Text("Contoh: Java, Python, UI/UX, Marketing") },
+                label = { 
+                    Text(
+                        "Cari berdasarkan keahlian...",
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                },
+                placeholder = { 
+                    Text(
+                        "Contoh: Java, Python, UI/UX, Marketing",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                },
                 leadingIcon = { 
                     Icon(
                         Icons.Default.Search, 
-                        contentDescription = "Cari keahlian"
+                        contentDescription = "Cari keahlian",
+                        tint = MaterialTheme.colorScheme.primary
                     ) 
                 },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
+                shape = RoundedCornerShape(16.dp),
+                colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = MaterialTheme.colorScheme.primary,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant,
+                    focusedLabelColor = MaterialTheme.colorScheme.primary
+                ),
+                textStyle = MaterialTheme.typography.bodyLarge,
                 supportingText = {
                     if (searchQuery.isNotEmpty()) {
                         val formattedQuery = searchQuery.lowercase().replace(" ", "_")
-                        Text("Mencari keahlian: $formattedQuery", style = MaterialTheme.typography.bodySmall)
+                        Text(
+                            "Mencari keahlian: $formattedQuery", 
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
                     } else {
-                        Text("Ketik keahlian yang ingin dicari", style = MaterialTheme.typography.bodySmall)
+                        Text(
+                            "Ketik keahlian yang ingin dicari", 
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
                     }
                 }
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
             when (state) {
                 is MentorViewModel.MentorListState.Loading -> {
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        CircularProgressIndicator()
+                    Box(
+                        modifier = Modifier.fillMaxSize(), 
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            CircularProgressIndicator(
+                                color = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.size(48.dp)
+                            )
+                            Spacer(modifier = Modifier.height(16.dp))
+                            Text(
+                                "Mencari mentor...",
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
                     }
                 }
                 is MentorViewModel.MentorListState.Success -> {
                     val mentors = (state as MentorViewModel.MentorListState.Success).mentors
 
                     if (mentors.isEmpty()) {
-                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Box(
+                            modifier = Modifier.fillMaxSize(), 
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Icon(
+                                    Icons.Default.Search,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(64.dp),
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                                Spacer(modifier = Modifier.height(16.dp))
                                 Text(
                                     if (searchQuery.isNotEmpty()) "Tidak ada mentor dengan keahlian tersebut" 
                                     else "Tidak ada mentor tersedia", 
-                                    style = MaterialTheme.typography.bodyLarge
+                                    style = MaterialTheme.typography.titleMedium,
+                                    textAlign = TextAlign.Center,
+                                    color = MaterialTheme.colorScheme.onSurface
                                 )
                                 if (searchQuery.isNotEmpty()) {
                                     Spacer(modifier = Modifier.height(8.dp))
                                     Text(
                                         "Coba cari dengan kata kunci lain",
                                         style = MaterialTheme.typography.bodyMedium,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        textAlign = TextAlign.Center
                                     )
                                 }
                             }
                         }
                     } else {
-                        LazyColumn {
+                        LazyColumn(
+                            verticalArrangement = Arrangement.spacedBy(16.dp)
+                        ) {
                             // Show search results count
                             if (searchQuery.isNotEmpty()) {
                                 item {
@@ -305,22 +379,32 @@ fun MentorListScreen(
                                     currentUserId = currentUserId,
                                     onClick = { onMentorSelected(mentor.id) }
                                 )
-                                Spacer(modifier = Modifier.height(8.dp))
                             }
                         }
                     }
                 }
                 is MentorViewModel.MentorListState.Error -> {
                     val error = (state as MentorViewModel.MentorListState.Error).message
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Icon(Icons.Default.Error, "Error", tint = MaterialTheme.colorScheme.error)
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text("Kesalahan: $error", color = MaterialTheme.colorScheme.error)
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Button(onClick = { viewModel.fetchMentors() }) {
-                                Text("Coba Lagi")
-                            }
+                    Box(
+                        modifier = Modifier.fillMaxSize(), 
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Icon(
+                                Icons.Default.Error, 
+                                contentDescription = "Error", 
+                                tint = MaterialTheme.colorScheme.error,
+                                modifier = Modifier.size(64.dp)
+                            )
+                            Spacer(modifier = Modifier.height(16.dp))
+                            Text(
+                                "Kesalahan: $error", 
+                                color = MaterialTheme.colorScheme.error,
+                                style = MaterialTheme.typography.bodyLarge,
+                                textAlign = TextAlign.Center
+                            )
                         }
                     }
                 }
@@ -336,86 +420,123 @@ fun MentorCard(
     onClick: () -> Unit
 ) {
     val isOwnProfile = mentor.userId == currentUserId
-    val cardColors = if (isOwnProfile) {
-        CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)
-    } else {
-        CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
-    }
-
+    
     Card(
         onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
-        colors = cardColors,
-        shape = RoundedCornerShape(16.dp)
+            .padding(vertical = 4.dp),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = if (isOwnProfile) 4.dp else 2.dp
+        ),
+        colors = CardDefaults.cardColors(
+            containerColor = if (isOwnProfile) {
+                MaterialTheme.colorScheme.secondaryContainer
+            } else {
+                MaterialTheme.colorScheme.surface
+            }
+        ),
+        shape = RoundedCornerShape(20.dp),
+        border = if (isOwnProfile) {
+            BorderStroke(2.dp, MaterialTheme.colorScheme.primary)
+        } else null
     ) {
         Row(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(20.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            // Modern Avatar with gradient
             Box(
                 modifier = Modifier
-                    .size(56.dp)
-                    .background(MaterialTheme.colorScheme.primaryContainer, CircleShape)
-                    .padding(8.dp),
+                    .size(64.dp)
+                    .background(
+                        Brush.radialGradient(
+                            colors = listOf(
+                                MaterialTheme.colorScheme.primary,
+                                MaterialTheme.colorScheme.primaryContainer
+                            )
+                        ),
+                        CircleShape
+                    )
+                    .padding(12.dp),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = mentor.name.take(1).uppercase(),
-                    style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                    style = MaterialTheme.typography.headlineSmall.copy(
+                        fontWeight = FontWeight.Bold
+                    ),
+                    color = MaterialTheme.colorScheme.onPrimary
                 )
             }
 
-            Spacer(Modifier.width(16.dp))
+            Spacer(Modifier.width(20.dp))
 
             Column(modifier = Modifier.weight(1f)) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
                     Text(
                         mentor.name,
-                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold)
+                        style = MaterialTheme.typography.titleLarge.copy(
+                            fontWeight = FontWeight.Bold
+                        ),
+                        color = MaterialTheme.colorScheme.onSurface
                     )
-                    Spacer(Modifier.width(8.dp))
+                    Spacer(Modifier.width(12.dp))
                     if (isOwnProfile) {
                         Badge(
                             containerColor = MaterialTheme.colorScheme.primary,
                             contentColor = MaterialTheme.colorScheme.onPrimary
                         ) {
-                            Text("Anda", style = MaterialTheme.typography.labelSmall)
+                            Text(
+                                "Anda", 
+                                style = MaterialTheme.typography.labelMedium.copy(
+                                    fontWeight = FontWeight.Medium
+                                )
+                            )
                         }
                     }
                 }
 
-                Spacer(Modifier.height(4.dp))
-
-                // Expertise badge
-                Badge(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                ) {
-                    Text(
-                        mentor.expertise,
-                        style = MaterialTheme.typography.labelMedium,
-                        fontWeight = FontWeight.Medium
-                    )
-                }
-
                 Spacer(Modifier.height(8.dp))
+
+                // Expertise badge with modern design
+                FilterChip(
+                    selected = false,
+                    onClick = {},
+                    label = { 
+                        Text(
+                            mentor.expertise,
+                            style = MaterialTheme.typography.labelLarge,
+                            fontWeight = FontWeight.Medium
+                        )
+                    },
+                    colors = FilterChipDefaults.filterChipColors(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                        labelColor = MaterialTheme.colorScheme.onPrimaryContainer
+                    ),
+                    shape = RoundedCornerShape(20.dp)
+                )
+
+                Spacer(Modifier.height(12.dp))
 
                 Text(
                     mentor.bio,
                     style = MaterialTheme.typography.bodyMedium,
                     maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    lineHeight = 20.sp
                 )
             }
 
             Icon(
                 Icons.Default.ChevronRight,
                 contentDescription = "Lihat profil",
-                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(24.dp)
             )
         }
     }
@@ -454,16 +575,35 @@ fun MentorProfileScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Profil Mentor") },
+                title = { 
+                    Text(
+                        "Profil Mentor",
+                        style = MaterialTheme.typography.headlineSmall.copy(
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, "Kembali")
+                        Icon(
+                            Icons.Default.ArrowBack, 
+                            contentDescription = "Kembali",
+                            tint = MaterialTheme.colorScheme.onSurface
+                        )
                     }
                 },
+                colors = androidx.compose.material3.TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    titleContentColor = MaterialTheme.colorScheme.onSurface
+                ),
                 actions = {
                     if (isMentor && isOwnProfile) {
                         IconButton(onClick = onSetAvailability) {
-                            Icon(Icons.Default.Schedule, "Atur Ketersediaan")
+                            Icon(
+                                Icons.Default.Schedule, 
+                                contentDescription = "Atur Ketersediaan",
+                                tint = MaterialTheme.colorScheme.primary
+                            )
                         }
                     }
                 }
@@ -474,99 +614,204 @@ fun MentorProfileScreen(
             modifier = Modifier
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
-                .padding(16.dp)
+                .background(MaterialTheme.colorScheme.background)
+                .padding(horizontal = 20.dp)
         ) {
             when (profileState) {
                 is MentorViewModel.ProfileState.Loading -> {
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        CircularProgressIndicator()
+                    Box(
+                        modifier = Modifier.fillMaxSize(), 
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            CircularProgressIndicator(
+                                color = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.size(48.dp)
+                            )
+                            Spacer(modifier = Modifier.height(16.dp))
+                            Text(
+                                "Memuat profil...",
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
                     }
                 }
                 is MentorViewModel.ProfileState.Success -> {
                     val profile = (profileState as MentorViewModel.ProfileState.Success).profile
 
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(
-                                Brush.verticalGradient(
-                                    colors = listOf(
-                                        MaterialTheme.colorScheme.primaryContainer,
-                                        MaterialTheme.colorScheme.surface
-                                    )
-                                )
-                            )
-                            .padding(24.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    // Modern Profile Header with gradient
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.surface
+                        ),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                        shape = RoundedCornerShape(24.dp)
                     ) {
                         Box(
                             modifier = Modifier
-                                .size(120.dp)
-                                .background(MaterialTheme.colorScheme.primary, CircleShape)
-                                .padding(12.dp),
+                                .fillMaxWidth()
+                                .background(
+                                    Brush.verticalGradient(
+                                        colors = listOf(
+                                            MaterialTheme.colorScheme.primaryContainer,
+                                            MaterialTheme.colorScheme.surface
+                                        )
+                                    )
+                                )
+                                .padding(32.dp),
                             contentAlignment = Alignment.Center
                         ) {
-                            Text(
-                                text = profile.mentorProfile.name.take(2).uppercase(),
-                                style = MaterialTheme.typography.displayMedium,
-                                color = MaterialTheme.colorScheme.onPrimary
-                            )
-                        }
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                // Large Avatar with gradient
+                                Box(
+                                    modifier = Modifier
+                                        .size(120.dp)
+                                        .background(
+                                            Brush.radialGradient(
+                                                colors = listOf(
+                                                    MaterialTheme.colorScheme.primary,
+                                                    MaterialTheme.colorScheme.primaryContainer
+                                                )
+                                            ),
+                                            CircleShape
+                                        )
+                                        .padding(16.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        text = profile.mentorProfile.name.take(2).uppercase(),
+                                        style = MaterialTheme.typography.displaySmall.copy(
+                                            fontWeight = FontWeight.Bold
+                                        ),
+                                        color = MaterialTheme.colorScheme.onPrimary
+                                    )
+                                }
 
-                        Spacer(Modifier.height(16.dp))
+                                Spacer(Modifier.height(20.dp))
 
-                        Text(
-                            profile.mentorProfile.name,
-                            style = MaterialTheme.typography.headlineSmall,
-                            fontWeight = FontWeight.Bold
-                        )
-
-                        Spacer(Modifier.height(8.dp))
-
-                        Text(
-                            profile.mentorProfile.expertise,
-                            style = MaterialTheme.typography.titleMedium,
-                            color = MaterialTheme.colorScheme.primary
-                        )
-
-                        Spacer(Modifier.height(16.dp))
-
-                        Text(
-                            profile.mentorProfile.bio,
-                            style = MaterialTheme.typography.bodyLarge,
-                            textAlign = TextAlign.Center
-                        )
-
-                        if (isOwnProfile) {
-                            Spacer(Modifier.height(16.dp))
-                            FilterChip(
-                                selected = true,
-                                onClick = {},
-                                label = { Text("Profil Anda") },
-                                leadingIcon = {
-                                    Icon(Icons.Default.Verified, "Terverifikasi")
-                                },
-                                colors = FilterChipDefaults.filterChipColors(
-                                    containerColor = MaterialTheme.colorScheme.tertiaryContainer
+                                Text(
+                                    profile.mentorProfile.name,
+                                    style = MaterialTheme.typography.headlineMedium.copy(
+                                        fontWeight = FontWeight.Bold
+                                    ),
+                                    color = MaterialTheme.colorScheme.onSurface
                                 )
-                            )
+
+                                Spacer(Modifier.height(8.dp))
+
+                                // Expertise with modern badge
+                                FilterChip(
+                                    selected = false,
+                                    onClick = {},
+                                    label = { 
+                                        Text(
+                                            profile.mentorProfile.expertise,
+                                            style = MaterialTheme.typography.titleMedium,
+                                            fontWeight = FontWeight.Medium
+                                        )
+                                    },
+                                    colors = FilterChipDefaults.filterChipColors(
+                                        containerColor = MaterialTheme.colorScheme.primary,
+                                        labelColor = MaterialTheme.colorScheme.onPrimary
+                                    ),
+                                    shape = RoundedCornerShape(20.dp)
+                                )
+
+                                Spacer(Modifier.height(20.dp))
+
+                                Text(
+                                    profile.mentorProfile.bio,
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    textAlign = TextAlign.Center,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    lineHeight = 24.sp
+                                )
+
+                                if (isOwnProfile) {
+                                    Spacer(Modifier.height(20.dp))
+                                    FilterChip(
+                                        selected = true,
+                                        onClick = {},
+                                        label = { 
+                                            Text(
+                                                "Profil Anda",
+                                                style = MaterialTheme.typography.labelLarge,
+                                                fontWeight = FontWeight.Medium
+                                            )
+                                        },
+                                        leadingIcon = {
+                                            Icon(
+                                                Icons.Default.Verified, 
+                                                contentDescription = "Terverifikasi",
+                                                tint = MaterialTheme.colorScheme.onTertiaryContainer
+                                            )
+                                        },
+                                        colors = FilterChipDefaults.filterChipColors(
+                                            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                                            labelColor = MaterialTheme.colorScheme.onTertiaryContainer
+                                        ),
+                                        shape = RoundedCornerShape(20.dp)
+                                    )
+                                }
+                            }
                         }
                     }
 
-                    Spacer(Modifier.height(24.dp))
+                    Spacer(Modifier.height(32.dp))
 
-                    Text("Ketersediaan", style = MaterialTheme.typography.titleMedium)
-                    Spacer(Modifier.height(8.dp))
+                    // Availability Section
+                    Text(
+                        "Ketersediaan",
+                        style = MaterialTheme.typography.titleLarge.copy(
+                            fontWeight = FontWeight.Bold
+                        ),
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                    Spacer(Modifier.height(16.dp))
 
                     when (availabilityState) {
                         is MentorViewModel.AvailabilityListState.Loading -> {
-                            CircularProgressIndicator()
+                            Box(
+                                modifier = Modifier.fillMaxWidth(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                CircularProgressIndicator(
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            }
                         }
                         is MentorViewModel.AvailabilityListState.Success -> {
                             val availabilities = (availabilityState as MentorViewModel.AvailabilityListState.Success).availabilities
 
                             if (availabilities.isEmpty()) {
-                                Text("Tidak ada slot tersedia", style = MaterialTheme.typography.bodyMedium)
+                                Card(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    colors = CardDefaults.cardColors(
+                                        containerColor = MaterialTheme.colorScheme.surfaceVariant
+                                    ),
+                                    shape = RoundedCornerShape(16.dp)
+                                ) {
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(24.dp),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Text(
+                                            "Tidak ada slot tersedia",
+                                            style = MaterialTheme.typography.bodyLarge,
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                                        )
+                                    }
+                                }
                             } else {
                                 availabilities.forEach { availability ->
                                     AvailabilitySlot(
@@ -574,46 +819,98 @@ fun MentorProfileScreen(
                                         onBookClick = { onAvailabilitySelected(availability) },
                                         enabled = !isOwnProfile
                                     )
-                                    Spacer(Modifier.height(8.dp))
+                                    Spacer(Modifier.height(12.dp))
                                 }
                             }
                         }
                         is MentorViewModel.AvailabilityListState.Error -> {
-                            Text(
-                                "Gagal memuat ketersediaan",
-                                color = MaterialTheme.colorScheme.error
-                            )
+                            Card(
+                                modifier = Modifier.fillMaxWidth(),
+                                colors = CardDefaults.cardColors(
+                                    containerColor = MaterialTheme.colorScheme.errorContainer
+                                ),
+                                shape = RoundedCornerShape(16.dp)
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(24.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        "Gagal memuat ketersediaan",
+                                        color = MaterialTheme.colorScheme.onErrorContainer,
+                                        style = MaterialTheme.typography.bodyLarge
+                                    )
+                                }
+                            }
                         }
                     }
 
-                    Spacer(Modifier.height(24.dp))
+                    Spacer(Modifier.height(32.dp))
 
-                    Text("Pengalaman Kerja", style = MaterialTheme.typography.titleMedium)
-                    Spacer(Modifier.height(8.dp))
+                    // Work Experience Section
+                    Text(
+                        "Pengalaman Kerja",
+                        style = MaterialTheme.typography.titleLarge.copy(
+                            fontWeight = FontWeight.Bold
+                        ),
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                    Spacer(Modifier.height(16.dp))
 
                     if (profile.workExperiences.isEmpty()) {
-                        Text("Tidak ada pengalaman kerja", style = MaterialTheme.typography.bodyMedium)
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.surfaceVariant
+                            ),
+                            shape = RoundedCornerShape(16.dp)
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(24.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    "Tidak ada pengalaman kerja",
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                        }
                     } else {
                         profile.workExperiences.forEach { exp ->
                             ExperienceItem(exp)
-                            Spacer(Modifier.height(12.dp))
+                            Spacer(Modifier.height(16.dp))
                         }
                     }
+                    
+                    Spacer(modifier = Modifier.height(32.dp))
                 }
                 is MentorViewModel.ProfileState.Error -> {
                     val error = (profileState as MentorViewModel.ProfileState.Error).message
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Icon(Icons.Default.Error, "Error", tint = MaterialTheme.colorScheme.error)
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text("Kesalahan: $error", color = MaterialTheme.colorScheme.error)
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Button(onClick = {
-                                viewModel.fetchMentorProfile(mentorId)
-                                viewModel.fetchAvailabilities(mentorId)
-                            }) {
-                                Text("Coba Lagi")
-                            }
+                    Box(
+                        modifier = Modifier.fillMaxSize(), 
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Icon(
+                                Icons.Default.Error, 
+                                contentDescription = "Error", 
+                                tint = MaterialTheme.colorScheme.error,
+                                modifier = Modifier.size(64.dp)
+                            )
+                            Spacer(modifier = Modifier.height(16.dp))
+                            Text(
+                                "Kesalahan: $error", 
+                                color = MaterialTheme.colorScheme.error,
+                                style = MaterialTheme.typography.bodyLarge,
+                                textAlign = TextAlign.Center
+                            )
                         }
                     }
                 }
@@ -628,61 +925,105 @@ fun ExperienceItem(exp: WorkExperience) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-        shape = RoundedCornerShape(16.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        ),
+        shape = RoundedCornerShape(20.dp),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier = Modifier.padding(20.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
+                // Modern icon with gradient background
                 Box(
                     modifier = Modifier
-                        .size(40.dp)
-                        .background(MaterialTheme.colorScheme.primaryContainer, CircleShape)
-                        .padding(8.dp),
+                        .size(48.dp)
+                        .background(
+                            Brush.radialGradient(
+                                colors = listOf(
+                                    MaterialTheme.colorScheme.primary,
+                                    MaterialTheme.colorScheme.primaryContainer
+                                )
+                            ),
+                            CircleShape
+                        )
+                        .padding(12.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         Icons.Default.Work,
                         contentDescription = "Pekerjaan",
-                        tint = MaterialTheme.colorScheme.onPrimaryContainer
+                        tint = MaterialTheme.colorScheme.onPrimary,
+                        modifier = Modifier.size(24.dp)
                     )
                 }
                 Spacer(Modifier.width(16.dp))
-                Column {
+                Column(modifier = Modifier.weight(1f)) {
                     Text(
                         exp.jobTitle,
-                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold)
+                        style = MaterialTheme.typography.titleLarge.copy(
+                            fontWeight = FontWeight.Bold
+                        ),
+                        color = MaterialTheme.colorScheme.onSurface
                     )
+                    Spacer(Modifier.height(4.dp))
                     Text(
                         exp.companyName,
-                        style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.primary)
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            fontWeight = FontWeight.Medium
+                        ),
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
             }
 
             Spacer(Modifier.height(16.dp))
 
+            // Modern timeline indicator
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Box(
                     modifier = Modifier
-                        .size(16.dp)
-                        .background(MaterialTheme.colorScheme.primary, CircleShape)
+                        .size(12.dp)
+                        .background(
+                            MaterialTheme.colorScheme.primary,
+                            CircleShape
+                        )
                 )
-                Spacer(Modifier.width(8.dp))
+                Spacer(Modifier.width(12.dp))
                 val period = buildString {
                     append("${monthName(exp.startMonth)} ${exp.startYear} - ")
                     append(if (exp.isCurrent) "Sekarang" else "${monthName(exp.endMonth)} ${exp.endYear}")
                 }
                 Text(
                     period,
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        fontWeight = FontWeight.Medium
+                    ),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
+                
+                if (exp.isCurrent) {
+                    Spacer(Modifier.width(8.dp))
+                    Badge(
+                        containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                        contentColor = MaterialTheme.colorScheme.onTertiaryContainer
+                    ) {
+                        Text(
+                            "Sekarang",
+                            style = MaterialTheme.typography.labelSmall,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
+                }
             }
 
             Spacer(Modifier.height(16.dp))
 
             Text(
                 exp.jobDesc,
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                lineHeight = 24.sp
             )
         }
     }
@@ -725,46 +1066,98 @@ fun AvailabilitySlot(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
         colors = CardDefaults.cardColors(
-            containerColor = if (enabled) MaterialTheme.colorScheme.surfaceVariant
-            else MaterialTheme.colorScheme.surface
+            containerColor = if (enabled) {
+                MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.1f)
+            } else {
+                MaterialTheme.colorScheme.surfaceVariant
+            }
         ),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
-        shape = RoundedCornerShape(16.dp)
+        border = BorderStroke(
+            1.dp, 
+            if (enabled) MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)
+            else MaterialTheme.colorScheme.outlineVariant
+        ),
+        shape = RoundedCornerShape(20.dp)
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(
-                    Icons.Default.Schedule,
-                    contentDescription = "Waktu",
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(20.dp)
-                )
-                Spacer(Modifier.width(8.dp))
-                Text(
-                    "$startDateTime - $endDateTime",
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Medium
-                )
+        Column(modifier = Modifier.padding(20.dp)) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                // Modern time icon with background
+                Box(
+                    modifier = Modifier
+                        .size(40.dp)
+                        .background(
+                            MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                            CircleShape
+                        )
+                        .padding(8.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        Icons.Default.Schedule,
+                        contentDescription = "Waktu",
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
+                Spacer(Modifier.width(16.dp))
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        "Sesi Konsultasi",
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            fontWeight = FontWeight.Bold
+                        ),
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                    Spacer(Modifier.height(4.dp))
+                    Text(
+                        "$startDateTime - $endDateTime",
+                        style = MaterialTheme.typography.bodyLarge.copy(
+                            fontWeight = FontWeight.Medium
+                        ),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
             }
 
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(16.dp))
 
             Button(
                 onClick = onBookClick,
                 enabled = enabled,
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(12.dp),
+                shape = RoundedCornerShape(16.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = MaterialTheme.colorScheme.onPrimary
+                    containerColor = if (enabled) {
+                        MaterialTheme.colorScheme.primary
+                    } else {
+                        MaterialTheme.colorScheme.surfaceVariant
+                    },
+                    contentColor = if (enabled) {
+                        MaterialTheme.colorScheme.onPrimary
+                    } else {
+                        MaterialTheme.colorScheme.onSurfaceVariant
+                    }
+                ),
+                elevation = ButtonDefaults.buttonElevation(
+                    defaultElevation = if (enabled) 4.dp else 0.dp
                 )
             ) {
-                Text("Pesan Sesi", style = MaterialTheme.typography.labelLarge)
+                Text(
+                    if (enabled) "Pesan Sesi" else "Tidak Tersedia",
+                    style = MaterialTheme.typography.labelLarge.copy(
+                        fontWeight = FontWeight.Bold
+                    )
+                )
             }
         }
     }
 }
+
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -1284,41 +1677,129 @@ fun RegisterMentorDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Daftar sebagai Mentor") },
+        title = { 
+            Text(
+                "Daftar sebagai Mentor",
+                style = MaterialTheme.typography.headlineSmall.copy(
+                    fontWeight = FontWeight.Bold
+                )
+            )
+        },
         text = {
-            Column {
-                TextField(
+            Column(
+                modifier = Modifier.padding(vertical = 8.dp)
+            ) {
+                OutlinedTextField(
                     value = expertise,
                     onValueChange = { expertise = it },
-                    label = { Text("Keahlian Anda") },
-                    modifier = Modifier.fillMaxWidth()
+                    label = { 
+                        Text(
+                            "Keahlian Anda",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    },
+                    placeholder = {
+                        Text(
+                            "Contoh: Java, Python, UI/UX Design",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(16.dp),
+                    colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = MaterialTheme.colorScheme.primary,
+                        unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant,
+                        focusedLabelColor = MaterialTheme.colorScheme.primary
+                    ),
+                    textStyle = MaterialTheme.typography.bodyLarge
                 )
-                Spacer(modifier = Modifier.height(16.dp))
-                TextField(
+                Spacer(modifier = Modifier.height(20.dp))
+                OutlinedTextField(
                     value = bio,
                     onValueChange = { bio = it },
-                    label = { Text("Bio Anda") },
+                    label = { 
+                        Text(
+                            "Bio Anda",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    },
+                    placeholder = {
+                        Text(
+                            "Ceritakan pengalaman dan keahlian Anda...",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    },
                     modifier = Modifier.fillMaxWidth(),
                     keyboardOptions = KeyboardOptions.Default.copy(
                         keyboardType = KeyboardType.Text
                     ),
-                    maxLines = 3
+                    maxLines = 4,
+                    shape = RoundedCornerShape(16.dp),
+                    colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = MaterialTheme.colorScheme.primary,
+                        unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant,
+                        focusedLabelColor = MaterialTheme.colorScheme.primary
+                    ),
+                    textStyle = MaterialTheme.typography.bodyLarge
                 )
 
                 when (state) {
                     is MentorViewModel.RegisterState.Success -> {
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Text(
-                            "Pendaftaran berhasil! Anda sekarang adalah mentor.",
-                            color = MaterialTheme.colorScheme.primary
-                        )
+                        Spacer(modifier = Modifier.height(20.dp))
+                        Card(
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.primaryContainer
+                            ),
+                            shape = RoundedCornerShape(16.dp)
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(16.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Icon(
+                                    Icons.Default.Verified,
+                                    contentDescription = "Berhasil",
+                                    tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                                    modifier = Modifier.size(24.dp)
+                                )
+                                Spacer(Modifier.width(12.dp))
+                                Text(
+                                    "Pendaftaran berhasil! Anda sekarang adalah mentor.",
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                                    fontWeight = FontWeight.Medium
+                                )
+                            }
+                        }
                     }
                     is MentorViewModel.RegisterState.Error -> {
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Text(
-                            (state as MentorViewModel.RegisterState.Error).message,
-                            color = MaterialTheme.colorScheme.error
-                        )
+                        Spacer(modifier = Modifier.height(20.dp))
+                        Card(
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.errorContainer
+                            ),
+                            shape = RoundedCornerShape(16.dp)
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(16.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Icon(
+                                    Icons.Default.Error,
+                                    contentDescription = "Error",
+                                    tint = MaterialTheme.colorScheme.onErrorContainer,
+                                    modifier = Modifier.size(24.dp)
+                                )
+                                Spacer(Modifier.width(12.dp))
+                                Text(
+                                    (state as MentorViewModel.RegisterState.Error).message,
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = MaterialTheme.colorScheme.onErrorContainer
+                                )
+                            }
+                        }
                     }
                     else -> {}
                 }
@@ -1326,7 +1807,10 @@ fun RegisterMentorDialog(
         },
         confirmButton = {
             if (state is MentorViewModel.RegisterState.Loading) {
-                CircularProgressIndicator()
+                CircularProgressIndicator(
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(24.dp)
+                )
             } else {
                 Button(
                     onClick = {
@@ -1334,15 +1818,32 @@ fun RegisterMentorDialog(
                             viewModel.registerMentor(currentUserId, expertise, bio)
                         }
                     },
-                    enabled = expertise.isNotBlank() && bio.isNotBlank() && currentUserId.isNotEmpty()
+                    enabled = expertise.isNotBlank() && bio.isNotBlank() && currentUserId.isNotEmpty(),
+                    shape = RoundedCornerShape(16.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary
+                    ),
+                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
                 ) {
-                    Text("Daftar")
+                    Text(
+                        "Daftar sebagai Mentor",
+                        style = MaterialTheme.typography.labelLarge.copy(
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
                 }
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text("Batal")
+            TextButton(
+                onClick = onDismiss,
+                shape = RoundedCornerShape(16.dp)
+            ) {
+                Text(
+                    "Batal",
+                    style = MaterialTheme.typography.labelLarge
+                )
             }
         }
     )
@@ -1546,7 +2047,8 @@ fun SubmitFeedbackDialog(
                                 imageVector = if (i <= rating) Icons.Filled.Star else Icons.Outlined.Star,
                                 contentDescription = "Rating $i",
                                 modifier = Modifier.fillMaxSize(),
-                                tint = if (i <= rating) Color(0xFFFFD700) else MaterialTheme.colorScheme.onSurfaceVariant
+                                tint = if (i <= rating) MaterialTheme.colorScheme.primary
+                                else MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
                     }

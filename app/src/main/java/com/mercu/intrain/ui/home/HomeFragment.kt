@@ -8,6 +8,8 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -51,7 +53,11 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
+            val systemInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(0, systemInsets.top, 0, systemInsets.bottom)
+            insets
+        }
         setupUI()
         setupObservers()
         setupClickListeners()
@@ -76,7 +82,6 @@ class HomeFragment : Fragment() {
     private fun setupObservers() {
         homeViewModel.apply {
             name.observe(viewLifecycleOwner) { binding.helloText.text = it }
-            courseDescription.observe(viewLifecycleOwner) { binding.courseDescription.text = it }
 
             completionPercentage.observe(viewLifecycleOwner) { percentage ->
                 binding.progressText.text = "$percentage%"

@@ -1,6 +1,7 @@
 package com.mercu.intrain.repository
 import android.content.Context
 import com.mercu.intrain.API.ApiConfig
+import com.mercu.intrain.model.Achievement
 import com.mercu.intrain.model.CompletedStepResponse
 import com.mercu.intrain.model.ProgressStep
 import com.mercu.intrain.model.Roadmap
@@ -42,4 +43,8 @@ class RoadmapRepository(private val context: Context) {
 
     suspend fun deleteRoadmap(roadmapId: String): Response<Unit> =
         withContext(Dispatchers.IO) { api.deleteRoadmap(getUserId(), roadmapId) }
+
+    suspend fun getUserAchievements(userId: String): Response<List<Achievement>> {
+        return api.getUserAchievements(userId)
+    }
 }

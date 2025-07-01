@@ -47,3 +47,11 @@ data class UserRoadmapHistory(
     @SerializedName("started_at") val startedAt: String,
     @SerializedName("roadmap") val roadmap: Roadmap
 )
+
+data class Achievement(
+    @SerializedName("earned_at") val earnedAt: String,
+    @SerializedName("id") val id: String,
+    @SerializedName("roadmap") val roadmap: Roadmap,
+    @SerializedName("roadmap_id") val roadmapId: String,
+    @SerializedName("user_id") val userId: String
+)
