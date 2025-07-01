@@ -25,7 +25,7 @@
             android:text="Judul Kursus"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="#4560b6"
+            android:textColor="@color/text_course"
             android:fontFamily="@font/poppinsbold"/>
 
         <TextView
@@ -36,14 +36,14 @@
             android:text="Provider"
             android:fontFamily="@font/poppinsbold"
             android:textSize="14sp"
-            android:textColor="#757575" />
+            android:textColor="@color/text_course" />
 
         <TextView
             android:id="@+id/tvEnrolledDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:textColor="#757575"
+            android:textColor="@color/text_course"
             android:fontFamily="@font/poppinsbold"
             android:textSize="12sp"
             android:text="Enrolled: 2023-01-01"
@@ -80,7 +80,7 @@
             android:text="Enroll"
             android:textAllCaps="false"
             app:cornerRadius="12dp"
-            app:backgroundTint="#6246EA"
+            app:backgroundTint="@color/intrain_primary"
             app:iconTint="@android:color/white"
             android:textColor="@android:color/white"
             android:fontFamily="@font/poppinsbold"/>

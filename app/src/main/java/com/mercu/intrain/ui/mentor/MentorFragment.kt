@@ -1,6 +1,6 @@
 package com.mercu.intrain.ui.mentor
 
-import MentorshipScreen
+
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater

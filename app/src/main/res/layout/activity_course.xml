@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:src="@drawable/ic_back"
-        app:backgroundTint="#2196F3"
+        app:backgroundTint="@color/intrain_primary"
         app:tint="@android:color/white"
         app:fabSize="normal"
         app:elevation="6dp"

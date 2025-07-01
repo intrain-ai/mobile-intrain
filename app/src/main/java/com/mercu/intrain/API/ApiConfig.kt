@@ -11,7 +11,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 object ApiConfig {
-    private const val BASE_URL = "https://examples-implications-spine-msgstr.trycloudflare.com"
+    private const val BASE_URL = "https://almost-sources-necessity-cradle.trycloudflare.com"
 
     private val interceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY

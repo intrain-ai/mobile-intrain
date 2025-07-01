@@ -22,6 +22,7 @@ import com.mercu.intrain.API.ChatResponse
 import com.mercu.intrain.API.Evaluation
 import com.mercu.intrain.R
 import com.mercu.intrain.model.Message
+import com.mercu.intrain.theme.intrainPrimary
 import kotlinx.coroutines.launch
 
 @Composable
@@ -132,7 +133,7 @@ fun ChatBubble(
         ) {
             Text(name, style = MaterialTheme.typography.labelMedium)
             Surface(
-                color = if (isUser) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant,
+                color = if (isUser) intrainPrimary else MaterialTheme.colorScheme.surfaceVariant,
                 shape = MaterialTheme.shapes.medium,
                 shadowElevation = 2.dp
             ) {
