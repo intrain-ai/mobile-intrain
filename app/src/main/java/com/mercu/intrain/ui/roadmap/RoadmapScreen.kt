@@ -29,6 +29,8 @@ import com.mercu.intrain.ui.theme.intrainPrimaryColor
 import com.mercu.intrain.ui.theme.intrainAccentColor
 import com.mercu.intrain.ui.theme.intrainSuccessColor
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -536,4 +538,4 @@ fun EmptyStateCard(
             }
         }
     }
-} 
+}

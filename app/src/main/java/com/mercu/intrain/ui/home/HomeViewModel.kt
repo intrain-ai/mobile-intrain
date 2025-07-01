@@ -8,7 +8,12 @@ import androidx.lifecycle.viewModelScope
 import com.mercu.intrain.API.Article
 import com.mercu.intrain.API.ApiService
 import com.mercu.intrain.API.NewsConfig
+import com.mercu.intrain.model.ProgressStep
+import com.mercu.intrain.model.Roadmap
 import com.mercu.intrain.sharedpref.SharedPrefHelper
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
@@ -24,6 +29,18 @@ class HomeViewModel(
 
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> = _errorMessage
+
+    val _progressPercentage = MutableLiveData<Int>()
+    val progressPercentage: LiveData<Int> = _progressPercentage
+
+    private val _roadmapProgress = MutableStateFlow<List<ProgressStep>?>(null)
+    val roadmapProgress: StateFlow<List<ProgressStep>?> = _roadmapProgress.asStateFlow()
+
+
+    private val _selectedRoadmap = MutableStateFlow<Roadmap?>(null)
+    val selectedRoadmap: StateFlow<Roadmap?> = _selectedRoadmap.asStateFlow()
+
+
 
     private val _name = MutableLiveData<String>().apply {
         value = "Hello, ${sharedPrefHelper.getUsername() ?: "User"}!"
@@ -93,4 +110,79 @@ class HomeViewModel(
             }
         }
     }
+
+    fun getLatestRoadmapId(onResult: (String?) -> Unit) {
+        val userId = sharedPrefHelper.getUid()
+        if (userId.isNullOrEmpty()) {
+            onResult(null)
+            return
+        }
+
+        viewModelScope.launch {
+            try {
+                val response = apiService.getUserRoadmaps(userId)
+                if (response.isSuccessful) {
+                    val histories = response.body().orEmpty()
+                    if (histories.isNotEmpty()) {
+                        val latest = histories.maxByOrNull { it.startedAt }
+                        onResult(latest?.roadmapId)
+                    } else {
+                        onResult(null)
+                    }
+                } else {
+                    onResult(null)
+                }
+            } catch (e: Exception) {
+                onResult(null)
+            }
+        }
+    }
+
+    fun getRoadmapDetail(roadmapId: String) {
+        viewModelScope.launch {
+            try {
+                val response = apiService.getRoadmapDetails(roadmapId)
+                if (response.isSuccessful) {
+                    _selectedRoadmap.value = response.body()
+                } else {
+                    _selectedRoadmap.value = null
+                }
+            } catch (e: Exception) {
+                _selectedRoadmap.value = null
+            }
+        }
+    }
+
+    fun getRoadmapProgress() {
+        val userId = sharedPrefHelper.getUid()
+        if (userId.isNullOrEmpty()) {
+            _roadmapProgress.value = emptyList()
+            return
+        }
+        getLatestRoadmapId { roadmapId ->
+            if (roadmapId.isNullOrEmpty()) {
+                _roadmapProgress.value = emptyList()
+                return@getLatestRoadmapId
+            }
+
+            viewModelScope.launch {
+                try {
+                    val response = apiService.getRoadmapProgress(userId, roadmapId)
+                    if (response.isSuccessful) {
+                        val progressList = response.body() ?: emptyList()
+                        Log.d("value", "${progressList.count()}")
+                        val completedCount = progressList.count { it.completed }
+                        Log.d("value", "$completedCount")
+                        val percentage = if (progressList.isNotEmpty()) (completedCount * 100 / progressList.size) else 0
+                        _progressPercentage.postValue(percentage)
+                    } else {
+                        _roadmapProgress.value = emptyList()
+                    }
+                } catch (e: Exception) {
+                    _roadmapProgress.value = emptyList()
+                }
+            }
+        }
+    }
+
 }

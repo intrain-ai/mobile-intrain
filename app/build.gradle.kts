@@ -46,6 +46,7 @@ android {
 }
 
 dependencies {
+    implementation("io.coil-kt:coil-compose:2.5.0")
     implementation ("com.github.MahboubehSeyedpour:jetpack-loading:1.1.0")
     implementation (libs.mahboubehseyedpour.jetpack.loading)
     implementation(libs.androidx.ui)
@@ -58,6 +59,7 @@ dependencies {
     implementation (libs.androidx.foundation)
     implementation (libs.material3)
     implementation (libs.androidx.material.icons.extended)
+    implementation(libs.androidx.runtime.livedata)
     debugImplementation (libs.androidx.ui.tooling)
     implementation (libs.ui.tooling.preview)
 

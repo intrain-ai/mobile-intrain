@@ -22,7 +22,11 @@ class RoadmapComposeActivity : ComponentActivity() {
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
+        val initialRoadmapId = intent.getStringExtra("roadmap_id")
+        val initialScreen = intent.getStringExtra("screen")
+
+
         setContent {
             InTrainTheme {
                 RoadmapComposeContent(
@@ -30,7 +34,9 @@ class RoadmapComposeActivity : ComponentActivity() {
                     onNavigateBack = { finish() },
                     onOpenCourse = { courseId ->
                         openCourseDetail(courseId)
-                    }
+                    },
+                    initialRoadmapId = initialRoadmapId,
+                    initialScreen = initialScreen
                 )
             }
         }
@@ -49,10 +55,22 @@ class RoadmapComposeActivity : ComponentActivity() {
 fun RoadmapComposeContent(
     viewModel: RoadmapViewModel,
     onNavigateBack: () -> Unit,
-    onOpenCourse: (String) -> Unit
+    onOpenCourse: (String) -> Unit,
+    initialRoadmapId: String? = null,
+    initialScreen: String? = null
 ) {
-    var currentScreen by remember { mutableStateOf(RoadmapScreen.Main) }
-    var selectedRoadmapId by remember { mutableStateOf<String?>(null) }
+    var currentScreen by remember {
+        mutableStateOf(
+            when (initialScreen) {
+                "detail" -> RoadmapScreen.Detail
+                "progress" -> RoadmapScreen.Progress
+                else -> RoadmapScreen.Main
+            }
+        )
+    }
+    var selectedRoadmapId by remember { mutableStateOf(initialRoadmapId) }
+
+
     
     Scaffold(
         modifier = Modifier.fillMaxSize()
