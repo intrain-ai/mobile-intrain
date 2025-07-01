@@ -13,6 +13,7 @@ import com.mercu.intrain.R
 import com.mercu.intrain.API.CVReviewHistoryResponse
 import com.mercu.intrain.API.ReviewSection
 import com.google.gson.Gson
+import androidx.core.content.ContextCompat
 
 class CVReviewDetailDialogFragment : BottomSheetDialogFragment() {
     private lateinit var fileNameText: TextView
@@ -38,10 +39,17 @@ class CVReviewDetailDialogFragment : BottomSheetDialogFragment() {
 
         val json = arguments?.getString(ARG_CV_REVIEW)
         val review = Gson().fromJson(json, com.mercu.intrain.API.CVReviewHistoryResponse::class.java)
-        fileNameText?.text = review.submission.fileName
+        val dateLabel = review.submission.uploadedAt.take(10)
+        fileNameText?.text = "CV_$dateLabel"
+        fileNameText?.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.holo_blue_dark))
+        fileNameText?.setTypeface(null, android.graphics.Typeface.BOLD)
         fileTypeChip?.text = review.submission.fileType.uppercase()
+        fileTypeChip?.setChipBackgroundColorResource(android.R.color.holo_blue_dark)
+        fileTypeChip?.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.white))
         uploadedAtText?.text = "Uploaded: ${review.submission.uploadedAt.take(10)}"
+        uploadedAtText?.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.darker_gray))
         overallFeedbackText?.text = review.review?.overallFeedback ?: "No feedback yet."
+        overallFeedbackText?.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.holo_blue_light))
         sectionFeedbackRecyclerView?.layoutManager = LinearLayoutManager(requireContext())
         sectionFeedbackRecyclerView?.adapter = SectionFeedbackAdapter(review.sections)
     }

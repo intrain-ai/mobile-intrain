@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="20dp"
-    android:background="@android:color/white">
+    android:background="?attr/colorSurface">
 
     <TextView
         android:id="@+id/cvFileNameText"
@@ -14,7 +14,7 @@
         android:text="cv_final.pdf"
         android:textStyle="bold"
         android:textSize="18sp"
-        android:textColor="#000000"/>
+        android:textColor="?attr/colorPrimary"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:text="Uploaded: 2025-04-26"
             android:textSize="12sp"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="?attr/colorOnSurfaceVariant"
             android:layout_marginStart="12dp"/>
     </LinearLayout>
 
@@ -51,7 +51,8 @@
         android:text="Overall Feedback"
         android:textStyle="bold"
         android:textSize="15sp"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:textColor="?attr/colorPrimary"/>
 
     <TextView
         android:id="@+id/overallFeedbackText"
@@ -59,7 +60,7 @@
         android:layout_height="wrap_content"
         android:text="Feedback goes here..."
         android:textSize="14sp"
-        android:textColor="#666666"
+        android:textColor="?attr/colorOnSurfaceVariant"
         android:layout_marginTop="4dp"/>
 
     <TextView
@@ -69,7 +70,8 @@
         android:text="Section Feedbacks"
         android:textStyle="bold"
         android:textSize="15sp"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:textColor="?attr/colorPrimary"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/sectionFeedbackRecyclerView"

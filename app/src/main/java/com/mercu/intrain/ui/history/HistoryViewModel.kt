@@ -63,21 +63,4 @@ class HistoryViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-    // Test function to debug chat history endpoint
-    fun testChatHistoryEndpoint() {
-        userId?.let { uid ->
-            Log.d("HistoryViewModel", "Testing chat history endpoint for user: $uid")
-            viewModelScope.launch {
-                try {
-                    val response = apiService.getChatHistory(uid)
-                    Log.d("HistoryViewModel", "Raw response code: ${response.code()}")
-                    Log.d("HistoryViewModel", "Raw response message: ${response.message()}")
-                    Log.d("HistoryViewModel", "Raw response body: ${response.body()}")
-                    Log.d("HistoryViewModel", "Raw response error body: ${response.errorBody()?.string()}")
-                } catch (e: Exception) {
-                    Log.e("HistoryViewModel", "Test endpoint error: ${e.message}", e)
-                }
-            }
-        }
-    }
 }

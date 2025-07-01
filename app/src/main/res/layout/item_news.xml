@@ -15,6 +15,7 @@
         android:id="@+id/newsImage"
         android:layout_width="match_parent"
         android:layout_height="150dp"
+        android:padding="8dp"
         android:scaleType="centerCrop"
         android:contentDescription="Ini Gambar Berita"
         tools:ignore="HardcodedText" />
@@ -28,9 +29,10 @@
         android:text="Ini Judul"
         android:textSize="15sp"
         android:textStyle="bold"
-        android:maxLines="1"
+        android:maxLines="2"
         android:ellipsize="end"
-        android:fontFamily="@font/poppinsbold" />
+        android:fontFamily="@font/poppinsbold"
+        android:textColor="#FFFFFF"/>
 
     <!-- Deskripsi -->
     <TextView
@@ -40,9 +42,9 @@
         android:layout_marginTop="6dp"
         android:text="Ini Deskripsi"
         android:textSize="13sp"
-        android:maxLines="1"
+        android:maxLines="2"
         android:ellipsize="end"
-        android:lineSpacingMultiplier="1.2"
+        android:textColor="#FFFFFF"
         android:fontFamily="@font/poppinsregular" />
 
     <!-- Info: Tanggal & Sumber -->
@@ -57,7 +59,7 @@
             android:layout_width="12dp"
             android:layout_height="12dp"
             android:src="@drawable/ic_calendar"
-            app:tint="#666666" />
+            app:tint="#FFFFFF" />
 
         <TextView
             android:id="@+id/newsDate"
@@ -66,19 +68,20 @@
             android:layout_marginStart="4dp"
             android:text="12 Jun 2023"
             android:textSize="11sp"
+            android:textColor="#FFFFFF"
             android:fontFamily="@font/poppinsregular" />
 
         <View
             android:layout_width="1dp"
             android:layout_height="12dp"
             android:layout_marginHorizontal="8dp"
-            android:background="#666666" />
+            android:background="#FFFFFF" />
 
         <ImageView
             android:layout_width="12dp"
             android:layout_height="12dp"
             android:src="@drawable/ic_news"
-            app:tint="#666666" />
+            app:tint="#FFFFFF" />
 
         <TextView
             android:id="@+id/newsSource"
@@ -87,17 +90,8 @@
             android:layout_marginStart="4dp"
             android:text="Kompas.com"
             android:textSize="11sp"
+            android:textColor="#FFFFFF"
             android:fontFamily="@font/poppinsregular" />
     </LinearLayout>
 
-    <!-- Tombol Baca Selengkapnya -->
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="READ MORE"
-        android:textSize="11sp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:fontFamily="@font/poppinsbold"
-        android:backgroundTint="@android:color/transparent" />
 </LinearLayout>

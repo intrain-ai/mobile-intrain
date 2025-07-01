@@ -54,6 +54,10 @@ import com.mercu.intrain.MainActivity
 import com.mercu.intrain.R
 import com.mercu.intrain.sharedpref.SharedPrefHelper
 import com.mercu.intrain.theme.intrainPrimary
+import com.mercu.intrain.ui.theme.InTrainTheme
+import com.mercu.intrain.ui.theme.intrainPrimaryColor
+import com.mercu.intrain.ui.theme.intrainAccentColor
+import com.mercu.intrain.ui.theme.intrainSuccessColor
 import com.spr.jetpack_loading.components.indicators.BallSpinFadeLoaderIndicator
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -62,7 +66,7 @@ class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MaterialTheme {
+            InTrainTheme {
                 LoginScreen(
                     onLoginSuccess = {
                         startActivity(Intent(this, MainActivity::class.java))
@@ -95,7 +99,6 @@ fun LoginScreen(
     var usernameError by remember { mutableStateOf("") }
     var passwordError by remember { mutableStateOf("") }
 
-    // Collect state from ViewModel
     val loginState by viewModel.loginState.collectAsState()
     var isTransitioning by remember { mutableStateOf(false) }
     val isLoading by viewModel.isLoading.collectAsState()
@@ -157,7 +160,7 @@ fun LoginScreen(
                     Text(
                         text = "Username",
                         style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.primary
+                        color = MaterialTheme.intrainPrimaryColor
                     )
 
                     OutlinedTextField(
@@ -175,7 +178,7 @@ fun LoginScreen(
                     Text(
                         text = "Password",
                         style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.primary
+                        color = MaterialTheme.intrainPrimaryColor
                     )
 
                     OutlinedTextField(
@@ -217,18 +220,16 @@ fun LoginScreen(
                         },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(56.dp)
+                            .height(56.dp),
+                        colors = androidx.compose.material3.ButtonDefaults.buttonColors(containerColor = MaterialTheme.intrainPrimaryColor)
                     ) {
                         if (isLoading) {
-                            CircularProgressIndicator(color = Color.White)
+                            CircularProgressIndicator(color = MaterialTheme.intrainAccentColor)
                         } else {
-                            Text("Login")
+                            Text("Login", color = Color.White)
                         }
                     }
-
-
-
-
+                    
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.Center
@@ -236,16 +237,8 @@ fun LoginScreen(
                         TextButton(onClick = onRegisterClick) {
                             Text(
                                 text = "Register",
-                                textDecoration = TextDecoration.Underline
-                            )
-                        }
-
-                        Spacer(modifier = Modifier.width(32.dp))
-
-                        TextButton(onClick = { /* Handle forgot password */ }) {
-                            Text(
-                                text = "Forgot Password",
-                                textDecoration = TextDecoration.Underline
+                                textDecoration = TextDecoration.Underline,
+                                color = MaterialTheme.intrainAccentColor
                             )
                         }
                     }
@@ -259,13 +252,21 @@ fun LoginScreen(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(intrainPrimary),
+                    .background(MaterialTheme.intrainPrimaryColor),
                 contentAlignment = Alignment.Center
             ) {
                 BallSpinFadeLoaderIndicator(
-                    color = Color.White
+                    color = MaterialTheme.intrainAccentColor
                 )
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun LoginScreenPreview() {
+    InTrainTheme {
+        LoginScreen(onLoginSuccess = {}, onRegisterClick = {})
     }
 }

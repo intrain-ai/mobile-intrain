@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     app:cardCornerRadius="8dp"
+    backgroundTint="@android:color/white"
     app:cardElevation="4dp">
 
     <LinearLayout
@@ -18,14 +19,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:text="Job Title"/>
 
         <TextView
             android:id="@+id/companyNameText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:text="Company Name"/>
 
         <TextView
             android:id="@+id/dateRangeText"
@@ -33,14 +36,16 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:textSize="14sp"
-            android:textColor="@android:color/darker_gray" />
+            android:textColor="@android:color/darker_gray"
+            android:text="Date Range"/>
 
         <TextView
             android:id="@+id/jobDescText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:text="Job Description"/>
 
         <LinearLayout
             android:layout_width="match_parent"

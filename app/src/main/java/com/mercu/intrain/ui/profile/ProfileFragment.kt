@@ -1,5 +1,6 @@
 package com.mercu.intrain.ui.profile
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -16,6 +17,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.switchmaterial.SwitchMaterial
+import com.google.android.material.textfield.TextInputEditText
 import com.mercu.intrain.API.ApiConfig
 import com.mercu.intrain.API.UpdateUserRequest
 import com.mercu.intrain.R
@@ -23,6 +26,7 @@ import com.mercu.intrain.databinding.FragmentProfileBinding
 import com.mercu.intrain.model.WorkExperience
 import com.mercu.intrain.sharedpref.SharedPrefHelper
 import com.mercu.intrain.ui.auth.LoginActivity
+import com.mercu.intrain.ui.jobs.JobsActiviy
 import com.mercu.intrain.ui.roadmap.RoadmapComposeActivity
 import com.mercu.intrain.utils.ChatUtils
 import kotlinx.coroutines.launch
@@ -66,7 +70,12 @@ class ProfileFragment : Fragment() {
         val username = sharedPrefHelper.getUsername() ?: ""
         val email = sharedPrefHelper.getEmail() ?: ""
         val name = sharedPrefHelper.getName() ?: ""
-        val jobType = sharedPrefHelper.getJobType() ?: "Belum diatur"
+        val jobId = sharedPrefHelper.getJobType() ?: ""
+        var jobTitle = "Belum dipilih"
+        // Optionally, you can map jobId to jobTitle if you store the title in SharedPreferences
+        if (jobId.isNotEmpty()) {
+            jobTitle = jobId // If you store the title, use it here
+        }
 
         profileViewModel.updateProfileInfo(name, username, email)
 
@@ -80,9 +89,6 @@ class ProfileFragment : Fragment() {
         profileViewModel.email.observe(viewLifecycleOwner) {
             binding.emailText.text = it
         }
-
-        // Set job type text in settings
-        binding.jobTypeText.text = jobType
 
         return binding.root
     }
@@ -225,45 +231,18 @@ class ProfileFragment : Fragment() {
             binding.editPassword.text?.clear()
         }
 
-        // Job Type button
+        // Job type button opens JobsActivity
         binding.jobTypeButton.setOnClickListener {
-            binding.editJobType.visibility = View.VISIBLE
-            binding.jobTypeButtonLayout.visibility = View.VISIBLE
-            binding.editJobType.setText(sharedPrefHelper.getJobType() ?: "")
-            binding.editJobType.requestFocus()
-            Toast.makeText(requireContext(), "Masukkan tipe pekerjaan baru", Toast.LENGTH_SHORT).show()
-        }
-
-        // Save Job Type button
-        binding.saveJobTypeButton.setOnClickListener {
-            val newJobType = binding.editJobType.text.toString().trim()
-            if (newJobType.isEmpty()) {
-                Toast.makeText(requireContext(), "Tipe pekerjaan tidak boleh kosong", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            sharedPrefHelper.saveJobType(newJobType)
-            binding.jobTypeText.text = newJobType
-            Toast.makeText(requireContext(), "Tipe pekerjaan berhasil diperbarui", Toast.LENGTH_SHORT).show()
-            
-            // Hide job type editing UI
-            binding.editJobType.visibility = View.GONE
-            binding.jobTypeButtonLayout.visibility = View.GONE
-            binding.editJobType.text?.clear()
-        }
-
-        // Cancel Job Type button
-        binding.cancelJobTypeButton.setOnClickListener {
-            // Hide job type editing UI
-            binding.editJobType.visibility = View.GONE
-            binding.jobTypeButtonLayout.visibility = View.GONE
-            binding.editJobType.text?.clear()
+            val intent = Intent(requireContext(), JobsActiviy::class.java)
+            startActivity(intent)
+            requireActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
 
         // Roadmap button
         binding.roadmapButton.setOnClickListener {
             val intent = Intent(requireContext(), RoadmapComposeActivity::class.java)
             startActivity(intent)
+            requireActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
 
         // Logout button
@@ -271,6 +250,11 @@ class ProfileFragment : Fragment() {
             sharedPrefHelper.clear()
             Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT).show()
             navigateToLogin()
+        }
+
+        binding.jobTypeButton.setOnClickListener {
+            val intent = Intent(requireContext(), JobsActiviy::class.java)
+            startActivity(intent)
         }
 
         setupWorkExperience()
@@ -383,14 +367,14 @@ class ProfileFragment : Fragment() {
             .create()
 
         // Initialize views
-        val jobTitleInput = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.jobTitleInput)
-        val companyNameInput = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.companyNameInput)
-        val jobDescInput = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.jobDescInput)
-        val startMonthInput = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.startMonthInput)
-        val startYearInput = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.startYearInput)
-        val endMonthInput = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.endMonthInput)
-        val endYearInput = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.endYearInput)
-        val isCurrentJobSwitch = dialogView.findViewById<com.google.android.material.switchmaterial.SwitchMaterial>(R.id.isCurrentJobSwitch)
+        val jobTitleInput = dialogView.findViewById<TextInputEditText>(R.id.jobTitleInput)
+        val companyNameInput = dialogView.findViewById<TextInputEditText>(R.id.companyNameInput)
+        val jobDescInput = dialogView.findViewById<TextInputEditText>(R.id.jobDescInput)
+        val startMonthInput = dialogView.findViewById<TextInputEditText>(R.id.startMonthInput)
+        val startYearInput = dialogView.findViewById<TextInputEditText>(R.id.startYearInput)
+        val endMonthInput = dialogView.findViewById<TextInputEditText>(R.id.endMonthInput)
+        val endYearInput = dialogView.findViewById<TextInputEditText>(R.id.endYearInput)
+        val isCurrentJobSwitch = dialogView.findViewById<SwitchMaterial>(R.id.isCurrentJobSwitch)
 
         // Pre-fill data if editing
         workExperience?.let {
@@ -402,6 +386,10 @@ class ProfileFragment : Fragment() {
             endMonthInput.setText(it.endMonth.toString())
             endYearInput.setText(it.endYear.toString())
             isCurrentJobSwitch.isChecked = it.isCurrent
+
+            // Apply enabled state based on current job status
+            endMonthInput.isEnabled = !it.isCurrent
+            endYearInput.isEnabled = !it.isCurrent
         }
 
         // Handle current job switch
@@ -411,7 +399,14 @@ class ProfileFragment : Fragment() {
         }
 
         dialog.setOnShowListener {
-            dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+            // Set max height for dialog
+            val window = dialog.window
+            window?.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                (resources.displayMetrics.heightPixels * 0.8).toInt()
+            )
+
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                 val userId = sharedPrefHelper.getUid() ?: return@setOnClickListener
 
                 // Validate inputs

@@ -1,5 +1,6 @@
 package com.mercu.intrain.API
 
+import com.mercu.intrain.model.Achievement
 import com.mercu.intrain.model.Availability
 import com.mercu.intrain.model.CompletedStepResponse
 import com.mercu.intrain.model.Course
@@ -8,6 +9,7 @@ import com.mercu.intrain.model.EnrollmentItem
 //import com.mercu.intrain.model.EnrollmentMockResponse
 import com.mercu.intrain.model.EnrollmentRequest
 import com.mercu.intrain.model.EnrollmentResponse
+import com.mercu.intrain.model.JobResponse
 import com.mercu.intrain.model.MentorFeedback
 import com.mercu.intrain.model.MentorProfile
 import com.mercu.intrain.model.MentorProfileWithExperience
@@ -17,6 +19,7 @@ import com.mercu.intrain.model.Roadmap
 import com.mercu.intrain.model.UserRoadmap
 import com.mercu.intrain.model.UserRoadmapHistory
 import com.mercu.intrain.model.WorkExperience
+import kotlinx.coroutines.Job
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -200,6 +203,11 @@ interface ApiService {
         @Path("roadmap_id") roadmapId: String
     ): Response<Unit>
 
+    @GET("api/v1/users/{user_id}/achievements")
+    suspend fun getUserAchievements(
+        @Path("user_id") userId: String
+    ): Response<List<Achievement>>
+
     // -------------------- Mentorship Feature --------------------
 
     @POST("api/v1/mentorship/register")
@@ -239,5 +247,8 @@ interface ApiService {
         @Path("mentor_id") mentorId: String
     ): Response<MentorProfileWithExperience>
 
+    //Jobs Feature
+    @GET("api/v1/jobs")
+    suspend fun getJobs(): Response<List<JobResponse>>
 
 }

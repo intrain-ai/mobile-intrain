@@ -47,11 +47,6 @@ class HomeViewModel(
     }
     val name: LiveData<String> = _name
 
-    private val _courseDescription = MutableLiveData<String>().apply {
-        value = "Course Completion"
-    }
-    val courseDescription: LiveData<String> = _courseDescription
-
 
     init {
         loadNews()

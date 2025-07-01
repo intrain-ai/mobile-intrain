@@ -21,6 +21,7 @@ activity = "1.10.1"
 legacySupportV4 = "1.0.0"
 fragmentKtx = "1.5.6"
 runtimeLivedata = "1.8.3"
+runtimeLivedataVersion = "2.7.0"
 swiperefreshlayout = "1.1.0"
 uiToolingPreview = "1.8.3"
 
@@ -55,6 +56,7 @@ androidx-legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support
 androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragmentKtx" }
 material-v190 = { module = "com.google.android.material:material", version.ref = "googleMaterialVersion" }
 material3 = { module = "androidx.compose.material3:material3" }
+runtime-livedata = { module = "androix.compose.runtime:runtime-livedata", version.ref = "runtimeLivedataVersion" }
 ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
