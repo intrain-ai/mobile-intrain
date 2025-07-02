@@ -73,13 +73,12 @@ Dibangun dengan arsitektur **MVVM**, **Jetpack Compose**, dan konsumsi API berba
 ├── MainActivity.kt     # Launcher activity
 └── navigation/         # NavGraph config
 ```
-## 🧪 How to Run
-1. Clone project:
-```bash
-git clone https://github.com/intrain-ai/mobile-intrain.git
-```
-2. Buka di Android Studio (Giraffe / Hedgehog+)
-3. Sync Gradle dan Run via Emulator / Device
+## 🖼️ App Preview
+
+<div align="center">
+  <img src="https://github.com/intrain-ai/mobile-intrain/blob/main/frame.png" alt="inTrain App Preview" width="300"/>
+</div>
+
 
 ## 🌐 API Integration
 
