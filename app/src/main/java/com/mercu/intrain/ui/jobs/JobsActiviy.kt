@@ -1,5 +1,6 @@
 package com.mercu.intrain.ui.jobs
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -34,6 +35,8 @@ import com.mercu.intrain.ui.theme.InTrainTheme
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import com.mercu.intrain.MainActivity
+import com.mercu.intrain.ui.home.HomeFragment
 
 class JobsActiviy : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -185,6 +188,10 @@ fun JobsScreen(viewModel: JobViewModel = viewModel()) {
                         }
                         showConfirmationDialog = false
                         // You can add navigation or finish activity here
+                        val intent = Intent(context, MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        context.startActivity(intent)
+
                     }
                 ) {
                     Text("Ya, Konfirmasi")

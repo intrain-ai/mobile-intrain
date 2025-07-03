@@ -29,6 +29,8 @@ class ReviewViewModel : ViewModel() {
 
     private var selectedPdfUri: Uri? = null
 
+    fun getSelectedPdfUri(): Uri? = selectedPdfUri
+
     fun setSelectedPdfUri(context: Context, uri: Uri) {
         selectedPdfUri = uri
         generatePdfPreview(context, uri)
@@ -83,4 +85,6 @@ class ReviewViewModel : ViewModel() {
             }
         }
     }
+
+
 }

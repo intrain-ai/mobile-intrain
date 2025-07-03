@@ -108,7 +108,7 @@ fun HomeScreen(
             })
             Spacer(modifier = Modifier.height(24.dp))
 
-            Text("Berita Terkini", style = MaterialTheme.typography.titleLarge)
+            Text("Menu", style = MaterialTheme.typography.titleLarge)
 
             Spacer(modifier = Modifier.height(12.dp))
 

@@ -219,7 +219,11 @@ fun RoadmapProgressScreen(
                     item {
                         Spacer(modifier = Modifier.height(24.dp))
                         Button(
-                            onClick = {  },
+                            onClick = { val completedSteps = roadmapProgress.count { it.completed }
+                                            if (roadmapProgress.count() == roadmapProgress.count { it.completed }){
+
+                                            }
+                                      },
                             modifier = Modifier.fillMaxWidth(),
                             colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.intrainSuccessColor)
                         ) {

@@ -13,17 +13,27 @@ import com.mercu.intrain.sharedpref.SharedPrefHelper
 import com.mercu.intrain.ui.chat.DiffSelectActivity
 import com.mercu.intrain.ui.course.CourseActivity
 import com.mercu.intrain.ui.cvcheck.ReviewComposeActivity
+import com.mercu.intrain.ui.jobs.JobsActiviy
 import com.mercu.intrain.ui.roadmap.RoadmapComposeActivity
 import com.mercu.intrain.ui.theme.InTrainTheme
 
 class HomeFragment : Fragment() {
+
+    private lateinit var sharedPrefHelper: SharedPrefHelper
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+
         return ComposeView(requireContext()).apply {
+
+            sharedPrefHelper = SharedPrefHelper(requireContext())
+
+            val jobtype = sharedPrefHelper.getJobType()
+
             setContent {
                 InTrainTheme {
                     HomeScreen(
@@ -37,10 +47,16 @@ class HomeFragment : Fragment() {
                             startActivity(Intent(requireContext(), CourseActivity::class.java))
                         },
                         onCVCheckClick = {
+
                             startActivity(Intent(requireContext(), ReviewComposeActivity::class.java))
+
                         },
                         onChatBotClick = {
-                            startActivity(Intent(requireContext(), DiffSelectActivity::class.java))
+                            if (jobtype != null) {
+                                startActivity(Intent(requireContext(), DiffSelectActivity::class.java))
+                            } else {
+                                startActivity(Intent(requireContext(), JobsActiviy::class.java))
+                            }
                         },
                         onNavigateToRoadmapDetail = { roadmapId ->
                             val intent = Intent(requireContext(), RoadmapComposeActivity::class.java).apply {

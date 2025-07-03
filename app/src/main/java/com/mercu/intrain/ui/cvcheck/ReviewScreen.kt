@@ -1,6 +1,7 @@
 package com.mercu.intrain.ui.cvcheck
 
 import ReviewViewModel
+import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
@@ -46,15 +47,22 @@ fun ReviewScreen(viewModel: ReviewViewModel = viewModel()) {
     val result by viewModel.cvResult.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     var showInitialUI by remember { mutableStateOf(true) }
+    var selectedPdfUri by remember { mutableStateOf<Uri?>(null) }
+
+    LaunchedEffect(Unit) {
+        selectedPdfUri = viewModel.getSelectedPdfUri()
+    }
 
     val pdfPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.OpenDocument(),
         onResult = { uri ->
             uri?.let {
                 viewModel.setSelectedPdfUri(context, uri)
+                selectedPdfUri = uri
             }
         }
     )
+
 
     Box(
         modifier = Modifier
@@ -99,18 +107,22 @@ fun ReviewScreen(viewModel: ReviewViewModel = viewModel()) {
                     Text("Upload CV PDF", color = MaterialTheme.colorScheme.primary)
                 }
                 Spacer(modifier = Modifier.height(12.dp))
-                Button(
-                    onClick = {
-                        coroutineScope.launch {
-                            showInitialUI = false
-                            viewModel.uploadPdf(context)
-                        }
-                    },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.White),
-                    enabled = !isLoading,
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp)
-                ) {
-                    Text("Analisa dengan AI", color = MaterialTheme.colorScheme.primary)
+                if (selectedPdfUri != null) {
+                    Button(
+                        onClick = {
+                            coroutineScope.launch {
+                                showInitialUI = false
+                                viewModel.uploadPdf(context)
+                            }
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.White),
+                        enabled = !isLoading,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 32.dp)
+                    ) {
+                        Text("Analisa dengan AI", color = MaterialTheme.colorScheme.primary)
+                    }
                 }
             }
         }
