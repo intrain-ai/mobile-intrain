@@ -43,6 +43,10 @@ class SharedPrefHelper(context: Context) {
         sharedPreferences.edit().putString("job_type", jobType).apply()
     }
 
+    fun saveOnboardingFinished(finished: Boolean) {
+        sharedPreferences.edit().putBoolean("onboarding_finished", finished).apply()
+    }
+
     fun getUid(): String? {
         return getString("auth_uid")
     }
@@ -77,6 +81,10 @@ class SharedPrefHelper(context: Context) {
 
     fun hasJobType(): Boolean {
         return getJobType() != null && getJobType()!!.isNotEmpty()
+    }
+
+    fun isOnboardingFinished(): Boolean {
+        return sharedPreferences.getBoolean("onboarding_finished", false)
     }
 
     private fun getString(key: String, default: String? = null): String? {
