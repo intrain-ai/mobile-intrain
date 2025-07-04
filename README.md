@@ -75,10 +75,7 @@ Dibangun dengan arsitektur **MVVM**, **Jetpack Compose**, dan konsumsi API berba
 ```
 ## 🖼️ App Preview
 
-<div align="center">
-  <img src="https://github.com/intrain-ai/mobile-intrain/blob/main/frame.png" alt="inTrain App Preview" width="300"/>
-</div>
-
+Check out the full app preview and details on the [📦 inTrain.ai Mobile App Release Page](https://github.com/intrain-ai/mobile-intrain/releases/tag/app).
 
 ## 🌐 API Integration
 
