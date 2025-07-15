@@ -109,7 +109,10 @@ dependencies {
     implementation (libs.material.v190)
 
     implementation(libs.androidx.swiperefreshlayout)
+    implementation("com.google.android.exoplayer:exoplayer:2.19.1")
 
+    implementation ("androidx.media3:media3-exoplayer:1.7.1")
+    implementation ("androidx.media3:media3-ui:1.7.1")
 
 
 }

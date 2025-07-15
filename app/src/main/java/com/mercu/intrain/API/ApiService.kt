@@ -251,4 +251,17 @@ interface ApiService {
     @GET("api/v1/jobs")
     suspend fun getJobs(): Response<List<JobResponse>>
 
+    // --- Voice Interview Endpoints ---
+    @POST("/api/v1/feature/interview/voice")
+    suspend fun initVoiceInterview(
+        @Body request: VoiceInterviewInitRequest
+    ): Response<VoiceInterviewInitResponse>
+
+    @Multipart
+    @POST("/api/v1/feature/interview/voice")
+    suspend fun continueVoiceInterview(
+        @Part file: MultipartBody.Part,
+        @Part("session_id") sessionId: RequestBody
+    ): Response<VoiceInterviewContinueResponse>
+
 }

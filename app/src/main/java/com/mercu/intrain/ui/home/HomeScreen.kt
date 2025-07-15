@@ -43,6 +43,7 @@ fun HomeScreen(
     onCourseClick: () -> Unit,
     onCVCheckClick: () -> Unit,
     onChatBotClick: () -> Unit,
+    onVoiceInterviewClick: () -> Unit,
     onNavigateToRoadmapDetail: (String) -> Unit
 ) {
     val name by viewModel.name.observeAsState("Hello, User!")
@@ -115,7 +116,8 @@ fun HomeScreen(
             FeatureButtons(
                 onCourseClick = onCourseClick,
                 onCVCheckClick = onCVCheckClick,
-                onChatBotClick = onChatBotClick
+                onChatBotClick = onChatBotClick,
+                onVoiceInterviewClick = onVoiceInterviewClick
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -281,7 +283,8 @@ fun NewsCard(article: Article) {
 fun FeatureButtons(
     onCourseClick: () -> Unit,
     onCVCheckClick: () -> Unit,
-    onChatBotClick: () -> Unit
+    onChatBotClick: () -> Unit,
+    onVoiceInterviewClick: () -> Unit
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -292,6 +295,7 @@ fun FeatureButtons(
         FeatureIconWithLabel("CV Check", R.drawable.ic_cv_checker, onCVCheckClick, Modifier.weight(1f))
         FeatureIconWithLabel("InTrain Bot", R.drawable.ic_chat, onChatBotClick, Modifier.weight(1f))
         FeatureIconWithLabel("Courses", R.drawable.ic_course, onCourseClick, Modifier.weight(1f))
+        FeatureIconWithLabel("Voice Interview", R.drawable.ic_warning, onVoiceInterviewClick, Modifier.weight(1f))
     }
 }
 

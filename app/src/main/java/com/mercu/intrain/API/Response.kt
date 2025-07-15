@@ -343,3 +343,27 @@ data class Experience(
     @SerializedName("location")
     val location: String? = null
 ) : Parcelable
+
+// --- Voice Interview Models ---
+data class VoiceInterviewInitRequest(
+    @SerializedName("user_id") val userId: String,
+    @SerializedName("hr_level_id") val hrLevelId: Int,
+    @SerializedName("job_type") val jobType: String
+)
+
+@Parcelize
+data class VoiceInterviewInitResponse(
+    @SerializedName("response_audio") val responseAudio: String?,
+    @SerializedName("response_text") val responseText: String?,
+    @SerializedName("session_id") val sessionId: String?,
+    @SerializedName("transcript") val transcript: String? // null at init
+) : Parcelable
+
+@Parcelize
+data class VoiceInterviewContinueResponse(
+    @SerializedName("response_audio") val responseAudio: String?,
+    @SerializedName("response_text") val responseText: String?,
+    @SerializedName("session_id") val sessionId: String?,
+    @SerializedName("transcript") val transcript: String?,
+    @SerializedName("evaluation") val evaluation: Evaluation? = null
+) : Parcelable

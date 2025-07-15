@@ -11,7 +11,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 object ApiConfig {
-    private const val BASE_URL = "https://gen-lang-client-0770833121.et.r.appspot.com"
+    private const val BASE_URL = "https://intrain-server-293048372767.asia-southeast2.run.app/"
 
     private val interceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
