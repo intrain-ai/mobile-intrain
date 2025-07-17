@@ -21,7 +21,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.mercu.intrain.ui.onboarding.OnboardingDialogModal
-import com.mercu.intrain.ui.voice.DiffSelectVoiceActivity
 import com.mercu.intrain.ui.voice.VoiceInterviewActivity
 
 class HomeFragment : Fragment() {
@@ -68,13 +67,6 @@ class HomeFragment : Fragment() {
                             onChatBotClick = {
                                 if (jobtype != null) {
                                     startActivity(Intent(requireContext(), DiffSelectActivity::class.java))
-                                } else {
-                                    startActivity(Intent(requireContext(), JobsActiviy::class.java))
-                                }
-                            },
-                            onVoiceInterviewClick = {
-                                if (jobtype != null) {
-                                    startActivity(Intent(requireContext(), DiffSelectVoiceActivity::class.java))
                                 } else {
                                     startActivity(Intent(requireContext(), JobsActiviy::class.java))
                                 }

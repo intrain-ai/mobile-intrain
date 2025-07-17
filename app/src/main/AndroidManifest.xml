@@ -72,8 +72,6 @@
             android:exported="true" />
         <activity android:name=".ui.jobs.JobsActiviy"
             android:exported="true" />
-        <activity android:name=".ui.voice.DiffSelectVoiceActivity"
-            android:exported="true" />
         <activity android:name=".ui.voice.VoiceInterviewActivity"
             android:exported="true" />
     </application>

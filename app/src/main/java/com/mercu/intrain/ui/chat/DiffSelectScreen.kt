@@ -34,7 +34,7 @@ import retrofit2.Response
 
 @Composable
 fun DiffSelectScreen(
-    navToChat: (sessionId: String, chatResponse: ChatResponse, hrLevel: Int) -> Unit,
+    navToChat: (sessionId: String, chatResponse: ChatResponse, hrLevel: Int, interviewType: Int) -> Unit,
     viewModel: DiffSelectViewModel = viewModel()
 ) {
     val difficulties = listOf(
@@ -45,7 +45,7 @@ fun DiffSelectScreen(
 
     val pagerState = rememberPagerState(pageCount = { difficulties.size })
 
-    val coroutineScope = rememberCoroutineScope()
+    var showDialog by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
     val isLoading by remember { derivedStateOf { viewModel.isLoading } }
@@ -94,21 +94,7 @@ fun DiffSelectScreen(
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp),
                 shape = RoundedCornerShape(8.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.White),
-                onClick = {
-                    val selected = difficulties[pagerState.currentPage]
-                    val userId = SharedPrefHelper(context).getUid().toString()
-                    viewModel.initializeChat(
-                        userId = userId,
-                        hrLevel = selected.id,
-                        jobType = SharedPrefHelper(context).getJobType() ?: "",
-                        onSuccess = { sessionId, response ->
-                            navToChat(sessionId, response, selected.id)
-                        },
-                        onError = { message ->
-                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-                        }
-                    )
-                },
+                onClick = { showDialog = true },
                 enabled = !isLoading
             ) {
                 if (isLoading) {
@@ -117,6 +103,28 @@ fun DiffSelectScreen(
                 }
                 Text("Select" , color = intrainPrimary, fontWeight = FontWeight.Black, fontSize = 20.sp)
             }
+
+            if (showDialog){
+                PromptInterviewTypeDialog(
+                    onDismiss = { showDialog = false },
+                    onSelect = { interviewType ->
+                        showDialog = false
+                        val selected = difficulties[pagerState.currentPage]
+                        val userId = SharedPrefHelper(context).getUid().toString()
+                        viewModel.initializeChat(
+                            userId = userId,
+                            hrLevel = selected.id,
+                            jobType = SharedPrefHelper(context).getJobType() ?: "",
+                            onSuccess = { sessionId, response ->
+                                navToChat(sessionId, response, selected.id,interviewType)
+                            },
+                            onError = { message ->
+                                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                            }
+                        )
+                    }
+                )
+            }
         }
     }
 }
@@ -124,5 +132,31 @@ fun DiffSelectScreen(
 @Composable
 @Preview
 fun DiffSelectScreenPreview() {
-    DiffSelectScreen(navToChat = { _, _, _ -> })
+    DiffSelectScreen(navToChat = { _, _, _, _ -> })
+}
+
+@Composable
+fun PromptInterviewTypeDialog(
+    onDismiss: () -> Unit,
+    onSelect: (interviewType: Int) -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = { onDismiss() },
+        title = { Text("Pilih Tipe Wawancara") },
+        text = { Text("Bagaimana kamu ingin melakukan sesi ini?") },
+        confirmButton = {
+            TextButton(onClick = {
+                onSelect(0) // Simulasi Wawancara
+            }) {
+                Text("Simulasi Wawancara")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = {
+                onSelect(1) // Live Practice
+            }) {
+                Text("Live Practice")
+            }
+        }
+    )
 }
