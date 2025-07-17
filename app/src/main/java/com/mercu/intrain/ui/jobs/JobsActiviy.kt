@@ -36,6 +36,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import com.mercu.intrain.MainActivity
+import com.mercu.intrain.ui.chat.DiffSelectActivity
+import com.mercu.intrain.ui.chat.DiffSelectScreen
 import com.mercu.intrain.ui.home.HomeFragment
 
 class JobsActiviy : ComponentActivity() {
@@ -188,7 +190,7 @@ fun JobsScreen(viewModel: JobViewModel = viewModel()) {
                         }
                         showConfirmationDialog = false
                         // You can add navigation or finish activity here
-                        val intent = Intent(context, MainActivity::class.java)
+                        val intent = Intent(context, DiffSelectActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         context.startActivity(intent)
 
